@@ -1,0 +1,20 @@
+﻿@using MudBlazor
+<MudGrid>
+    <MudItem xs="12">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Team 1</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <div class="d-flex gap-4">
+                    <SpielerSelect Spieler="@Spieler">
+                    </SpielerSelect>
+                    <SpielerSelect Spieler="@Spieler">
+                    </SpielerSelect>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>

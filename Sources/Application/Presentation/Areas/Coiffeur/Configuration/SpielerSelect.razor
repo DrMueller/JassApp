@@ -1,0 +1,11 @@
+﻿@using MudBlazor
+<MudSelect @bind-Value="SelectedSpieler"
+           Variant="Variant.Outlined"
+           Label="Spieler"
+           FitContent="true"
+           Placeholder="Spieler auswählen">
+    @foreach (var spieler in Spieler)
+    {
+        <MudSelectItem Value="spieler">@spieler.Name</MudSelectItem>
+    }
+</MudSelect>

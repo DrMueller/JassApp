@@ -1,7 +1,10 @@
-﻿@using JassApp.Presentation.Areas.Spieler
+﻿@using JassApp.Presentation.Areas.Coiffeur.Overview
+@using JassApp.Presentation.Areas.Spieler
 @using MudBlazor
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
 
-    <MudNavLink Href="@SpielerOverviewPage.Path" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Spieler</MudNavLink>
+    <MudNavLink Href="@SpielerOverviewPage.Path" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">Spieler</MudNavLink>
+
+    <MudNavLink Href="@CoiffeurOverviewPage.Path" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Science">Coiffeur</MudNavLink>
 </MudNavMenu>
