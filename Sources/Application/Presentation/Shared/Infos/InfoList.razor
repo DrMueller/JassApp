@@ -1,0 +1,21 @@
+﻿@if (InfoEntries.Count > 1)
+{
+    <ul>
+        @foreach (var infoMessage in InfoEntries)
+        {
+            <li>
+                <div class="text-wrap">
+                    <strong>@infoMessage</strong>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else if (InfoEntries.Count == 1)
+{
+    <div class="text-wrap">
+        <strong>
+            @InfoEntries.Single()
+        </strong>
+    </div>
+}

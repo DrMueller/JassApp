@@ -1,0 +1,13 @@
+parameters:
+  ConnectedServiceName: '8e238b2b-b5d4-4398-8046-21d4a330ac79'
+  WebAppKind: 'webApp'
+  WebAppName: 'HackyApp'
+
+steps:
+- task: AzureRmWebAppDeployment@4
+  displayName: 'Deploy Azure App Service'
+  inputs:
+    azureSubscription: '${{ parameters.ConnectedServiceName }}'
+    appType: '${{ parameters.WebAppKind }}'
+    WebAppName: '${{ parameters.WebAppName }}'
+    JSONFiles: '**/appsettings.json'

@@ -1,0 +1,10 @@
+﻿@using MudBlazor
+@if (IsLoading)
+{
+    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+
+}
+else
+{
+    @ChildContent
+}

@@ -1,0 +1,39 @@
+﻿@using MudBlazor
+<div >
+    @if (HasErrors)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled">
+            <ul>
+                @foreach (var error in Entries!.ErrorMessages)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </MudAlert>
+
+    }
+
+    @if (HasWarnings)
+    {
+        <MudAlert Severity="Severity.Warning" Variant="Variant.Filled">
+            <ul>
+                @foreach (var error in Entries!.WarningMessages)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </MudAlert>
+    }
+
+    @if (HasInfos)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Filled">
+            <ul>
+                @foreach (var error in Entries!.InfoMessages)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </MudAlert>
+    }
+</div>

@@ -1,0 +1,56 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true # batch changes if true; start a new build for every push if false (default)
+  branches:
+    include:
+      - refs/heads/master
+
+variables:
+  BuildConfiguration: "Release"
+
+jobs:
+  - job: "BuildAndTest"
+    displayName: "Build and test"
+    pool:
+      name: Azure Pipelines
+      vmImage: windows-latest
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: "Restore"
+        inputs:
+          command: restore
+          projects: "Sources/**/*.csproj"
+      - task: DotNetCoreCLI@2
+        displayName: "Build with warnings as errors"
+        inputs:
+          projects: "Sources/**/*.csproj"
+          arguments: '/p:TreatWarningsAsErrors="true" --configuration $(BuildConfiguration)'
+      - task: DotNetCoreCLI@2
+        displayName: Run Tests
+        inputs:
+          command: test
+          projects: "**/HackerApp.sln"
+          arguments: "--configuration $(BuildConfiguration)"
+      - task: petersendev.dotnet-global-tool-installer.DotnetGlobalToolInstaller.DotnetGlobalToolInstaller@0
+        displayName: '.NET Core Global Tool'
+        inputs:
+          name: nugetlicencebuddy
+      - script: 'nugetlicencebuddy -i -s Sources'
+        displayName: 'Run Licence Buddy'
+
+  - job: "RunResharper"
+    displayName: "Run ReSharper analysis"
+    pool:
+      name: Azure Pipelines
+      vmImage: windows-latest
+    steps:
+    - task: petersendev.dotnet-global-tool-installer.DotnetGlobalToolInstaller.DotnetGlobalToolInstaller@0
+      displayName: '.NET Core Global Tool'
+      inputs:
+        name: jetbrains.resharper.globaltools
+
+    - task: DrMueller2.ReSharperRunner.ReSharperRunnerTask.ReSharperRunnerTask@2
+      displayName: Run ReSharper analysis
+      inputs:
+        solutionPath: JassApp.sln

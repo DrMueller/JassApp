@@ -1,0 +1,48 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none # will disable CI builds entirely
+
+resources:
+  pipelines:
+  - pipeline: ca-pip  # Name of the pipeline resource
+    source: 01-JassApp-Continous-Integration # Name of the pipeline referenced by the pipeline resource
+    trigger: 
+      branches:
+      - refs/heads/master
+
+variables:
+  BuildConfiguration: 'Release'
+  PublishPath: '$(Build.ArtifactStagingDirectory)/App'
+
+jobs:
+- job: 'BuildAndPublishAsArtifact'
+  displayName: 'Build and save zipped Artifact'
+  pool:
+    name: Azure Pipelines
+    vmImage: windows-latest
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore'
+    inputs:
+      command: restore
+      projects: 'Sources/**/*.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: Publish Blazor
+    inputs:
+      command: publish
+
+      publishWebProjects: false
+
+      projects: 'Sources/Application/JassApp.csproj'
+
+      arguments: '--configuration $(BuildConfiguration) --output $(PublishPath) /p:DeleteExistingFiles=True'
+
+      zipAfterPublish: true
+
+      modifyOutputPath: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Save Artifact'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
