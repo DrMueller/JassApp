@@ -1,4 +1,6 @@
 ﻿using JassApp.Common.Settings.Provisioning.Models;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
 using MudBlazor.Services;
 
 namespace JassApp.Presentation.Shell.Initialization
@@ -26,6 +28,14 @@ namespace JassApp.Presentation.Shell.Initialization
             {
                 options.CheckConsentNeeded = _ => true;
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+            });
+
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApp(Program.Configuration.GetSection("AzureAd"));
+
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = options.DefaultPolicy;
             });
         }
     }

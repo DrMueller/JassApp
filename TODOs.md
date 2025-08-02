@@ -4,6 +4,7 @@
 
 ## Features
 
+- Ausloggen
 - Spieler löschen
    - Prüfen, dass man keine Spiele hat
 - Jass-Historie -> Quickgrid mit Server-side Filtering
@@ -14,6 +15,4 @@
    - Team definieren
    - Modus wählen
    - Start
-	-
 - Spiel spielen
-- EntraID Anbindung
