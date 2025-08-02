@@ -1,9 +1,11 @@
 ﻿using JassApp.Common.LanguageExtensions.Invariance;
 using JassApp.Common.LanguageExtensions.Types.Maybes;
 using JassApp.Common.LanguageExtensions.Types.Maybes.Implementation;
+using JetBrains.Annotations;
 
 namespace JassApp.Domain.Models
 {
+    [PublicAPI]
     public class Trumpfrunde
     {
         public Trumpfrunde(

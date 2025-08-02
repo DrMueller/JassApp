@@ -1,10 +1,14 @@
 ﻿using JassApp.Common.LanguageExtensions.Invariance;
+using JetBrains.Annotations;
 
 namespace JassApp.Domain.Models
 {
+    public record JassTeamSpieler(SpielerId Id, string Name);
+
+    [PublicAPI]
     public record JassTeam
     {
-        public JassTeam(Spieler spieler1, Spieler spieler2)
+        public JassTeam(JassTeamSpieler spieler1, JassTeamSpieler spieler2)
         {
             Guard.ObjectNotNull(() => spieler1);
             Guard.ObjectNotNull(() => spieler2);
@@ -14,7 +18,7 @@ namespace JassApp.Domain.Models
             Spieler2 = spieler2;
         }
 
-        public Spieler Spieler1 { get; }
-        public Spieler Spieler2 { get; }
+        public JassTeamSpieler Spieler1 { get; }
+        public JassTeamSpieler Spieler2 { get; }
     }
 }

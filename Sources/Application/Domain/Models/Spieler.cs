@@ -2,10 +2,12 @@
 
 namespace JassApp.Domain.Models
 {
-    public record Spieler
+    public record SpielerId(int Value);
+
+    public class Spieler
     {
         public Spieler(
-            int id,
+            SpielerId id,
             string name)
         {
             Guard.StringNotNullOrEmpty(() => name);
@@ -13,7 +15,7 @@ namespace JassApp.Domain.Models
             Name = name;
         }
 
-        public int Id { get; }
+        public SpielerId Id { get; }
         public string Name { get; }
     }
 }

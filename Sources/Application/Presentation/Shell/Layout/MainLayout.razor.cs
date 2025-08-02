@@ -69,7 +69,7 @@ namespace JassApp.Presentation.Shell.Layout
             OverlayLight = "#1e1e2d80"
         };
 
-        public string DarkLightModeButtonIcon => _isDarkMode switch
+        private string DarkLightModeButtonIcon => _isDarkMode switch
         {
             true => Icons.Material.Rounded.AutoMode,
             false => Icons.Material.Outlined.DarkMode

@@ -15,7 +15,7 @@ namespace JassApp.Presentation.Infrastructure.Navigation.Models
             NativeValue = nativeValue;
         }
 
-        public string NativeValue { get; }
+        private string NativeValue { get; }
 
         public static AppPath Create(string nativeValue)
         {

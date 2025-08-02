@@ -41,14 +41,14 @@ namespace JassApp.Presentation.Areas.Spieler
                 .LoadAsync(PlayerId)
                 .MapAsync(s => new SpielerEditViewModel
                 {
-                    Id = s.Id,
+                    Id = s.Id.Value,
                     Name = s.Name
                 });
         }
 
         private async Task HandleValidSubmitAsync(EditContext arg)
         {
-            var spieler = new Domain.Models.Spieler(EditModel!.Id, EditModel.Name!);
+            var spieler = new Domain.Models.Spieler(new Domain.Models.SpielerId(EditModel!.Id), EditModel.Name!);
             Infos = await SpielerRepo.SaveAsync(spieler);
 
             if (Infos.IsEmpty)

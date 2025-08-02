@@ -1,4 +1,5 @@
 ﻿using JassApp.Common.LanguageExtensions.Invariance;
+using JetBrains.Annotations;
 
 namespace JassApp.Domain.Models
 {
@@ -19,6 +20,7 @@ namespace JassApp.Domain.Models
         Wahl = 12
     }
 
+    [PublicAPI]
     public class Trumpf
     {
         public Trumpf(
