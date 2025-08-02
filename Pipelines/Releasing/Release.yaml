@@ -6,7 +6,7 @@ trigger: none
 resources:
   pipelines:
     - pipeline: ca-pip # Name of the pipeline resource
-      source: 02-HackerApp-Create-Artifacts # Name of the pipeline referenced by the pipeline resource
+      source: 02-JassApp-Create-Artifacts # Name of the pipeline referenced by the pipeline resource
       trigger: true
 
 pool:
@@ -14,7 +14,7 @@ pool:
   vmImage: windows-2022
 
 variables:
-  - group: HackerApp-Production
+  - group: JassApp-Production
 
 stages:
   - stage: Production
@@ -22,7 +22,7 @@ stages:
     jobs:
       - deployment: "DeploymentProduction"
         displayName: "Deployment Production"
-        environment: "HackerApp-Production"
+        environment: "JassApp-Production"
         strategy:
           runOnce:
             deploy:

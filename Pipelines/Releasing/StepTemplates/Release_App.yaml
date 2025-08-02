@@ -1,7 +1,7 @@
 parameters:
   ConnectedServiceName: '8e238b2b-b5d4-4398-8046-21d4a330ac79'
   WebAppKind: 'webApp'
-  WebAppName: 'HackyApp'
+  WebAppName: 'JassApp'
 
 steps:
 - task: AzureRmWebAppDeployment@4

@@ -30,7 +30,7 @@ jobs:
         displayName: Run Tests
         inputs:
           command: test
-          projects: "**/HackerApp.sln"
+          projects: "**/JassApp.sln"
           arguments: "--configuration $(BuildConfiguration)"
       - task: petersendev.dotnet-global-tool-installer.DotnetGlobalToolInstaller.DotnetGlobalToolInstaller@0
         displayName: '.NET Core Global Tool'
