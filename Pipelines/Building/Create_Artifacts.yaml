@@ -6,9 +6,7 @@ resources:
   pipelines:
   - pipeline: ca-pip  # Name of the pipeline resource
     source: 01-JassApp-Continous-Integration # Name of the pipeline referenced by the pipeline resource
-    trigger: 
-      branches:
-      - refs/heads/master
+    trigger: true
 
 variables:
   BuildConfiguration: 'Release'
