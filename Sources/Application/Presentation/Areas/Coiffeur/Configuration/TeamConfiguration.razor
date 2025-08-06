@@ -1,6 +1,6 @@
 ﻿@using MudBlazor
 <MudGrid>
-    <MudItem xs="12">
+    <MudItem xs="6">
         <MudCard>
             <MudCardHeader>
                 <CardHeaderContent>
@@ -9,9 +9,27 @@
             </MudCardHeader>
             <MudCardContent>
                 <div class="d-flex gap-4">
-                    <SpielerSelect Spieler="@Spieler">
+                    <SpielerSelect OnSpielerChanged="OnSpieler1Selected" Spieler="@Spieler">
                     </SpielerSelect>
-                    <SpielerSelect Spieler="@Spieler">
+                    <SpielerSelect OnSpielerChanged="OnSpieler2Selected" Spieler="@Spieler">
+                    </SpielerSelect>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="6">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Team 2</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <div class="d-flex gap-4">
+                    <SpielerSelect OnSpielerChanged="OnSpieler3Selected" Spieler="@Spieler">
+                    </SpielerSelect>
+                    <SpielerSelect OnSpielerChanged="OnSpieler4Selected" Spieler="@Spieler">
                     </SpielerSelect>
                 </div>
             </MudCardContent>

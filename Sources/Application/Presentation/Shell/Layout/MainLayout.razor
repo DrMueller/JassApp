@@ -1,5 +1,8 @@
 ﻿@using MudBlazor
+@using JassApp.Presentation.Shell.Benutzer
 @inherits LayoutComponentBase
+
+<PageTitle>Jass App</PageTitle>
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
 <MudPopoverProvider/>
@@ -11,7 +14,7 @@
         <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
         <MudSpacer/>
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle"/>
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
+        <BenutzerMenu></BenutzerMenu>
     </MudAppBar>
     <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu/>

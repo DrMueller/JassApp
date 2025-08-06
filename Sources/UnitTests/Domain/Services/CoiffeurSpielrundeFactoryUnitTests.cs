@@ -1,8 +1,9 @@
 using FluentAssertions;
 using JassApp.Domain.Models;
-using JassApp.Domain.Services;
 using JassApp.Domain.Services.Implementation;
+using JassApp.Domain.Services.Servants;
 using JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders;
+using JassApp.UnitTests.TestingInfrastructure.Extension;
 using Moq;
 using Xunit;
 
@@ -11,40 +12,69 @@ namespace JassApp.UnitTests.Domain.Services
     public class CoiffeurSpielrundeFactoryUnitTests
     {
         private readonly CoiffeurSpielrundeFactory _sut;
-        private readonly Mock<ITrumpfFactory> _trumpFactoryMock;
+        private readonly Mock<ITrumpfRundenFactory> _trumpfRundenFactoryMock;
 
         public CoiffeurSpielrundeFactoryUnitTests()
         {
-            _trumpFactoryMock = new Mock<ITrumpfFactory>();
-            _sut = new CoiffeurSpielrundeFactory(_trumpFactoryMock.Object);
+            _trumpfRundenFactoryMock = new Mock<ITrumpfRundenFactory>();
+            _sut = new CoiffeurSpielrundeFactory(
+                _trumpfRundenFactoryMock.Object);
         }
 
         [Fact]
-        public void CreatingSpielrunde_WithGschobna_AssignsCorrectValuesToEachTrumpf()
+        public void TryCreating_CreatesCoiffeurSpielrunde()
         {
             // Arrange
-            var teams = JassTeamBuilder.Create();
+            var spieler = SpielerTestBuilder.Create();
+            const CoiffeurSpielrundeTyp typ = CoiffeurSpielrundeTyp.WithDifferenzler;
 
-            var drueliDrue = new Trumpf(TrumpfTyp.DrueliDrue, "t");
-            var herz = new Trumpf(TrumpfTyp.Herz, "t");
+            const int punkteWert = 10;
 
-            _trumpFactoryMock
-                .Setup(f => f.CreateWithGschobna())
-                .Returns([drueliDrue, herz]);
+            var trumpfrunde = new Trumpfrunde(1, Trumpf.Differenzler);
+
+            _trumpfRundenFactoryMock
+                .Setup(f => f.Create(typ))
+                .Returns([trumpfrunde]);
 
             // Act
-            var actualRunde = _sut.CreateGschobna(
+            var actualSpielRundeResult = _sut.TryCreating(
                 10,
-                teams.Team1,
-                teams.Team2);
+                typ,
+                spieler.Spieler1,
+                spieler.Spieler2,
+                spieler.Spieler3,
+                spieler.Spieler4);
 
             // Assert
-            actualRunde.Runden.Should().HaveCount(2);
-            actualRunde.Runden.ElementAt(0).Trumpf.Typ.Should().Be(TrumpfTyp.Herz);
-            actualRunde.Runden.ElementAt(0).PunkteModifikator.Should().Be(1);
+            var actualSpielRunde = actualSpielRundeResult.ShouldBeRight();
+            actualSpielRunde.Team1.Spieler1.Id.Should().Be(spieler.Spieler1.Id);
+            actualSpielRunde.Team1.Spieler2.Id.Should().Be(spieler.Spieler2.Id);
+            actualSpielRunde.Team2.Spieler1.Id.Should().Be(spieler.Spieler3.Id);
+            actualSpielRunde.Team2.Spieler2.Id.Should().Be(spieler.Spieler4.Id);
 
-            actualRunde.Runden.ElementAt(1).Trumpf.Typ.Should().Be(TrumpfTyp.DrueliDrue);
-            actualRunde.Runden.ElementAt(1).PunkteModifikator.Should().Be(2);
+            actualSpielRunde.PunkteWert.Should().Be(punkteWert);
+
+            actualSpielRunde.Trumpfrunden.Should().HaveCount(1);
+            actualSpielRunde.Trumpfrunden.Single().Should().Be(trumpfrunde);
+        }
+
+        [Fact]
+        public void TryCreating_WithSameSpieler_ReturnsError()
+        {
+            // Arrange
+            const int duplicateSpielerId = 1;
+
+            // Act
+            var actualResult = _sut.TryCreating(1,
+                CoiffeurSpielrundeTyp.WithGschobna,
+                new Spieler(new SpielerId(duplicateSpielerId), "Spieler1", []),
+                new Spieler(new SpielerId(duplicateSpielerId), "Spieler21", []),
+                new Spieler(new SpielerId(3), "Spieler3", []),
+                new Spieler(new SpielerId(4), "Spieler4", []));
+
+            // Assert
+            var actualInfoEntries = actualResult.ShouldBeLeft();
+            actualInfoEntries.ErrorMessages.Single().Should().Be(CoiffeurSpielrundeFactory.SpielerNichtEindeutigErrorMessage);
         }
     }
 }

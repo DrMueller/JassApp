@@ -1,6 +1,7 @@
 ﻿using JassApp.Common.Extensions;
 using JassApp.Common.InformationHandling;
 using JassApp.DataAccess.Repositories;
+using JassApp.Domain.Models;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -48,7 +49,14 @@ namespace JassApp.Presentation.Areas.Spieler
 
         private async Task HandleValidSubmitAsync(EditContext arg)
         {
-            var spieler = new Domain.Models.Spieler(new Domain.Models.SpielerId(EditModel!.Id), EditModel.Name!);
+            var spieler = EditModel!.Id == 0
+                ? new Domain.Models.Spieler(
+                    new SpielerId(EditModel.Id),
+                    EditModel.Name!,
+                    [])
+                : await SpielerRepo.LoadAsync(EditModel.Id);
+
+            spieler.UpdateName(EditModel.Name!);
             Infos = await SpielerRepo.SaveAsync(spieler);
 
             if (Infos.IsEmpty)

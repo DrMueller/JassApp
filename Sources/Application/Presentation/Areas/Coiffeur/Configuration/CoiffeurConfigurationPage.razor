@@ -1,9 +1,27 @@
-﻿@using JassApp.Presentation.Shared.LoadingIndication
+﻿@using JassApp.Presentation.Shared.Infos
+@using JassApp.Presentation.Shared.LoadingIndication
 @using MudBlazor
 @attribute [Route(Path)]
 
 <MudPaper Class="pa-4">
+    <Informations Entries="Infos"></Informations>
     <LoadingIndicator IsLoading="IsLoading">
-        <TeamConfiguration Spieler="@Spieler"></TeamConfiguration>
+        <MudGrid>
+            <MudItem xs="3">
+                <MudNumericField @bind-Value="Punktwert" Label="Punktwert" Variant="Variant.Text" Min="0"/>
+            </MudItem>
+            <MudItem xs="3">
+                <CoiffeurTypSelect OnSelectedTypChanged="f => SelectedTyp = f"></CoiffeurTypSelect>
+            </MudItem>
+        </MudGrid>
+
+        <TeamConfiguration OnSpieler1Selected="spieler => SelectedSpieler1 = spieler"
+                           OnSpieler2Selected="spieler => SelectedSpieler2 = spieler"
+                           OnSpieler3Selected="spieler => SelectedSpieler3 = spieler"
+                           OnSpieler4Selected="spieler => SelectedSpieler4 = spieler"
+                           Spieler="@Spieler">
+        </TeamConfiguration>
+
+        <MudButton OnClick="StartGameAsync" Color="Color.Primary" Variant="Variant.Filled">Start</MudButton>
     </LoadingIndicator>
 </MudPaper>

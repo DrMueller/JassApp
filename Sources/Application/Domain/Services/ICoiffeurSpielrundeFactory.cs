@@ -1,12 +1,18 @@
-﻿using JassApp.Domain.Models;
+﻿using JassApp.Common.InformationHandling;
+using JassApp.Common.LanguageExtensions.Types.Eithers;
+using JassApp.Domain.Models;
 
 namespace JassApp.Domain.Services
 {
     public interface ICoiffeurSpielrundeFactory
     {
-        CoiffeurSpielrunde CreateGschobna(
+        Either<InformationEntries, CoiffeurSpielrunde> TryCreating(
             int punkteWert,
-            JassTeam team1,
-            JassTeam team2);
+            CoiffeurSpielrundeTyp typ,
+            Spieler? spieler1,
+            Spieler? spieler2,
+            Spieler? spieler3,
+            Spieler? spieler4
+        );
     }
 }

@@ -1,0 +1,10 @@
+﻿@using JassApp.Domain.Models
+@using MudBlazor
+<MudSelect ValueChanged="HandleTypChangedAsync"
+           Value="SelectedTyp"
+           T="CoiffeurSpielrundeTyp"
+           Label="Typ" AdornmentColor="Color.Secondary">
+    <MudSelectItem Value="CoiffeurSpielrundeTyp.WithGschobna">Gschobna</MudSelectItem>
+    <MudSelectItem Value="CoiffeurSpielrundeTyp.WithDifferenzler">Differenzler</MudSelectItem>
+    <MudSelectItem Value="CoiffeurSpielrundeTyp.OhneBeides">Weder noch</MudSelectItem>
+</MudSelect>

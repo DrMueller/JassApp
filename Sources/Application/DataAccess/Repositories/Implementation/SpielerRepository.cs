@@ -29,7 +29,7 @@ namespace JassApp.DataAccess.Repositories.Implementation
                 .Create()
                 .DbSet<SpielerTable>()
                 .AsQueryable()
-                .Select(sp => new Spieler(new SpielerId(sp.Id), sp.Name))
+                .Select(sp => new Spieler(new SpielerId(sp.Id), sp.Name, new List<JassTeamÎd>()))
                 .ToListAsync();
         }
 
@@ -41,7 +41,10 @@ namespace JassApp.DataAccess.Repositories.Implementation
                 .AsQueryable()
                 .SingleAsync(f => f.Id == spielerId);
 
-            return new Spieler(new SpielerId(spielerTable.Id), spielerTable.Name);
+            return new Spieler(
+                new SpielerId(spielerTable.Id), 
+                spielerTable.Name,
+                new List<JassTeamÎd>());
         }
 
         public async Task<InformationEntries> SaveAsync(Spieler spieler)

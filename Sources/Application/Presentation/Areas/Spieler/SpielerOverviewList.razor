@@ -1,7 +1,7 @@
 ﻿@using JassApp.Domain.Models
-@using MudBlazor
-@using JassApp.Presentation.Shared.LoadingIndication
 @using JassApp.Presentation.Shared.Infos
+@using JassApp.Presentation.Shared.LoadingIndication
+@using MudBlazor
 <LoadingIndicator IsLoading="IsLoading">
     <Informations Entries="@Infos"></Informations>
     <MudTable Items="Spieler" Hover="true" SortLabel="Sort By" Elevation="0" AllowUnsorted="false">
@@ -21,16 +21,18 @@
             <MudTd DataLabel="Name">@context.Name</MudTd>
             <MudTd DataLabel="Name">
                 <MudButton Size="Size.Small" OnClick="() => EditSpieler(context.Id.Value)" Color="Color.Primary" Variant="Variant.Filled">
-                    <MudIcon Icon="@Icons.Material.Filled.Edit" />
+                    <MudIcon Icon="@Icons.Material.Filled.Edit"/>
                 </MudButton>
 
-                <MudButton Size="Size.Small" OnClick="() => DeleteSpielerAsync(context.Id.Value)" Color="Color.Primary" Variant="Variant.Filled">
-                    <MudIcon Icon="@Icons.Material.Filled.Delete" />
+                <MudButton Size="Size.Small" OnClick="() => DeleteSpielerAsync(context.Id.Value)" Color="Color.Primary"
+                           Disabled="!context.CanBeDeleted"
+                           Variant="Variant.Filled">
+                    <MudIcon Icon="@Icons.Material.Filled.Delete"/>
                 </MudButton>
             </MudTd>
         </RowTemplate>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new[] { 50, 100 }" />
+            <MudTablePager PageSizeOptions="new[] { 50, 100 }"/>
         </PagerContent>
     </MudTable>
 </LoadingIndicator>

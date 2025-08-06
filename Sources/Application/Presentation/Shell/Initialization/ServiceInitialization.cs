@@ -9,6 +9,7 @@ namespace JassApp.Presentation.Shell.Initialization
     {
         public static void Initialize(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddMudServices();
             services.Configure<AppSettings>(Program.Configuration.GetSection(AppSettings.SectionKey));
 
