@@ -15,6 +15,9 @@
             </MudItem>
         </MudGrid>
 
+        <SpielerSelect OnSpielerChanged="s => StartSpieler = s" Spieler="@Spieler">
+        </SpielerSelect>
+
         <TeamConfiguration OnSpieler1Selected="spieler => SelectedSpieler1 = spieler"
                            OnSpieler2Selected="spieler => SelectedSpieler2 = spieler"
                            OnSpieler3Selected="spieler => SelectedSpieler3 = spieler"

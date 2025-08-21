@@ -1,13 +1,12 @@
 # JassApp
 
 - Immer grad speichern
-- Pipelines
-- Releasing
-- 
+
 ## Features
 
-
+- Auszahlung berechnen
 - Jass-Historie -> Quickgrid mit Server-side Filtering
 - Spieler-Historie -> Quickgrid mit Server-Side Filter
   - Stats
 - Spiel spielen
+- Runden übersicht

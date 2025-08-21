@@ -6,15 +6,15 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
     {
         [Parameter]
         [EditorRequired]
-        public required EventCallback<Domain.Models.Spieler> OnSpielerChanged { get; set; }
+        public required EventCallback<Domain.Spieler.Models.Spieler> OnSpielerChanged { get; set; }
 
         [Parameter]
         [EditorRequired]
-        public required IReadOnlyCollection<Domain.Models.Spieler> Spieler { get; set; }
+        public required IReadOnlyCollection<Domain.Spieler.Models.Spieler> Spieler { get; set; }
 
-        private Domain.Models.Spieler? SelectedSpieler { get; set; }
+        private Domain.Spieler.Models.Spieler? SelectedSpieler { get; set; }
 
-        private async Task HandleSpielerChangedAsync(Domain.Models.Spieler arg)
+        private async Task HandleSpielerChangedAsync(Domain.Spieler.Models.Spieler arg)
         {
             SelectedSpieler = arg;
             await OnSpielerChanged.InvokeAsync(arg);

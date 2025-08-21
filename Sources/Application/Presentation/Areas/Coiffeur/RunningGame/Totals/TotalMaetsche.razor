@@ -1,0 +1,17 @@
+﻿@using JassApp.Domain.Coiffeur.Models
+@using MudBlazor
+<MudTFootRow>
+    <MudTd>
+        <b>Mätsche</b>
+    </MudTd>
+    <MudTd>
+    </MudTd>
+    <MudTd>
+        <b>@Spielrunde.CalculateMaetche(JassTeamTyp.Team1)</b>
+    </MudTd>
+    <MudTd>
+    </MudTd>
+    <MudTd>
+        <b>@Spielrunde.CalculateMaetche(JassTeamTyp.Team2)</b>
+    </MudTd>
+</MudTFootRow>

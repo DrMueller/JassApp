@@ -1,6 +1,7 @@
 ﻿using JassApp.Common.Settings.Provisioning.Models;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
 
 namespace JassApp.Presentation.Shell.Initialization
@@ -38,6 +39,9 @@ namespace JassApp.Presentation.Shell.Initialization
             {
                 options.FallbackPolicy = options.DefaultPolicy;
             });
+
+            services.AddControllersWithViews()
+                .AddMicrosoftIdentityUI();
         }
     }
 }

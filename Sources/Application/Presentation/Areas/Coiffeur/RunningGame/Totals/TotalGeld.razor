@@ -1,0 +1,17 @@
+﻿@using JassApp.Domain.Coiffeur.Models
+@using MudBlazor
+<MudTFootRow>
+    <MudTd>
+        <b>Auszahlung</b>
+    </MudTd>
+    <MudTd>
+    </MudTd>
+    <MudTd>
+        <b>@Spielrunde.CalculateAusbezahlung(JassTeamTyp.Team1).Description</b>
+    </MudTd>
+    <MudTd>
+    </MudTd>
+    <MudTd>
+        <b>@Spielrunde.CalculateAusbezahlung(JassTeamTyp.Team2).Description</b>
+    </MudTd>
+</MudTFootRow>

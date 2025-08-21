@@ -1,5 +1,37 @@
-﻿<h3>CoiffeurOverviewList</h3>
+﻿@using JassApp.Domain.Coiffeur.Models
+@using JassApp.Presentation.Shared.LoadingIndication
+@using MudBlazor
+<LoadingIndicator IsLoading="IsLoading">
+    <MudTable Items="Runden" Hover="true" SortLabel="Sort By" Elevation="0" AllowUnsorted="false">
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<CoiffeurSpielrunde, object>(x => x.Id)">ID</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<CoiffeurSpielrunde, object>(x => x.GestartetAm)">Gestartet am</MudTableSortLabel>
+            </MudTh>
+            <MudTh>Team 1</MudTh>
+            <MudTh>Team 2</MudTh>
 
-@code {
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="ID">@context.Id.Value</MudTd>
+            <MudTd DataLabel="Gestartet am">@context.GestartetAm.ToShortTimeString()</MudTd>
+            <MudTd DataLabel="Team 1">@context.Team1.Description</MudTd>
+            <MudTd DataLabel="Team 2">@context.Team2.Description</MudTd>
+            <MudTd>
+                <MudButton Size="Size.Small" OnClick="() => EditRunde(context.Id.Value)" Color="Color.Primary" Variant="Variant.Filled">
+                    <MudIcon Icon="@Icons.Material.Filled.Edit"/>
+                </MudButton>
 
-}
+                <MudButton Size="Size.Small" OnClick="() => DeleteRundeAsync(context.Id.Value)" Color="Color.Primary"
+                           Variant="Variant.Filled">
+                    <MudIcon Icon="@Icons.Material.Filled.Delete"/>
+                </MudButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new[] { 50, 100 }"/>
+        </PagerContent>
+    </MudTable>
+</LoadingIndicator>

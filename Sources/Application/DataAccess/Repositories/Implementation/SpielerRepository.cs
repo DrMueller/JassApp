@@ -2,7 +2,9 @@
 using JassApp.DataAccess.DbContexts.Contexts;
 using JassApp.DataAccess.DbContexts.Factories;
 using JassApp.DataAccess.Tables;
-using JassApp.Domain.Models;
+using JassApp.Domain.Coiffeur.Models;
+using JassApp.Domain.Spieler.Models;
+using JassApp.Domain.Spieler.Services;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 

@@ -11,24 +11,24 @@
     <Compile Remove="Common\NewFolder\**" />
     <Compile Remove="DataAccess\Configurations\NewFolder\**" />
     <Compile Remove="DataAccess\Tables\**" />
-    <Compile Remove="Domain\NewFolder\**" />
     <Content Remove="Common\NewFolder\**" />
     <Content Remove="DataAccess\Configurations\NewFolder\**" />
     <Content Remove="DataAccess\Tables\**" />
-    <Content Remove="Domain\NewFolder\**" />
     <EmbeddedResource Remove="Common\NewFolder\**" />
     <EmbeddedResource Remove="DataAccess\Configurations\NewFolder\**" />
     <EmbeddedResource Remove="DataAccess\Tables\**" />
-    <EmbeddedResource Remove="Domain\NewFolder\**" />
     <None Remove="Common\NewFolder\**" />
     <None Remove="DataAccess\Configurations\NewFolder\**" />
     <None Remove="DataAccess\Tables\**" />
-    <None Remove="Domain\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="DataAccess\Tables\Base\TableBase.cs" />
+    <Compile Include="DataAccess\Tables\JassTeamSpielerTable.cs" />
+    <Compile Include="DataAccess\Tables\JassTeamTable.cs" />
     <Compile Include="DataAccess\Tables\SpielerTable.cs" />
+    <Compile Include="DataAccess\Tables\CoiffeurSpielrundeTable.cs" />
+    <Compile Include="DataAccess\Tables\TrumpfrundeTable.cs" />
   </ItemGroup>
 
 	
@@ -41,8 +41,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Identity.Web" Version="3.12.0" />
-    <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.12.0" />
+	  <PackageReference Include="Microsoft.Identity.Web" Version="3.12.0" />
+	  <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.12.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

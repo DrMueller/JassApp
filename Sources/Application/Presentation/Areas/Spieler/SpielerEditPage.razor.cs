@@ -1,7 +1,7 @@
 ﻿using JassApp.Common.Extensions;
 using JassApp.Common.InformationHandling;
-using JassApp.DataAccess.Repositories;
-using JassApp.Domain.Models;
+using JassApp.Domain.Spieler.Models;
+using JassApp.Domain.Spieler.Services;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -50,7 +50,7 @@ namespace JassApp.Presentation.Areas.Spieler
         private async Task HandleValidSubmitAsync(EditContext arg)
         {
             var spieler = EditModel!.Id == 0
-                ? new Domain.Models.Spieler(
+                ? new Domain.Spieler.Models.Spieler(
                     new SpielerId(EditModel.Id),
                     EditModel.Name!,
                     [])

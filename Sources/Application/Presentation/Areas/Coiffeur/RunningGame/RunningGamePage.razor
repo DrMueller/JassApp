@@ -1,18 +1,6 @@
-﻿@using MudBlazor
-@using JassApp.Presentation.Shared.LoadingIndication
+﻿@using JassApp.Presentation.Shared.LoadingIndication
 @attribute [Route(Path)]
 
 <LoadingIndicator IsLoading="@IsLoading">
-    <MudPaper Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
-        <div>
-            <TeamsDetails Team="@Spielrunde!.Team1"></TeamsDetails>
-            <TeamsDetails Team="@Spielrunde!.Team2"></TeamsDetails>
-        </div>
-        <div>
-            @foreach(var trumpfrunde in Spielrunde.Trumpfrunden)
-            {
-                <TrumpfDetails Trumpfrunde="trumpfrunde"></TrumpfDetails>
-            }
-        </div>
-    </MudPaper>
+    <Spieltafel Spielrunde="@Spielrunde"></Spieltafel>
 </LoadingIndicator>

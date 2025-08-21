@@ -1,4 +1,4 @@
-﻿using JassApp.Domain.Models;
+﻿using JassApp.Domain.Coiffeur.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.Coiffeur.Configuration

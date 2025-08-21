@@ -1,7 +1,8 @@
 using FluentAssertions;
-using JassApp.Domain.Models;
-using JassApp.Domain.Services.Implementation;
-using JassApp.Domain.Services.Servants;
+using JassApp.Domain.Coiffeur.Models;
+using JassApp.Domain.Coiffeur.Services.Implementation;
+using JassApp.Domain.Coiffeur.Services.Servants;
+using JassApp.Domain.Spieler.Models;
 using JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders;
 using JassApp.UnitTests.TestingInfrastructure.Extension;
 using Moq;
@@ -30,7 +31,7 @@ namespace JassApp.UnitTests.Domain.Services
 
             const int punkteWert = 10;
 
-            var trumpfrunde = new Trumpfrunde(1, Trumpf.Differenzler);
+            var trumpfrunde = new CoiffeurTrumpfrunde(new TrumpfrundeId(1), 1, CoiffeurTrumpf.Differenzler);
 
             _trumpfRundenFactoryMock
                 .Setup(f => f.Create(typ))
@@ -43,7 +44,8 @@ namespace JassApp.UnitTests.Domain.Services
                 spieler.Spieler1,
                 spieler.Spieler2,
                 spieler.Spieler3,
-                spieler.Spieler4);
+                spieler.Spieler4,
+                spieler.Spieler1);
 
             // Assert
             var actualSpielRunde = actualSpielRundeResult.ShouldBeRight();
@@ -64,13 +66,16 @@ namespace JassApp.UnitTests.Domain.Services
             // Arrange
             const int duplicateSpielerId = 1;
 
+            var spieler3 = new Spieler(new SpielerId(3), "Spieler3", []);
+
             // Act
             var actualResult = _sut.TryCreating(1,
                 CoiffeurSpielrundeTyp.WithGschobna,
                 new Spieler(new SpielerId(duplicateSpielerId), "Spieler1", []),
                 new Spieler(new SpielerId(duplicateSpielerId), "Spieler21", []),
-                new Spieler(new SpielerId(3), "Spieler3", []),
-                new Spieler(new SpielerId(4), "Spieler4", []));
+                spieler3,
+                new Spieler(new SpielerId(4), "Spieler4", []),
+                spieler3);
 
             // Assert
             var actualInfoEntries = actualResult.ShouldBeLeft();

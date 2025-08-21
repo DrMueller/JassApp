@@ -1,4 +1,4 @@
-﻿using JassApp.Domain.Models;
+﻿using JassApp.Domain.Spieler.Models;
 
 namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
 {

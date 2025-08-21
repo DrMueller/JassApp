@@ -1,0 +1,17 @@
+﻿@using JassApp.Domain.Coiffeur.Models
+@using MudBlazor
+<MudTFootRow>
+    <MudTd>
+        <b>Punkte</b>
+    </MudTd>
+    <MudTd>
+    </MudTd>
+    <MudTd>
+        <b>@($"{Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team1).Punkte} ({Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team1).DifferenzZuGegner})")</b>
+    </MudTd>
+    <MudTd>
+    </MudTd>
+    <MudTd>
+        <b>@($"{Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team2).Punkte} ({Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team2).DifferenzZuGegner})")</b>
+    </MudTd>
+</MudTFootRow>

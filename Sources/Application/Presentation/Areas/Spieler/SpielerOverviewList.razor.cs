@@ -1,5 +1,5 @@
 ﻿using JassApp.Common.InformationHandling;
-using JassApp.DataAccess.Repositories;
+using JassApp.Domain.Spieler.Services;
 using JassApp.Presentation.Infrastructure.Navigation.Models;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
 using Microsoft.AspNetCore.Components;
@@ -17,7 +17,7 @@ namespace JassApp.Presentation.Areas.Spieler
         private InformationEntries? Infos { get; set; }
 
         private bool IsLoading => Spieler == null;
-        private IReadOnlyCollection<Domain.Models.Spieler>? Spieler { get; set; }
+        private IReadOnlyCollection<Domain.Spieler.Models.Spieler>? Spieler { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

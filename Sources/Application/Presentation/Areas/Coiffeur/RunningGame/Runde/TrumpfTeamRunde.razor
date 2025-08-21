@@ -1,0 +1,10 @@
+﻿@using MudBlazor
+<MudTd>
+    <MudTextField 
+        T="string"
+        Value="Value" 
+        ValueChanged="f => HandleValueChangedAsync(f)" Immediate="true"/>
+</MudTd>
+<MudTd>
+    <MudText>@CoiffeurTrumpfrunde.CalculatePunktedifferenz(TeamTyp)</MudText>
+</MudTd>

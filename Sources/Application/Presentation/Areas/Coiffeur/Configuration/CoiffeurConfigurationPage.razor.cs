@@ -1,7 +1,8 @@
 ﻿using JassApp.Common.InformationHandling;
-using JassApp.DataAccess.Repositories;
-using JassApp.Domain.Models;
-using JassApp.Domain.Services;
+using JassApp.Domain.Coiffeur.Models;
+using JassApp.Domain.Coiffeur.Repositories;
+using JassApp.Domain.Coiffeur.Services;
+using JassApp.Domain.Spieler.Services;
 using JassApp.Presentation.Areas.Coiffeur.RunningGame;
 using JassApp.Presentation.Infrastructure.Navigation.Models;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
@@ -28,15 +29,17 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         private InformationEntries? Infos { get; set; }
 
         private bool IsLoading => Spieler == null;
-        private int Punktwert { get; set; }
+        private int Punktwert { get; set; } = 20;
 
-        private Domain.Models.Spieler? SelectedSpieler1 { get; set; }
-        private Domain.Models.Spieler? SelectedSpieler2 { get; set; }
-        private Domain.Models.Spieler? SelectedSpieler3 { get; set; }
-        private Domain.Models.Spieler? SelectedSpieler4 { get; set; }
+        private Domain.Spieler.Models.Spieler? SelectedSpieler1 { get; set; }
+        private Domain.Spieler.Models.Spieler? SelectedSpieler2 { get; set; }
+        private Domain.Spieler.Models.Spieler? SelectedSpieler3 { get; set; }
+        private Domain.Spieler.Models.Spieler? SelectedSpieler4 { get; set; }
+
+        private Domain.Spieler.Models.Spieler? StartSpieler { get; set; }
 
         private CoiffeurSpielrundeTyp SelectedTyp { get; set; } = CoiffeurSpielrundeTyp.WithGschobna;
-        private IReadOnlyCollection<Domain.Models.Spieler>? Spieler { get; set; }
+        private IReadOnlyCollection<Domain.Spieler.Models.Spieler>? Spieler { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -52,7 +55,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
                     SelectedSpieler1,
                     SelectedSpieler2,
                     SelectedSpieler3,
-                    SelectedSpieler4)
+                    SelectedSpieler4,
+                    StartSpieler)
                 .ToTuple(() => null!);
 
             if (Infos.HasErrorsOrWarnings)

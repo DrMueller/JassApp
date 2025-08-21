@@ -1,6 +1,6 @@
 using FluentAssertions;
-using JassApp.Domain.Models;
-using JassApp.Domain.Services.Servants.Implementation;
+using JassApp.Domain.Coiffeur.Models;
+using JassApp.Domain.Coiffeur.Services.Servants.Implementation;
 using Xunit;
 
 namespace JassApp.UnitTests.Domain.Services.Servants
@@ -22,8 +22,8 @@ namespace JassApp.UnitTests.Domain.Services.Servants
 
             // Assert
             actualRunden.Should().HaveCount(13);
-            actualRunden.Should().NotContain(r => r.Trumpf.Typ == TrumpfTyp.Gschobna);
-            actualRunden.Should().Contain(r => r.Trumpf.Typ == TrumpfTyp.Differenzler);
+            actualRunden.Should().NotContain(r => r.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Gschobna);
+            actualRunden.Should().Contain(r => r.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Differenzler);
         }
 
         [Fact]
@@ -34,8 +34,8 @@ namespace JassApp.UnitTests.Domain.Services.Servants
 
             // Assert
             actualRunden.Should().HaveCount(13);
-            actualRunden.Should().Contain(r => r.Trumpf.Typ == TrumpfTyp.Gschobna);
-            actualRunden.Should().NotContain(r => r.Trumpf.Typ == TrumpfTyp.Differenzler);
+            actualRunden.Should().Contain(r => r.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Gschobna);
+            actualRunden.Should().NotContain(r => r.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Differenzler);
         }
 
         [Fact]
@@ -46,8 +46,8 @@ namespace JassApp.UnitTests.Domain.Services.Servants
 
             // Assert
             actualRunden.Should().HaveCount(12);
-            actualRunden.Should().NotContain(r => r.Trumpf.Typ == TrumpfTyp.Gschobna);
-            actualRunden.Should().NotContain(r => r.Trumpf.Typ == TrumpfTyp.Differenzler);
+            actualRunden.Should().NotContain(r => r.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Gschobna);
+            actualRunden.Should().NotContain(r => r.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Differenzler);
         }
     }
 }
