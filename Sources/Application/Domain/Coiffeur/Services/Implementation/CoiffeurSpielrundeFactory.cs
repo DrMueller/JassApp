@@ -1,7 +1,6 @@
 ﻿using JassApp.Common.InformationHandling;
 using JassApp.Common.LanguageExtensions.Types.Eithers;
 using JassApp.Domain.Coiffeur.Models;
-using JassApp.Domain.Coiffeur.Services;
 using JassApp.Domain.Coiffeur.Services.Servants;
 
 namespace JassApp.Domain.Coiffeur.Services.Implementation

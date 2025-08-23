@@ -1,0 +1,71 @@
+﻿.table {
+    display: grid;
+    grid-template-areas:
+        "left top right" "left center right" "left bottom right";
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 12px;
+    padding: 16px;
+    font-family: system-ui, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.center {
+    grid-area: center;
+    display: grid;
+    place-items: center;
+    gap: 12px;
+}
+
+.player {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.rotate {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 6px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,.08);
+    user-select: none;
+}
+
+    .card.small {
+        width: 48px;
+        height: 64px;
+        font-size: 14px;
+    }
+
+    .card.big {
+        width: 72px;
+        height: 96px;
+        font-size: 18px;
+    }
+
+.trick {
+    display: grid;
+    grid-template-columns: repeat(2, 90px);
+    grid-template-rows: repeat(2, 120px);
+    gap: 12px;
+}
+
+.slot {
+    display: grid;
+    place-items: center;
+    border: 1px dashed #ccc;
+    border-radius: 10px;
+}
+
+.trump {
+    font-size: 14px;
+    opacity: .8;
+}

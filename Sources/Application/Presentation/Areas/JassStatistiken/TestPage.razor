@@ -1,0 +1,158 @@
+﻿@* @page "/jass-static"
+@using System.Collections.ObjectModel
+@using JasperFx.Core
+
+<div class="table">
+    <div class="seat top">
+        <div class="player">@Players[1].Name</div>
+        <div class="hand">
+            @foreach (var c in Players[1].Hand)
+            {
+                <div class="card small">@RenderCard(c)</div>
+            }
+        </div>
+    </div>
+
+    <div class="seat left">
+        <div class="player rotate">@Players[0].Name</div>
+        <div class="hand vertical">
+            @foreach (var c in Players[0].Hand)
+            {
+                <div class="card small">@RenderCard(c)</div>
+            }
+        </div>
+    </div>
+
+    <div class="center">
+        <div class="trick">
+            @for (int i = 0; i < 4; i++)
+            {
+                <div class="slot">
+                    @if (CurrentTrick[i] is not null)
+                    {
+                        <div class="card big">@RenderCard(CurrentTrick[i]!)</div>
+                    }
+                </div>
+            }
+        </div>
+        <div class="trump">Trumpf: <b>@Trump</b></div>
+    </div>
+
+    <div class="seat right">
+        <div class="player rotate">@Players[2].Name</div>
+        <div class="hand vertical">
+            @foreach (var c in Players[2].Hand)
+            {
+                <div class="card small">@RenderCard(c)</div>
+            }
+        </div>
+    </div>
+
+    <div class="seat bottom">
+        <div class="player">@Players[3].Name</div>
+        <div class="hand">
+            @foreach (var c in Players[3].Hand)
+            {
+                <div class="card small">@RenderCard(c)</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    // Swiss suits & ranks
+    public enum Suit { Rosen, Schellen, Schilten, Eicheln }
+    public enum Rank { Six = 6, Seven, Eight, Nine, Ten, Under, Ober, King, Ace }
+    public record Card(Suit Suit, Rank Rank);
+
+    public class Player
+    {
+        public string Name { get; set; } = "";
+        public ObservableCollection<Card> Hand { get; } = new();
+    }
+
+    private List<Player> Players = new()
+    {
+        new Player { Name = "Nord" },
+        new Player { Name = "Ost" },
+        new Player { Name = "Sued" },
+        new Player { Name = "West" }
+    };
+
+    private Card?[] CurrentTrick =
+    {
+        new Card(Suit.Eicheln, Rank.Ten),   // Left seat
+        new Card(Suit.Eicheln, Rank.Ace),   // Top seat
+        new Card(Suit.Eicheln, Rank.Under), // Right seat
+        new Card(Suit.Eicheln, Rank.King),  // Bottom seat
+    };
+
+    private Suit CurrentTrump = Suit.Schilten;
+    private string Trump => CurrentTrump.ToString();
+
+    protected override void OnInitialized()
+    {
+        // Static example hands (9 cards each)
+        Players[0].Hand.AddRange(new[]
+        {
+            new Card(Suit.Rosen, Rank.Six), new Card(Suit.Rosen, Rank.Ober), new Card(Suit.Rosen, Rank.Ace),
+            new Card(Suit.Schellen, Rank.Nine), new Card(Suit.Schellen, Rank.King),
+            new Card(Suit.Schilten, Rank.Seven), new Card(Suit.Schilten, Rank.Ten),
+            new Card(Suit.Eicheln, Rank.Eight), new Card(Suit.Eicheln, Rank.Under)
+        });
+
+        Players[1].Hand.AddRange(new[]
+        {
+            new Card(Suit.Rosen, Rank.Seven), new Card(Suit.Rosen, Rank.King),
+            new Card(Suit.Schellen, Rank.Six), new Card(Suit.Schellen, Rank.Ace),
+            new Card(Suit.Schilten, Rank.Nine), new Card(Suit.Schilten, Rank.Under),
+            new Card(Suit.Eicheln, Rank.Seven), new Card(Suit.Eicheln, Rank.Ten), new Card(Suit.Eicheln, Rank.Ace)
+        });
+
+        Players[2].Hand.AddRange(new[]
+        {
+            new Card(Suit.Rosen, Rank.Eight), new Card(Suit.Rosen, Rank.Ten),
+            new Card(Suit.Schellen, Rank.Seven), new Card(Suit.Schellen, Rank.Ober),
+            new Card(Suit.Schilten, Rank.Six), new Card(Suit.Schilten, Rank.King),
+            new Card(Suit.Eicheln, Rank.Six), new Card(Suit.Eicheln, Rank.Nine), new Card(Suit.Eicheln, Rank.Ober)
+        });
+
+        Players[3].Hand.AddRange(new[]
+        {
+            new Card(Suit.Rosen, Rank.Nine), new Card(Suit.Rosen, Rank.Under),
+            new Card(Suit.Schellen, Rank.Eight), new Card(Suit.Schellen, Rank.Ten),
+            new Card(Suit.Schilten, Rank.Eight), new Card(Suit.Schilten, Rank.Ace),
+            new Card(Suit.Eicheln, Rank.Seven), new Card(Suit.Eicheln, Rank.King), new Card(Suit.Eicheln, Rank.Eight)
+        });
+    }
+
+    private RenderFragment RenderCard(Card c) => builder =>
+    {
+        var suitClass = $"suit-{c.Suit}";
+        var text = $"{RankLabel(c.Rank)}{SuitGlyph(c.Suit)}";
+        builder.OpenElement(0, "span");
+        builder.AddAttribute(1, "class", suitClass);
+        builder.AddContent(2, text);
+        builder.CloseElement();
+    };
+
+    private static string RankLabel(Rank r) => r switch
+    {
+        Rank.Under => "U",
+        Rank.Ober => "O",
+        Rank.King => "K",
+        Rank.Ace => "A",
+        _ => ((int)r).ToString()
+    };
+
+    private static string SuitGlyph(Suit s) => s switch
+    {
+        Suit.Rosen => " ♦",
+        Suit.Schellen => " ♦",
+        Suit.Schilten => " ♠",
+        Suit.Eicheln => " ♣",
+        _ => ""
+    };
+}
+
+ *@

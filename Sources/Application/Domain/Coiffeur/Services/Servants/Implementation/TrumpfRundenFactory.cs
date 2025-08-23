@@ -1,5 +1,4 @@
 ﻿using JassApp.Domain.Coiffeur.Models;
-using JassApp.Domain.Coiffeur.Services.Servants;
 
 namespace JassApp.Domain.Coiffeur.Services.Servants.Implementation
 {

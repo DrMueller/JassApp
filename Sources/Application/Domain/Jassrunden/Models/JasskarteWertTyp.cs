@@ -1,6 +1,6 @@
-﻿namespace JassApp.Domain.Jassrunden.Models.Jass
+﻿namespace JassApp.Domain.Jassrunden.Models
 {
-    public enum CardValueType
+    public enum JasskarteWertTyp
     {
         Ass,
         König,

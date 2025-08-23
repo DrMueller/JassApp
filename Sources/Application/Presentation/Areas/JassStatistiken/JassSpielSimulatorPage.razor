@@ -1,0 +1,9 @@
+﻿@using JassApp.Presentation.Shared.Infos
+@using JassApp.Presentation.Shared.LoadingIndication
+
+@attribute [Route(Path)]
+
+<LoadingIndicator IsLoading="IsLoading">
+    <Informations Entries="@Infos"/>
+    <JassSpielSimulation Runde="@Runde"></JassSpielSimulation>
+</LoadingIndicator>

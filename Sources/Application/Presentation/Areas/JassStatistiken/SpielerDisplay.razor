@@ -1,0 +1,11 @@
+﻿<div class="seat @SeatCssClass">
+    <div class="player">@Spieler.Name</div>
+    <div class="@HandCssClass">
+        @foreach (var c in Spieler.Hand.Karten)
+        {
+            <div class="card small">
+                <JasskarteDisplay Karte="c"/>
+            </div>
+        }
+    </div>
+</div>

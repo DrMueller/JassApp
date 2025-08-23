@@ -7,12 +7,7 @@ namespace JassApp.UnitTests.Domain.Services.Servants
 {
     public class TrumpfRundenFactoryUnitTests
     {
-        private readonly TrumpfRundenFactory _sut;
-
-        public TrumpfRundenFactoryUnitTests()
-        {
-            _sut = new TrumpfRundenFactory();
-        }
+        private readonly TrumpfRundenFactory _sut = new();
 
         [Fact]
         public void Creating_MitDifferenzler_RemovesGschobna()

@@ -342,11 +342,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-**/wwwroot/css/*.css
-**/wwwroot/css/overrides/*.css
-**/wwwroot/css/*.min.css
-**/wwwroot/js/common.min.js
-**/*.razor.css
 **/wwwroot/lib
 
 # Import Models & Context
@@ -355,10 +350,5 @@ healthchecksdb
 /Sources/Application/Data.Shell/Context/
 /Sources/Application/Data.Shell/Models/
 
-# SQL Scripts
-!DBScripts/*
-/Sources/Application/Data.Shell/efpt.config.json
-**/*.min.css
-**/*razor.min.css
 
 .local/**
