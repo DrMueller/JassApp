@@ -19,6 +19,11 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame.Runde
 
         private string? Value { get; set; }
 
+        protected override void OnInitialized()
+        {
+            Value = CoiffeurTrumpfrunde[TeamTyp].RawInput;
+        }
+
         private async Task HandleValueChangedAsync(string arg)
         {
             Value = arg;

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JassApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Spielrunde : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,15 +27,26 @@ namespace JassApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SpielerTable",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpielerTable", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JassTeamTable",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CoiffeurSpielrundeId = table.Column<int>(type: "int", nullable: false),
-                    JassTeamTyp = table.Column<int>(type: "int", nullable: false),
-                    Spieler1Id = table.Column<int>(type: "int", nullable: false),
-                    Spieler2Id = table.Column<int>(type: "int", nullable: false)
+                    JassTeamTyp = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,18 +57,6 @@ namespace JassApp.Migrations
                         principalTable: "CoiffeurSpielrundeTable",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JassTeamTable_SpielerTable_Spieler1Id",
-                        column: x => x.Spieler1Id,
-                        principalTable: "SpielerTable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_JassTeamTable_SpielerTable_Spieler2Id",
-                        column: x => x.Spieler2Id,
-                        principalTable: "SpielerTable",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,7 +69,7 @@ namespace JassApp.Migrations
                     PunkteModifikator = table.Column<int>(type: "int", nullable: false),
                     ResultatTeam1 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     ResultatTeam2 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    TrumpfTyp = table.Column<int>(type: "int", nullable: false)
+                    CoiffeurTrumpfTyp = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,20 +82,48 @@ namespace JassApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "JassTeamSpielerTable",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IstStartSpieler = table.Column<bool>(type: "bit", nullable: false),
+                    JassTeamId = table.Column<int>(type: "int", nullable: false),
+                    SpielerId = table.Column<int>(type: "int", nullable: false),
+                    Position = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JassTeamSpielerTable", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JassTeamSpielerTable_JassTeamTable_JassTeamId",
+                        column: x => x.JassTeamId,
+                        principalTable: "JassTeamTable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JassTeamSpielerTable_SpielerTable_SpielerId",
+                        column: x => x.SpielerId,
+                        principalTable: "SpielerTable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JassTeamSpielerTable_JassTeamId",
+                table: "JassTeamSpielerTable",
+                column: "JassTeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JassTeamSpielerTable_SpielerId",
+                table: "JassTeamSpielerTable",
+                column: "SpielerId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_JassTeamTable_CoiffeurSpielrundeId",
                 table: "JassTeamTable",
                 column: "CoiffeurSpielrundeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JassTeamTable_Spieler1Id",
-                table: "JassTeamTable",
-                column: "Spieler1Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JassTeamTable_Spieler2Id",
-                table: "JassTeamTable",
-                column: "Spieler2Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TrumpfrundeTable_CoiffeurSpielrundeId",
@@ -108,10 +135,16 @@ namespace JassApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "JassTeamTable");
+                name: "JassTeamSpielerTable");
 
             migrationBuilder.DropTable(
                 name: "TrumpfrundeTable");
+
+            migrationBuilder.DropTable(
+                name: "JassTeamTable");
+
+            migrationBuilder.DropTable(
+                name: "SpielerTable");
 
             migrationBuilder.DropTable(
                 name: "CoiffeurSpielrundeTable");

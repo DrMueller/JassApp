@@ -1,6 +1,6 @@
 ﻿using JassApp.Common.LanguageExtensions.Invariance;
 
-namespace JassApp.Domain.Jassrunden.Models.Jass
+namespace JassApp.Domain.Jassrunden.Models
 {
     public class JassSpielrunde
     {

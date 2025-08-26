@@ -10,8 +10,9 @@ namespace JassApp.DataAccess.DbContexts.Factories.Implementation
         ISettingsProvider appSettingsProvider)
         : IAppDbContextFactory
     {
-        private readonly Lazy<DbContextOptions> _lazyOptions = new(() => optionsFactory.CreateForSqlServer(
-            appSettingsProvider.AppSettings.ConnectionString));
+        private readonly Lazy<DbContextOptions> _lazyOptions = new(() => optionsFactory
+            .CreateForSqlServer(appSettingsProvider.AppSettings.ConnectionString)
+        );
 
         public IAppDbContext Create()
         {

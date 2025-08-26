@@ -1,11 +1,11 @@
-﻿using JassApp.Common.InformationHandling;
-using JassApp.Domain.Jassrunden.Models;
-using JassApp.Domain.Jassrunden.Models.Jass;
+﻿using JassApp.Domain.Jassrunden.Models;
 using JassApp.Domain.Jassrunden.Services;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.JassStatistiken
 {
+    [UsedImplicitly]
     public partial class JassSpielSimulatorPage
     {
         public const string Path = "/jass/simulator";
@@ -13,17 +13,20 @@ namespace JassApp.Presentation.Areas.JassStatistiken
         [Inject]
         public required IJassSpielrundeFactory RundeFactory { get; set; }
 
-        private JassSpielrunde? Runde { get; set; }
-
-        private InformationEntries? Infos { get; set; }
-
         private bool IsLoading => Runde == null;
+
+        private JassSpielrunde? Runde { get; set; }
 
         protected override Task OnInitializedAsync()
         {
             Runde = RundeFactory.Create();
 
             return Task.CompletedTask;
+        }
+
+        private void CreateNeueRunde()
+        {
+            Runde = RundeFactory.Create();
         }
     }
 }

@@ -8,7 +8,7 @@ using JassApp.Domain.Spieler.Services;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace JassApp.DataAccess.Repositories.Implementation
+namespace JassApp.DataAccess.Repositories
 {
     [UsedImplicitly]
     public class SpielerRepository(IAppDbContextFactory appDbContextFactory) : ISpielerRepository

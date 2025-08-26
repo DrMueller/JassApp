@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JassApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250808140715_JassTeamSpieler2")]
-    partial class JassTeamSpieler2
+    [Migration("20250826134350_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,9 @@ namespace JassApp.Migrations
                     b.Property<int>("JassTeamId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
                     b.Property<int>("SpielerId")
                         .HasColumnType("int");
 
@@ -84,22 +87,12 @@ namespace JassApp.Migrations
                     b.Property<int>("CoiffeurSpielrundeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JassTeamSpieler1Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JassTeamSpieler2Id")
-                        .HasColumnType("int");
-
                     b.Property<int>("JassTeamTyp")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CoiffeurSpielrundeId");
-
-                    b.HasIndex("JassTeamSpieler1Id");
-
-                    b.HasIndex("JassTeamSpieler2Id");
 
                     b.ToTable("JassTeamTable", (string)null);
                 });
@@ -132,6 +125,9 @@ namespace JassApp.Migrations
                     b.Property<int>("CoiffeurSpielrundeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CoiffeurTrumpfTyp")
+                        .HasColumnType("int");
+
                     b.Property<int>("PunkteModifikator")
                         .HasColumnType("int");
 
@@ -143,9 +139,6 @@ namespace JassApp.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("TrumpfTyp")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CoiffeurSpielrundeId");
@@ -156,7 +149,7 @@ namespace JassApp.Migrations
             modelBuilder.Entity("JassApp.DataAccess.Tables.JassTeamSpielerTable", b =>
                 {
                     b.HasOne("JassApp.DataAccess.Tables.JassTeamTable", "JassTeam")
-                        .WithMany()
+                        .WithMany("JassTeamSpieler")
                         .HasForeignKey("JassTeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -179,22 +172,6 @@ namespace JassApp.Migrations
                         .HasForeignKey("CoiffeurSpielrundeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("JassApp.DataAccess.Tables.JassTeamSpielerTable", "JassTeamSpieler1")
-                        .WithMany()
-                        .HasForeignKey("JassTeamSpieler1Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("JassApp.DataAccess.Tables.JassTeamSpielerTable", "JassTeamSpieler2")
-                        .WithMany()
-                        .HasForeignKey("JassTeamSpieler2Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("JassTeamSpieler1");
-
-                    b.Navigation("JassTeamSpieler2");
                 });
 
             modelBuilder.Entity("JassApp.DataAccess.Tables.TrumpfrundeTable", b =>
@@ -211,6 +188,11 @@ namespace JassApp.Migrations
                     b.Navigation("JassTeams");
 
                     b.Navigation("Trumpfrunden");
+                });
+
+            modelBuilder.Entity("JassApp.DataAccess.Tables.JassTeamTable", b =>
+                {
+                    b.Navigation("JassTeamSpieler");
                 });
 #pragma warning restore 612, 618
         }

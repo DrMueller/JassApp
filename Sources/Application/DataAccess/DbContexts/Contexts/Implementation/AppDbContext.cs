@@ -12,6 +12,11 @@ namespace JassApp.DataAccess.DbContexts.Contexts.Implementation
             return new DbSetProxy<TTable>(set);
         }
 
+        public IQueryable<TTable> Query<TTable>() where TTable : TableBase
+        {
+            return Set<TTable>().AsQueryable();
+        }
+
         // Only called if the models are not configured
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,5 +1,4 @@
 ﻿using JassApp.Domain.Jassrunden.Models;
-using JassApp.Domain.Jassrunden.Models.Jass;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.JassStatistiken

@@ -12,15 +12,15 @@ namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
                 new(new TrumpfrundeId(1), 1, CoiffeurTrumpf.Egge)
             };
 
-            var teams = JassTeamTestBuilder.Create();
+            var (team1, team2) = JassTeamTestBuilder.Create();
 
             return new CoiffeurSpielrunde(
                 new CoiffeurSpielrundeId(0),
                 DateTime.Now,
                 10,
                 trumpfrunden,
-                teams.Team1,
-                teams.Team2);
+                team1,
+                team2);
         }
     }
 }

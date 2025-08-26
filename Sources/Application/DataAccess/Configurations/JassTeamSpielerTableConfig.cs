@@ -12,6 +12,7 @@ namespace JassApp.DataAccess.Configurations
             builder.Property(f => f.JassTeamId).IsRequired();
             builder.Property(f => f.SpielerId).IsRequired();
             builder.Property(f => f.IstStartSpieler).IsRequired();
+            builder.Property(f => f.Position).IsRequired();
 
             builder.HasOne(f => f.Spieler)
                 .WithMany()

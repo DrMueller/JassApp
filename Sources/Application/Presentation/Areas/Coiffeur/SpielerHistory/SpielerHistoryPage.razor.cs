@@ -1,19 +1,23 @@
-﻿using JassApp.Domain.Coiffeur.Models;
+﻿using JassApp.Domain.Spieler.BusinessObjects;
+using JassApp.Domain.Spieler.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.Coiffeur.SpielerHistory
 {
     public partial class SpielerHistoryPage
     {
-        [Parameter]
-        [EditorRequired]
-        public required int PlayerId { get; set; }
+        public const string Path = "coiffeur/game/playerhistory";
 
-        private CoiffeurSpielrunde? Spielrunde { get; set; }
+        [Inject]
+        public required ISpielerQueryService QueryService { get; set; }
 
-        private bool IsLoading => Spielrunde == null;
+        private IReadOnlyCollection<SpielerHistoryEntryBo>? Entries { get; set; }
 
-        public const string Path = "coiffeur/game/{gameId:int}";
+        private bool IsLoading => Entries == null;
 
+        protected override async Task OnInitializedAsync()
+        {
+            Entries = await QueryService.LoadHistoryAsync();
+        }
     }
 }

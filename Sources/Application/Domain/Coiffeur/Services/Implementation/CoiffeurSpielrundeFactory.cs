@@ -38,33 +38,37 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
                 new JassTeamSpielerId(0),
                 spieler1!.Id,
                 spieler1.Name,
-                startSpieler!.Id == spieler1.Id);
+                startSpieler!.Id == spieler1.Id,
+                JassTeamSpielerPosition.Spieler1);
 
             var teamSpieler2 = new JassTeamSpieler(
                 new JassTeamSpielerId(0),
                 spieler2!.Id,
                 spieler2.Name,
-                startSpieler.Id == spieler2.Id);
+                startSpieler.Id == spieler2.Id,
+                JassTeamSpielerPosition.Spieler2);
 
             var teamSpieler3 = new JassTeamSpieler(
                 new JassTeamSpielerId(0),
                 spieler3!.Id,
                 spieler3.Name,
-                startSpieler.Id == spieler3.Id);
+                startSpieler.Id == spieler3.Id,
+                JassTeamSpielerPosition.Spieler1);
 
             var teamSpieler4 = new JassTeamSpieler(
                 new JassTeamSpielerId(0),
                 spieler4!.Id,
                 spieler4.Name,
-                startSpieler.Id == spieler4.Id);
+                startSpieler.Id == spieler4.Id,
+                JassTeamSpielerPosition.Spieler2);
 
             return new CoiffeurSpielrunde(
                 new CoiffeurSpielrundeId(0),
                 DateTime.Now,
                 punkteWert,
                 trumpfRunden,
-                JassTeam.CreateNew(teamSpieler1, teamSpieler2),
-                JassTeam.CreateNew(teamSpieler3, teamSpieler4));
+                JassTeam.CreateNew([teamSpieler1, teamSpieler2]),
+                JassTeam.CreateNew([teamSpieler3, teamSpieler4]));
         }
 
         private static InformationEntries ValidateSpieler(

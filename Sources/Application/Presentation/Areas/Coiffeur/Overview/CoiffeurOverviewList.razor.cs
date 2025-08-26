@@ -30,8 +30,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.Overview
 
         private async Task DeleteRundeAsync(int rundeId)
         {
-            var tra = await DialogService.ShowAsync<DeleteDialog>("Löschen");
-            var result = await tra.Result;
+            var dialogReference = await DialogService.ShowAsync<DeleteDialog>("Löschen");
+            var result = await dialogReference.Result;
             if (result!.Canceled)
             {
                 return;

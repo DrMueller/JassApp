@@ -58,4 +58,10 @@
     <PackageReference Include="MudBlazor" Version="8.10.0" />
   </ItemGroup>
 
+	
+  <ItemGroup>
+    <Folder Include="DataAccess\Migrations\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

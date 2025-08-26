@@ -1,4 +1,5 @@
-﻿@using JassApp.Domain.Coiffeur.Models
+﻿@using System.Globalization
+@using JassApp.Domain.Coiffeur.Models
 @using JassApp.Presentation.Shared.LoadingIndication
 @using MudBlazor
 <LoadingIndicator IsLoading="IsLoading">
@@ -16,7 +17,7 @@
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="ID">@context.Id.Value</MudTd>
-            <MudTd DataLabel="Gestartet am">@context.GestartetAm.ToShortTimeString()</MudTd>
+            <MudTd DataLabel="Gestartet am">@context.GestartetAm.ToString(CultureInfo.InvariantCulture)</MudTd>
             <MudTd DataLabel="Team 1">@context.Team1.Description</MudTd>
             <MudTd DataLabel="Team 2">@context.Team2.Description</MudTd>
             <MudTd>

@@ -26,7 +26,7 @@ namespace JassApp.UnitTests.Domain.Services
         public void TryCreating_CreatesCoiffeurSpielrunde()
         {
             // Arrange
-            var spieler = SpielerTestBuilder.Create();
+            var (spieler1, spieler2, spieler3, spieler4) = SpielerTestBuilder.Create();
             const CoiffeurSpielrundeTyp typ = CoiffeurSpielrundeTyp.WithDifferenzler;
 
             const int punkteWert = 10;
@@ -41,18 +41,18 @@ namespace JassApp.UnitTests.Domain.Services
             var actualSpielRundeResult = _sut.TryCreating(
                 10,
                 typ,
-                spieler.Spieler1,
-                spieler.Spieler2,
-                spieler.Spieler3,
-                spieler.Spieler4,
-                spieler.Spieler1);
+                spieler1,
+                spieler2,
+                spieler3,
+                spieler4,
+                spieler1);
 
             // Assert
             var actualSpielRunde = actualSpielRundeResult.ShouldBeRight();
-            actualSpielRunde.Team1.Spieler1.Id.Should().Be(spieler.Spieler1.Id);
-            actualSpielRunde.Team1.Spieler2.Id.Should().Be(spieler.Spieler2.Id);
-            actualSpielRunde.Team2.Spieler1.Id.Should().Be(spieler.Spieler3.Id);
-            actualSpielRunde.Team2.Spieler2.Id.Should().Be(spieler.Spieler4.Id);
+            actualSpielRunde.Team1.Spieler1.SpielerId.Should().Be(spieler1.Id);
+            actualSpielRunde.Team1.Spieler2.SpielerId.Should().Be(spieler2.Id);
+            actualSpielRunde.Team2.Spieler1.SpielerId.Should().Be(spieler3.Id);
+            actualSpielRunde.Team2.Spieler2.SpielerId.Should().Be(spieler4.Id);
 
             actualSpielRunde.PunkteWert.Should().Be(punkteWert);
 

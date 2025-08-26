@@ -4,7 +4,7 @@ namespace JassApp.Domain.Jassrunden.Services.Implementation
 {
     public static class JassSuitFactory
     {
-        public static readonly Lazy<IReadOnlyCollection<JassSuit>> _allLazy = new(() => new List<JassSuit>
+        private static readonly Lazy<IReadOnlyCollection<JassSuit>> _allLazy = new(() => new List<JassSuit>
         {
             new(JassSuitType.Ecken, "#c52a2a", "♦"),
             new(JassSuitType.Herz, "#c52a2a", "♥"),

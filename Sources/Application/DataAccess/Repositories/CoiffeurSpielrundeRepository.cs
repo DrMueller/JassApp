@@ -9,7 +9,7 @@ using JassApp.Domain.Spieler.Models;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace JassApp.DataAccess.Repositories.Implementation
+namespace JassApp.DataAccess.Repositories
 {
     [UsedImplicitly]
     public class CoiffeurSpielrundeRepository(IAppDbContextFactory appDbContextFactory) : ICoiffeurSpielrundeRepository
@@ -57,10 +57,20 @@ namespace JassApp.DataAccess.Repositories.Implementation
             }
 
             jassTeamTable1.JassTeamTyp = JassTeamTyp.Team1;
-            jassTeamTable1.JassTeamSpieler1.SpielerId = runde.Team1.Spieler1.SpielerId.Value;
-            jassTeamTable1.JassTeamSpieler1.IstStartSpieler = runde.Team1.Spieler1.IstStartSpieler;
-            jassTeamTable1.JassTeamSpieler2.SpielerId = runde.Team1.Spieler2.SpielerId.Value;
-            jassTeamTable1.JassTeamSpieler2.IstStartSpieler = runde.Team1.Spieler2.IstStartSpieler;
+            jassTeamTable1.JassTeamSpieler.Clear();
+            jassTeamTable1.JassTeamSpieler.Add(new JassTeamSpielerTable
+            {
+                IstStartSpieler = runde.Team1.Spieler1.IstStartSpieler,
+                SpielerId = runde.Team1.Spieler1.SpielerId.Value,
+                Position = JassTeamSpielerPosition.Spieler1
+            });
+
+            jassTeamTable1.JassTeamSpieler.Add(new JassTeamSpielerTable
+            {
+                IstStartSpieler = runde.Team1.Spieler2.IstStartSpieler,
+                SpielerId = runde.Team1.Spieler2.SpielerId.Value,
+                Position = JassTeamSpielerPosition.Spieler2
+            });
 
             var jassTeamTable2 = rundeTable.JassTeams.SingleOrDefault(f => f.JassTeamTyp == JassTeamTyp.Team2);
 
@@ -71,10 +81,20 @@ namespace JassApp.DataAccess.Repositories.Implementation
             }
 
             jassTeamTable2.JassTeamTyp = JassTeamTyp.Team2;
-            jassTeamTable2.JassTeamSpieler1.SpielerId = runde.Team2.Spieler1.SpielerId.Value;
-            jassTeamTable2.JassTeamSpieler1.IstStartSpieler = runde.Team2.Spieler1.IstStartSpieler;
-            jassTeamTable2.JassTeamSpieler2.SpielerId = runde.Team2.Spieler2.SpielerId.Value;
-            jassTeamTable2.JassTeamSpieler2.IstStartSpieler = runde.Team2.Spieler2.IstStartSpieler;
+            jassTeamTable2.JassTeamSpieler.Clear();
+            jassTeamTable2.JassTeamSpieler.Add(new JassTeamSpielerTable
+            {
+                IstStartSpieler = runde.Team2.Spieler1.IstStartSpieler,
+                SpielerId = runde.Team2.Spieler1.SpielerId.Value,
+                Position = JassTeamSpielerPosition.Spieler1
+            });
+
+            jassTeamTable2.JassTeamSpieler.Add(new JassTeamSpielerTable
+            {
+                IstStartSpieler = runde.Team2.Spieler2.IstStartSpieler,
+                SpielerId = runde.Team2.Spieler2.SpielerId.Value,
+                Position = JassTeamSpielerPosition.Spieler2
+            });
 
             MapTrumpfrunden(runde, rundeTable);
             await context.SaveChangesAsync();
@@ -127,31 +147,22 @@ namespace JassApp.DataAccess.Repositories.Implementation
                     f.ResultatTeam2))
                 .ToList();
 
-            var team1 = table.JassTeams.Single(f => f.JassTeamTyp == JassTeamTyp.Team1);
-            var team2 = table.JassTeams.Single(f => f.JassTeamTyp == JassTeamTyp.Team2);
+            var team1Table = table.JassTeams.Single(f => f.JassTeamTyp == JassTeamTyp.Team1);
+            var team2Table = table.JassTeams.Single(f => f.JassTeamTyp == JassTeamTyp.Team2);
 
-            var jassTeam1 = new JassTeam(new JassTeamÎd(team1.Id),
-                new JassTeamSpieler(
-                    new JassTeamSpielerId(team1.JassTeamSpieler1Id),
-                    new SpielerId(team1.JassTeamSpieler1.SpielerId),
-                    team1.JassTeamSpieler1.Spieler.Name,
-                    team1.JassTeamSpieler1.IstStartSpieler),
-                new JassTeamSpieler(
-                    new JassTeamSpielerId(team1.JassTeamSpieler2Id),
-                    new SpielerId(team1.JassTeamSpieler2.SpielerId),
-                    team1.JassTeamSpieler2.Spieler.Name,
-                    team1.JassTeamSpieler2.IstStartSpieler));
+            var team1Spieler1Table = team1Table.JassTeamSpieler.Single(f => f.Position == JassTeamSpielerPosition.Spieler1);
+            var team1Spieler2Table = team1Table.JassTeamSpieler.Single(f => f.Position == JassTeamSpielerPosition.Spieler2);
 
-            var jassTeam2 = new JassTeam(new JassTeamÎd(team2.Id),
-                new JassTeamSpieler(
-                    new JassTeamSpielerId(team2.JassTeamSpieler1Id),
-                    new SpielerId(team2.JassTeamSpieler1.SpielerId),
-                    team2.JassTeamSpieler1.Spieler.Name,
-                    team2.JassTeamSpieler1.IstStartSpieler),
-                new JassTeamSpieler(new JassTeamSpielerId(team2.JassTeamSpieler2Id),
-                    new SpielerId(team2.JassTeamSpieler2.SpielerId),
-                    team2.JassTeamSpieler2.Spieler.Name,
-                    team2.JassTeamSpieler2.IstStartSpieler));
+            var team2Spieler1Table = team2Table.JassTeamSpieler.Single(f => f.Position == JassTeamSpielerPosition.Spieler1);
+            var team2Spieler2Table = team2Table.JassTeamSpieler.Single(f => f.Position == JassTeamSpielerPosition.Spieler2);
+
+            var jassTeam1 = new JassTeam(
+                new JassTeamÎd(team1Table.Id),
+                [MapJassTeamSpieler(team1Spieler1Table), MapJassTeamSpieler(team1Spieler2Table)]);
+
+            var jassTeam2 = new JassTeam(
+                new JassTeamÎd(team2Table.Id),
+                [MapJassTeamSpieler(team2Spieler1Table), MapJassTeamSpieler(team2Spieler2Table)]);
 
             return new CoiffeurSpielrunde(
                 new CoiffeurSpielrundeId(table.Id),
@@ -160,6 +171,15 @@ namespace JassApp.DataAccess.Repositories.Implementation
                 trumpfrunden,
                 jassTeam1,
                 jassTeam2);
+        }
+
+        private static JassTeamSpieler MapJassTeamSpieler(JassTeamSpielerTable jt)
+        {
+            return new JassTeamSpieler(new JassTeamSpielerId(jt.Id),
+                new SpielerId(jt.Spieler.Id),
+                jt.Spieler.Name,
+                jt.IstStartSpieler,
+                jt.Position);
         }
 
         private static void MapTrumpfrunden(CoiffeurSpielrunde runde, CoiffeurSpielrundeTable rundeTable)
@@ -178,10 +198,7 @@ namespace JassApp.DataAccess.Repositories.Implementation
         {
             return context.DbSet<CoiffeurSpielrundeTable>().AsQueryable()
                 .Include(f => f.JassTeams)
-                .ThenInclude(f => f.JassTeamSpieler1)
-                .ThenInclude(f => f.Spieler)
-                .Include(f => f.JassTeams)
-                .ThenInclude(f => f.JassTeamSpieler2)
+                .ThenInclude(f => f.JassTeamSpieler)
                 .ThenInclude(f => f.Spieler)
                 .Include(f => f.Trumpfrunden);
         }

@@ -37,11 +37,6 @@ namespace JassApp.Domain.Coiffeur.Models
         public JassTeam Team2 { get; }
         public IReadOnlyCollection<CoiffeurTrumpfrunde> Trumpfrunden { get; }
 
-        public Ausbezahlung CalculateAusbezahlung(JassTeamTyp teamTyp)
-        {
-            return new Ausbezahlung(19);
-        }
-
         public int? CalculateMaetche(JassTeamTyp teamTyp)
         {
             var ownMaetsche =

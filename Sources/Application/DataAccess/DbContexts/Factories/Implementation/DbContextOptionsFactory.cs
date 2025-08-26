@@ -15,6 +15,9 @@ namespace JassApp.DataAccess.DbContexts.Factories.Implementation
 
             return new DbContextOptionsBuilder()
                 .UseSqlServer(connectionString)
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .AddInterceptors(new CommandInterceptor())
                 .UseModel(mb.FinalizeModel())
                 .Options;
         }

@@ -1,6 +1,5 @@
 ﻿using JassApp.DataAccess.Configurations.Base;
 using JassApp.DataAccess.Tables;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JassApp.DataAccess.Configurations
@@ -14,18 +13,6 @@ namespace JassApp.DataAccess.Configurations
 
             builder.Property(f => f.CoiffeurSpielrundeId)
                 .IsRequired();
-
-            builder.HasOne(f => f.JassTeamSpieler1)
-                .WithMany()
-                .HasForeignKey(f => f.JassTeamSpieler1Id)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(f => f.JassTeamSpieler2)
-                .WithMany()
-                .HasForeignKey(f => f.JassTeamSpieler2Id)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

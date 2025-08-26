@@ -1,4 +1,5 @@
 ﻿using JassApp.DataAccess.Tables.Base;
+using JassApp.Domain.Coiffeur.Models;
 using JetBrains.Annotations;
 
 namespace JassApp.DataAccess.Tables
@@ -11,5 +12,6 @@ namespace JassApp.DataAccess.Tables
         public int JassTeamId { get; set; }
         public SpielerTable Spieler { get; set; } = null!;
         public int SpielerId { get; set; }
+        public JassTeamSpielerPosition Position { get; set; }
     }
 }

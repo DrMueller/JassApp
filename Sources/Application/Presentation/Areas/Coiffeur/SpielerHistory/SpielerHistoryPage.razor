@@ -1,5 +1,9 @@
-﻿<h3>SpielerHistoryPage</h3>
+﻿@using MudBlazor
+@using JassApp.Presentation.Shared.LoadingIndication
+@attribute [Route(Path)]
 
-@code {
-
-}
+<LoadingIndicator IsLoading="IsLoading">
+    <MudPaper Class="pa-4">
+        <SpielerHistoryList Entries="Entries"></SpielerHistoryList>
+    </MudPaper>
+</LoadingIndicator>

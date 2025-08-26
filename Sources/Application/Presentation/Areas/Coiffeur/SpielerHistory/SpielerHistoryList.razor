@@ -1,5 +1,19 @@
-﻿<h3>SpielerHistoryList</h3>
-
-@code {
-
-}
+﻿@using JassApp.Domain.Spieler.BusinessObjects
+@using MudBlazor
+<MudTable Items="Entries" Hover="true" SortLabel="Sort By" Elevation="0" AllowUnsorted="false">
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<SpielerHistoryEntryBo, object>(x => x.Spieler1Name)">Spieler 1</MudTableSortLabel>
+        </MudTh>
+        <MudTh>Mit</MudTh>
+        <MudTh>Gespielt am</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Spieler 1">@context.Spieler1Name</MudTd>
+        <MudTd DataLabel="Spieler 2">@context.Spieler2Name</MudTd>
+        <MudTd DataLabel="Gespielt Am">@context.GespieltAm</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new[] { 50, 100 }"/>
+    </PagerContent>
+</MudTable>
