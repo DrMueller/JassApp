@@ -1,10 +1,10 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)
 
 trigger:
-  batch: true # batch changes if true; start a new build for every push if false (default)
+  batch: true
   branches:
     include:
-      - refs/heads/master
+    - main
 
 variables:
   BuildConfiguration: "Release"
