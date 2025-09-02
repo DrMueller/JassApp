@@ -2,7 +2,8 @@
 using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
 using JassApp.Domain.Coiffeur.Services;
-using JassApp.Domain.Spieler.Services;
+using JassApp.Domain.Shared.Data.Querying;
+using JassApp.Domain.Spieler.Specifications;
 using JassApp.Presentation.Areas.Coiffeur.RunningGame;
 using JassApp.Presentation.Infrastructure.Navigation.Models;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
@@ -18,13 +19,13 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         public required INavigator Navigator { get; set; }
 
         [Inject]
+        public required IQueryService QueryService { get; set; }
+
+        [Inject]
         public required ICoiffeurSpielrundeFactory RundeFactory { get; set; }
 
         [Inject]
         public required ICoiffeurSpielrundeRepository RundeRepo { get; set; }
-
-        [Inject]
-        public required ISpielerRepository SpielerRepo { get; set; }
 
         private InformationEntries? Infos { get; set; }
 
@@ -36,14 +37,14 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         private Domain.Spieler.Models.Spieler? SelectedSpieler3 { get; set; }
         private Domain.Spieler.Models.Spieler? SelectedSpieler4 { get; set; }
 
-        private Domain.Spieler.Models.Spieler? StartSpieler { get; set; }
-
         private CoiffeurSpielrundeTyp SelectedTyp { get; set; } = CoiffeurSpielrundeTyp.WithGschobna;
         private IReadOnlyCollection<Domain.Spieler.Models.Spieler>? Spieler { get; set; }
 
+        private Domain.Spieler.Models.Spieler? StartSpieler { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
-            Spieler = await SpielerRepo.LoadAllAsync();
+            Spieler = await QueryService.QueryAsync(new SpielerSpec());
         }
 
         private async Task StartGameAsync()

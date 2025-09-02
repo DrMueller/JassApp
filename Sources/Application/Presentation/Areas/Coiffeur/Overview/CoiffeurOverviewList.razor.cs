@@ -1,5 +1,8 @@
 ﻿using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
+using JassApp.Domain.Coiffeur.Specifications;
+using JassApp.Domain.Shared.Data.Querying;
+using JassApp.Domain.Shared.Data.Writing;
 using JassApp.Presentation.Areas.Coiffeur.RunningGame;
 using JassApp.Presentation.Infrastructure.Navigation.Models;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
@@ -18,7 +21,10 @@ namespace JassApp.Presentation.Areas.Coiffeur.Overview
         public required INavigator Navigator { get; set; }
 
         [Inject]
-        public required ICoiffeurSpielrundeRepository Repo { get; set; }
+        public required IQueryService QueryService { get; set; }
+
+        [Inject]
+        public required IUnitOfWorkFactory UowFactory { get; set; }
 
         private bool IsLoading => Runden == null;
         private IReadOnlyCollection<CoiffeurSpielrunde>? Runden { get; set; }
@@ -37,7 +43,11 @@ namespace JassApp.Presentation.Areas.Coiffeur.Overview
                 return;
             }
 
-            await Repo.DeleteAsync(new CoiffeurSpielrundeId(rundeId));
+            using var uow = UowFactory.Create();
+            var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
+            await repo.DeleteAsync(new CoiffeurSpielrundeId(rundeId));
+            await uow.SaveAsync();
+
             await LoadAsync();
         }
 
@@ -48,7 +58,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Overview
 
         private async Task LoadAsync()
         {
-            Runden = await Repo.LoadAllAsync();
+            Runden = await QueryService.QueryAsync(new CoiffeurSpielrundeSpec());
         }
     }
 }

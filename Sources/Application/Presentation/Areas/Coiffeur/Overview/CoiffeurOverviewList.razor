@@ -18,8 +18,8 @@
         <RowTemplate>
             <MudTd DataLabel="ID">@context.Id.Value</MudTd>
             <MudTd DataLabel="Gestartet am">@context.GestartetAm.ToString(CultureInfo.InvariantCulture)</MudTd>
-            <MudTd DataLabel="Team 1">@context.Team1.Description</MudTd>
-            <MudTd DataLabel="Team 2">@context.Team2.Description</MudTd>
+            <MudTd DataLabel="Team 1">@context.JassTeam1.Description</MudTd>
+            <MudTd DataLabel="Team 2">@context.JassTeam2.Description</MudTd>
             <MudTd>
                 <MudButton Size="Size.Small" OnClick="() => EditRunde(context.Id.Value)" Color="Color.Primary" Variant="Variant.Filled">
                     <MudIcon Icon="@Icons.Material.Filled.Edit"/>

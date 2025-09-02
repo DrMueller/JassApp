@@ -19,8 +19,7 @@ namespace JassApp.Domain.Coiffeur.Models
         bool IstStartSpieler,
         JassTeamSpielerPosition Position);
 
-    [PublicAPI]
-    public record JassTeamÎd(int Value);
+    public record JassTeamId(int Value);
 
     [PublicAPI]
     public record JassTeam
@@ -28,7 +27,8 @@ namespace JassApp.Domain.Coiffeur.Models
         private readonly IReadOnlyCollection<JassTeamSpieler> _spieler;
 
         public JassTeam(
-            JassTeamÎd id,
+            JassTeamId id,
+            JassTeamTyp typ,
             IReadOnlyCollection<JassTeamSpieler> spieler)
         {
             Guard.That(() => spieler.Count() == 2, "Genau 2 Spieler pro Team");
@@ -36,6 +36,7 @@ namespace JassApp.Domain.Coiffeur.Models
             _spieler = spieler;
 
             Id = id;
+            Typ = typ;
         }
 
         public string Description
@@ -49,14 +50,19 @@ namespace JassApp.Domain.Coiffeur.Models
             }
         }
 
-        public JassTeamÎd Id { get; }
+        public JassTeamId Id { get; }
         public JassTeamSpieler Spieler1 => _spieler.Single(f => f.Position == JassTeamSpielerPosition.Spieler1);
         public JassTeamSpieler Spieler2 => _spieler.Single(f => f.Position == JassTeamSpielerPosition.Spieler2);
+        public JassTeamTyp Typ { get; }
 
         public static JassTeam CreateNew(
-            IReadOnlyCollection<JassTeamSpieler> jassTeamSpieler)
+            IReadOnlyCollection<JassTeamSpieler> jassTeamSpieler,
+            JassTeamTyp typ)
         {
-            return new JassTeam(new JassTeamÎd(0), jassTeamSpieler);
+            return new JassTeam(
+                new JassTeamId(0),
+                typ,
+                jassTeamSpieler);
         }
     }
 }

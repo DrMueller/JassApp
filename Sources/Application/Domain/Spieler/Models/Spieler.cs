@@ -10,7 +10,7 @@ namespace JassApp.Domain.Spieler.Models
         public Spieler(
             SpielerId id,
             string name,
-            IReadOnlyCollection<JassTeamÎd> assignedTeams)
+            IReadOnlyCollection<JassTeamId> assignedTeams)
         {
             Guard.StringNotNullOrEmpty(() => name);
             Id = id;
@@ -22,7 +22,7 @@ namespace JassApp.Domain.Spieler.Models
 
         public SpielerId Id { get; }
         public string Name { get; private set; }
-        private IReadOnlyCollection<JassTeamÎd> AssignedTeams { get; }
+        private IReadOnlyCollection<JassTeamId> AssignedTeams { get; }
 
         public void UpdateName(string name)
         {

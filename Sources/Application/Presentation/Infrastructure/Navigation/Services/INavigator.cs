@@ -6,10 +6,10 @@
 
         string Uri { get; }
 
-        Uri ToAbsoluteUri(string? relativeUri);
-
         void NavigateTo(string target, bool forceLoad = false);
 
         Task OpenInNewTabAsync(string target);
+
+        Uri ToAbsoluteUri(string? relativeUri);
     }
 }

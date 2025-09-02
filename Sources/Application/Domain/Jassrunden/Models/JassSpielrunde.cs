@@ -4,8 +4,6 @@ namespace JassApp.Domain.Jassrunden.Models
 {
     public class JassSpielrunde
     {
-        public IReadOnlyCollection<JasshandSpieler> JassPlayers { get; }
-
         public JassSpielrunde(IReadOnlyCollection<JasshandSpieler> jassPlayers)
         {
             Guard.ObjectNotNull(() => jassPlayers);
@@ -17,5 +15,7 @@ namespace JassApp.Domain.Jassrunden.Models
 
             JassPlayers = jassPlayers;
         }
+
+        public IReadOnlyCollection<JasshandSpieler> JassPlayers { get; }
     }
 }

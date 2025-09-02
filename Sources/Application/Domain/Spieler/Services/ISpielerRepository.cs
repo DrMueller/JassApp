@@ -1,12 +1,11 @@
 ﻿using JassApp.Common.InformationHandling;
+using JassApp.Domain.Shared.Data.Writing;
 
 namespace JassApp.Domain.Spieler.Services
 {
-    public interface ISpielerRepository
+    public interface ISpielerRepository : IRepository
     {
-        Task<InformationEntries> SaveAsync(Models.Spieler spieler);
         Task<InformationEntries> DeleteAsync(int spielerId);
-        Task<IReadOnlyCollection<Models.Spieler>> LoadAllAsync();
-        Task<Models.Spieler> LoadAsync(int spielerId);
+        Task<InformationEntries> SaveAsync(Models.Spieler spieler);
     }
 }

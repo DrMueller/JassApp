@@ -37,14 +37,14 @@ namespace JassApp.Domain.Coiffeur.Models
             CoiffeurTrumpf = coiffeurTrumpf;
         }
 
+        public CoiffeurTrumpf CoiffeurTrumpf { get; }
+
         public string Description =>
             $"{CoiffeurTrumpf.Name} ({PunkteModifikator}x)";
 
         public TrumpfrundeId ID { get; }
 
         public int PunkteModifikator { get; }
-
-        public CoiffeurTrumpf CoiffeurTrumpf { get; }
 
         public TrumpfrundeResultat this[JassTeamTyp teamTyp] => _resultate.Single(f => f.TeamTyp == teamTyp);
 

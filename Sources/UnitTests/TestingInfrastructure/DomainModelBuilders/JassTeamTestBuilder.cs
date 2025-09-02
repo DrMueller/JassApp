@@ -24,7 +24,8 @@ namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
                 JassTeamSpielerPosition.Spieler2);
 
             var team1 = new JassTeam(
-                new JassTeamÎd(1),
+                new JassTeamId(1),
+                JassTeamTyp.Team1,
                 [team1Spieler1, team1Spieler2]);
 
             var team2Spieler1 = new JassTeamSpieler(
@@ -42,7 +43,8 @@ namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
                 JassTeamSpielerPosition.Spieler2);
 
             var team2 = new JassTeam(
-                new JassTeamÎd(2),
+                new JassTeamId(2),
+                JassTeamTyp.Team2,
                 [team2Spieler1, team2Spieler2]);
 
             return (team1, team2);

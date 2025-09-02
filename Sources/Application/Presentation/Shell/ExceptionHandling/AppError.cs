@@ -2,6 +2,6 @@
 {
     public record AppError(
         string ErrorType,
-        string ErrorMessage, 
+        string ErrorMessage,
         string StrackTrace);
 }

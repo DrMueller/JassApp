@@ -7,19 +7,16 @@ namespace JassApp.Common.LanguageExtensions.Types.Maybes
 {
     public static class MaybeAdapter
     {
-        public static async Task<Maybe<T>> ToMaybeAsync<T>(this Task<T?> maybeTask)
-            where T : class
+        public static Maybe<TNew> Map<T, TNew>(this Maybe<T> maybe, Func<T, TNew> map)
         {
-#pragma warning disable VSTHRD003
-            var result = await maybeTask;
-#pragma warning restore VSTHRD003
-
-            if (result is null)
+            if (maybe is None<T>)
             {
                 return None.Value;
             }
 
-            return result;
+            var someValue = (Some<T>)maybe;
+
+            return map(someValue);
         }
 
         public static async Task<Maybe<TNew>> MapAsync<T, TNew>(this Task<Maybe<T>> maybeTask, Func<T, TNew> map)
@@ -50,18 +47,6 @@ namespace JassApp.Common.LanguageExtensions.Types.Maybes
             var someValue = (Some<T>)maybe;
 
             return await map(someValue);
-        }
-
-        public static Maybe<TNew> Map<T, TNew>(this Maybe<T> maybe, Func<T, TNew> map)
-        {
-            if (maybe is None<T>)
-            {
-                return None.Value;
-            }
-
-            var someValue = (Some<T>)maybe;
-
-            return map(someValue);
         }
 
         public static async Task<Maybe<TNew>> MapAsync<T, TNew>(this Maybe<T> maybe, Func<T, Task<TNew>> map)
@@ -189,6 +174,21 @@ namespace JassApp.Common.LanguageExtensions.Types.Maybes
             var someValue = (Some<T>)maybe;
 
             return new Right<TLeft, T>(someValue);
+        }
+
+        public static async Task<Maybe<T>> ToMaybeAsync<T>(this Task<T?> maybeTask)
+            where T : class
+        {
+#pragma warning disable VSTHRD003
+            var result = await maybeTask;
+#pragma warning restore VSTHRD003
+
+            if (result is null)
+            {
+                return None.Value;
+            }
+
+            return result;
         }
 
         public static void WhenSome<T>(

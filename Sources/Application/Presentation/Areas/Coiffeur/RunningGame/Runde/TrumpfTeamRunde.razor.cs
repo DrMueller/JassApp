@@ -7,15 +7,15 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame.Runde
     {
         [Parameter]
         [EditorRequired]
+        public required CoiffeurTrumpfrunde CoiffeurTrumpfrunde { get; set; }
+
+        [Parameter]
+        [EditorRequired]
         public EventCallback OnValueChanged { get; set; }
 
         [Parameter]
         [EditorRequired]
         public required JassTeamTyp TeamTyp { get; set; }
-
-        [Parameter]
-        [EditorRequired]
-        public required CoiffeurTrumpfrunde CoiffeurTrumpfrunde { get; set; }
 
         private string? Value { get; set; }
 

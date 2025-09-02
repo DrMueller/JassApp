@@ -1,5 +1,6 @@
 ﻿using JassApp.Domain.Coiffeur.Models;
-using JassApp.Domain.Coiffeur.Repositories;
+using JassApp.Domain.Coiffeur.Specifications;
+using JassApp.Domain.Shared.Data.Querying;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
@@ -13,7 +14,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         public required int GameId { get; set; }
 
         [Inject]
-        public required ICoiffeurSpielrundeRepository RundeRepo { get; set; }
+        public required IQueryService QueryService { get; set; }
 
         private bool IsLoading => Spielrunde == null;
 
@@ -21,7 +22,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         protected override async Task OnInitializedAsync()
         {
-            Spielrunde = await RundeRepo.LoadAsync(new CoiffeurSpielrundeId(GameId));
+            var spec = new CoiffeurSpielrundeSpec(new CoiffeurSpielrundeId(GameId));
+            Spielrunde = await QueryService.QuerySingleAsync(spec);
         }
     }
 }

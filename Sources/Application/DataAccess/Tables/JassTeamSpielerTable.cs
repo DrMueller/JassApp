@@ -10,8 +10,8 @@ namespace JassApp.DataAccess.Tables
         public bool IstStartSpieler { get; set; }
         public JassTeamTable JassTeam { get; set; } = null!;
         public int JassTeamId { get; set; }
+        public JassTeamSpielerPosition Position { get; set; }
         public SpielerTable Spieler { get; set; } = null!;
         public int SpielerId { get; set; }
-        public JassTeamSpielerPosition Position { get; set; }
     }
 }

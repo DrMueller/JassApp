@@ -1,29 +1,29 @@
-﻿@using Microsoft.AspNetCore.Components.Forms
-@using MudBlazor
-@using JassApp.Presentation.Shared.Infos
+﻿@using JassApp.Presentation.Shared.Infos
 @using JassApp.Presentation.Shared.LoadingIndication
+@using Microsoft.AspNetCore.Components.Forms
+@using MudBlazor
 @attribute [Route(Path)]
 
 <MudPaper Class="pa-4">
-<LoadingIndicator IsLoading="IsLoading">
-    <Informations Entries="@Infos"></Informations>
+    <LoadingIndicator IsLoading="IsLoading">
+        <Informations Entries="@Infos"></Informations>
 
-    <EditForm Model="@EditModel" OnValidSubmit="HandleValidSubmitAsync">
-        <DataAnnotationsValidator/>
-        <MudGrid>
-            <MudItem xs="12" sm="7">
-                <MudCard>
-                    <MudCardContent>
-                        <MudTextField Label="Name" Class="mt-3"
-                                      @bind-Value="EditModel!.Name" For="@(() => EditModel!.Name)"/>
+        <EditForm Model="@EditModel" OnValidSubmit="HandleValidSubmitAsync">
+            <DataAnnotationsValidator/>
+            <MudGrid>
+                <MudItem xs="12" sm="7">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudTextField Label="Name" Class="mt-3"
+                                          @bind-Value="EditModel!.Name" For="@(() => EditModel!.Name)"/>
 
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Speichern</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
-        </MudGrid>
-    </EditForm>
-</LoadingIndicator>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Speichern</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </LoadingIndicator>
 </MudPaper>

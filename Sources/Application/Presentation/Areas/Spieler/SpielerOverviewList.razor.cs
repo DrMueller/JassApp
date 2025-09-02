@@ -1,5 +1,8 @@
 ﻿using JassApp.Common.InformationHandling;
+using JassApp.Domain.Shared.Data.Querying;
+using JassApp.Domain.Shared.Data.Writing;
 using JassApp.Domain.Spieler.Services;
+using JassApp.Domain.Spieler.Specifications;
 using JassApp.Presentation.Infrastructure.Navigation.Models;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
 using Microsoft.AspNetCore.Components;
@@ -12,7 +15,10 @@ namespace JassApp.Presentation.Areas.Spieler
         public required INavigator Navigator { get; set; }
 
         [Inject]
-        public required ISpielerRepository SpielerRepo { get; set; }
+        public required IQueryService QueryService { get; set; }
+
+        [Inject]
+        public required IUnitOfWorkFactory UowFactory { get; set; }
 
         private InformationEntries? Infos { get; set; }
 
@@ -26,9 +32,12 @@ namespace JassApp.Presentation.Areas.Spieler
 
         private async Task DeleteSpielerAsync(int spielerId)
         {
-            Infos = await SpielerRepo.DeleteAsync(spielerId);
+            using var uow = UowFactory.Create();
+            var spielerRepo = uow.GetRepository<ISpielerRepository>();
+            Infos = await spielerRepo.DeleteAsync(spielerId);
             if (Infos.IsEmpty)
             {
+                await uow.SaveAsync();
                 await LoadAsync();
             }
         }
@@ -40,7 +49,7 @@ namespace JassApp.Presentation.Areas.Spieler
 
         private async Task LoadAsync()
         {
-            Spieler = await SpielerRepo.LoadAllAsync();
+            Spieler = await QueryService.QueryAsync(new SpielerSpec());
         }
     }
 }

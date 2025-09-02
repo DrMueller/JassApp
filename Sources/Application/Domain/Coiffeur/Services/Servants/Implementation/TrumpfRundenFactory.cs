@@ -28,7 +28,7 @@ namespace JassApp.Domain.Coiffeur.Services.Servants.Implementation
 
             if (typ == CoiffeurSpielrundeTyp.OhneBeides)
             {
-                trumpfs.RemoveAll(f => f.Typ == CoiffeurTrumpfTyp.Gschobna || f.Typ == CoiffeurTrumpfTyp.Differenzler);
+                trumpfs.RemoveAll(f => f.Typ is CoiffeurTrumpfTyp.Gschobna or CoiffeurTrumpfTyp.Differenzler);
             }
 
             if (typ == CoiffeurSpielrundeTyp.WithDifferenzler)

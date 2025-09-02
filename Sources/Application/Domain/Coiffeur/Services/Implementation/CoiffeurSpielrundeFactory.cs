@@ -62,13 +62,18 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
                 startSpieler.Id == spieler4.Id,
                 JassTeamSpielerPosition.Spieler2);
 
+            var jassTeams = new List<JassTeam>
+            {
+                JassTeam.CreateNew([teamSpieler1, teamSpieler2], JassTeamTyp.Team1),
+                JassTeam.CreateNew([teamSpieler3, teamSpieler4], JassTeamTyp.Team2)
+            };
+
             return new CoiffeurSpielrunde(
                 new CoiffeurSpielrundeId(0),
                 DateTime.Now,
                 punkteWert,
                 trumpfRunden,
-                JassTeam.CreateNew([teamSpieler1, teamSpieler2]),
-                JassTeam.CreateNew([teamSpieler3, teamSpieler4]));
+                jassTeams);
         }
 
         private static InformationEntries ValidateSpieler(

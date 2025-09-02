@@ -2,13 +2,14 @@
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 
-namespace JassApp.Common.Settings.Provisioning.Services.Implementation;
-
-[UsedImplicitly]
-public class SettingsProvider(
-    IOptions<AppSettings> appSettings
-)
-    : ISettingsProvider
+namespace JassApp.Common.Settings.Provisioning.Services.Implementation
 {
-    public AppSettings AppSettings => appSettings.Value;
+    [UsedImplicitly]
+    public class SettingsProvider(
+        IOptions<AppSettings> appSettings
+    )
+        : ISettingsProvider
+    {
+        public AppSettings AppSettings => appSettings.Value;
+    }
 }

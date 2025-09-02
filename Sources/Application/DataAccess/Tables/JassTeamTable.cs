@@ -8,8 +8,8 @@ namespace JassApp.DataAccess.Tables
     public class JassTeamTable : TableBase
     {
         public int CoiffeurSpielrundeId { get; set; }
-        public JassTeamTyp JassTeamTyp { get; set; }
-        
+
         public ICollection<JassTeamSpielerTable> JassTeamSpieler { get; set; } = new List<JassTeamSpielerTable>();
+        public JassTeamTyp JassTeamTyp { get; set; }
     }
 }

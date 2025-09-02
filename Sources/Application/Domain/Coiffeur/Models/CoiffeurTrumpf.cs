@@ -53,6 +53,27 @@ namespace JassApp.Domain.Coiffeur.Models
         public string Name { get; }
         public CoiffeurTrumpfTyp Typ { get; }
 
+        public static IReadOnlyCollection<CoiffeurTrumpf> CreateAll()
+        {
+            return
+            [
+                Herz,
+                Egge,
+                Kreuz,
+                Schaufeln,
+                Gschobna,
+                Differenzler,
+                Oben,
+                Unten,
+                Slalom,
+                Misere,
+                Gustav,
+                DrueliDrue,
+                Tutti,
+                Wahl
+            ];
+        }
+
         public static CoiffeurTrumpf CreateFromTyp(CoiffeurTrumpfTyp typ)
         {
             return typ switch
@@ -73,27 +94,6 @@ namespace JassApp.Domain.Coiffeur.Models
                 CoiffeurTrumpfTyp.Wahl => Wahl,
                 _ => throw new ArgumentOutOfRangeException(nameof(typ), typ, null)
             };
-        }
-
-        public static IReadOnlyCollection<CoiffeurTrumpf> CreateAll()
-        {
-            return
-            [
-                Herz,
-                Egge,
-                Kreuz,
-                Schaufeln,
-                Gschobna,
-                Differenzler,
-                Oben,
-                Unten,
-                Slalom,
-                Misere,
-                Gustav,
-                DrueliDrue,
-                Tutti,
-                Wahl
-            ];
         }
     }
 }

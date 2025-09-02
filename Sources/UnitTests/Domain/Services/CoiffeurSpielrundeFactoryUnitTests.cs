@@ -49,13 +49,11 @@ namespace JassApp.UnitTests.Domain.Services
 
             // Assert
             var actualSpielRunde = actualSpielRundeResult.ShouldBeRight();
-            actualSpielRunde.Team1.Spieler1.SpielerId.Should().Be(spieler1.Id);
-            actualSpielRunde.Team1.Spieler2.SpielerId.Should().Be(spieler2.Id);
-            actualSpielRunde.Team2.Spieler1.SpielerId.Should().Be(spieler3.Id);
-            actualSpielRunde.Team2.Spieler2.SpielerId.Should().Be(spieler4.Id);
-
+            actualSpielRunde.JassTeam1.Spieler1.SpielerId.Should().Be(spieler1.Id);
+            actualSpielRunde.JassTeam1.Spieler2.SpielerId.Should().Be(spieler2.Id);
+            actualSpielRunde.JassTeam2.Spieler1.SpielerId.Should().Be(spieler3.Id);
+            actualSpielRunde.JassTeam2.Spieler2.SpielerId.Should().Be(spieler4.Id);
             actualSpielRunde.PunkteWert.Should().Be(punkteWert);
-
             actualSpielRunde.Trumpfrunden.Should().HaveCount(1);
             actualSpielRunde.Trumpfrunden.Single().Should().Be(trumpfrunde);
         }

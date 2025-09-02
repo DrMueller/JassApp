@@ -1,14 +1,15 @@
 ﻿@using JassApp.Presentation.Shell.ExceptionHandling
+@using JassApp.Presentation.Shell.Layout
 <AppErrorBoundary @ref="ErrorBoundary" OnExceptionThrown="HandleExceptionThrown">
-   <ChildContent>
-       <Router AppAssembly="typeof(Program).Assembly">
-           <Found Context="routeData">
-               <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
-               <FocusOnNavigate RouteData="routeData" Selector="h1" />
-           </Found>
-       </Router>
-   </ChildContent>
-   <ErrorContent>
-       <ErrorInfo AppError="@AppError"></ErrorInfo>
-   </ErrorContent>
+    <ChildContent>
+        <Router AppAssembly="typeof(Program).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)"/>
+                <FocusOnNavigate RouteData="routeData" Selector="h1"/>
+            </Found>
+        </Router>
+    </ChildContent>
+    <ErrorContent>
+        <ErrorInfo AppError="@AppError"></ErrorInfo>
+    </ErrorContent>
 </AppErrorBoundary>

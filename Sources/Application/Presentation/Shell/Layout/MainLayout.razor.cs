@@ -4,42 +4,6 @@ namespace JassApp.Presentation.Shell.Layout
 {
     public partial class MainLayout
     {
-        private bool _drawerOpen = true;
-        private bool _isDarkMode = true;
-        private MudTheme? _theme;
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            _theme = new MudTheme
-            {
-                PaletteLight = _lightPalette,
-                PaletteDark = _darkPalette,
-                LayoutProperties = new LayoutProperties()
-            };
-        }
-
-        private void DrawerToggle()
-        {
-            _drawerOpen = !_drawerOpen;
-        }
-
-        private void DarkModeToggle()
-        {
-            _isDarkMode = !_isDarkMode;
-        }
-
-        private readonly PaletteLight _lightPalette = new()
-        {
-            Black = "#110e2d",
-            AppbarText = "#424242",
-            AppbarBackground = "rgba(255,255,255,0.8)",
-            DrawerBackground = "#ffffff",
-            GrayLight = "#e8e8e8",
-            GrayLighter = "#f9f9f9"
-        };
-
         private readonly PaletteDark _darkPalette = new()
         {
             Primary = "#7e6fff",
@@ -69,10 +33,47 @@ namespace JassApp.Presentation.Shell.Layout
             OverlayLight = "#1e1e2d80"
         };
 
+        private bool _drawerOpen = true;
+        private bool _isDarkMode = true;
+
+        private readonly PaletteLight _lightPalette = new()
+        {
+            Black = "#110e2d",
+            AppbarText = "#424242",
+            AppbarBackground = "rgba(255,255,255,0.8)",
+            DrawerBackground = "#ffffff",
+            GrayLight = "#e8e8e8",
+            GrayLighter = "#f9f9f9"
+        };
+
+        private MudTheme? _theme;
+
         private string DarkLightModeButtonIcon => _isDarkMode switch
         {
             true => Icons.Material.Rounded.AutoMode,
             false => Icons.Material.Outlined.DarkMode
         };
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            _theme = new MudTheme
+            {
+                PaletteLight = _lightPalette,
+                PaletteDark = _darkPalette,
+                LayoutProperties = new LayoutProperties()
+            };
+        }
+
+        private void DarkModeToggle()
+        {
+            _isDarkMode = !_isDarkMode;
+        }
+
+        private void DrawerToggle()
+        {
+            _drawerOpen = !_drawerOpen;
+        }
     }
 }

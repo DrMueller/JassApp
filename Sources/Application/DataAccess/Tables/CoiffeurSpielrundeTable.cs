@@ -9,8 +9,8 @@ namespace JassApp.DataAccess.Tables
     {
         public CoiffeurSpielrundeTyp CoiffeurSpielrundeTyp { get; set; }
         public DateTime GestartetAm { get; set; }
-        public ICollection<JassTeamTable> JassTeams { get; set; } = null!;
+        public ICollection<JassTeamTable> JassTeams { get; set; } = new List<JassTeamTable>();
         public int Punktewert { get; set; }
-        public ICollection<TrumpfrundeTable> Trumpfrunden { get; set; } = null!;
+        public ICollection<TrumpfrundeTable> Trumpfrunden { get; set; } = new List<TrumpfrundeTable>();
     }
 }

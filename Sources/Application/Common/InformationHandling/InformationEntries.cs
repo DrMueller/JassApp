@@ -31,21 +31,21 @@
                 });
         }
 
-        public static InformationEntries CreateFromWarning(string warningMessage)
-        {
-            return new InformationEntries(
-                new List<InformationEntry>
-                {
-                    new(InformationType.Warning, warningMessage)
-                });
-        }
-
         public static InformationEntries CreateFromInfo(string infoMessage)
         {
             return new InformationEntries(
                 new List<InformationEntry>
                 {
                     new(InformationType.Information, infoMessage)
+                });
+        }
+
+        public static InformationEntries CreateFromWarning(string warningMessage)
+        {
+            return new InformationEntries(
+                new List<InformationEntry>
+                {
+                    new(InformationType.Warning, warningMessage)
                 });
         }
 

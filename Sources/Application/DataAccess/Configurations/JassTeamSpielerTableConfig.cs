@@ -15,7 +15,7 @@ namespace JassApp.DataAccess.Configurations
             builder.Property(f => f.Position).IsRequired();
 
             builder.HasOne(f => f.Spieler)
-                .WithMany()
+                .WithMany(f => f.JassTeamSpieler)
                 .HasForeignKey(f => f.SpielerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);

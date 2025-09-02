@@ -13,45 +13,37 @@ namespace JassApp.Domain.Coiffeur.Models
             DateTime gestartetAm,
             int punkteWert,
             IReadOnlyCollection<CoiffeurTrumpfrunde> trumpfrunden,
-            JassTeam team1,
-            JassTeam team2)
+            IReadOnlyCollection<JassTeam> jassTeams)
         {
             Guard.ValueNotDefault(() => punkteWert);
             Guard.CollectionNotNullOrEmpty(() => trumpfrunden);
-            Guard.ObjectNotNull(() => team1);
-            Guard.ObjectNotNull(() => team2);
+            Guard.ObjectNotNull(() => jassTeams);
 
             Id = id;
             GestartetAm = gestartetAm;
             PunkteWert = punkteWert;
             Trumpfrunden = trumpfrunden;
-            Team1 = team1;
-            Team2 = team2;
+            JassTeams = jassTeams;
         }
 
         public DateTime GestartetAm { get; }
         public CoiffeurSpielrundeId Id { get; }
         public int PunkteWert { get; }
         public string PunktwertDescription => $"{PunkteWert} Rp.";
-        public JassTeam Team1 { get; }
-        public JassTeam Team2 { get; }
+        public IReadOnlyCollection<JassTeam> JassTeams { get; }
         public IReadOnlyCollection<CoiffeurTrumpfrunde> Trumpfrunden { get; }
+
+        public JassTeam JassTeam1 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team1);
+        public JassTeam JassTeam2 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team2);
 
         public int? CalculateMaetche(JassTeamTyp teamTyp)
         {
-            var ownMaetsche =
-                Trumpfrunden
-                    .Count(f => f[teamTyp].IstMatch);
-
+            var ownMaetsche = Trumpfrunden.Count(f => f[teamTyp].IstMatch);
             var opposingTeam = GetOpposingTeamType(teamTyp);
-
-            var konterMaetsche =
-                Trumpfrunden
-                    .Count(f => f[opposingTeam].IstKonterMatch);
-
-            var istHerzGewinner =
-                Trumpfrunden.Single(f => f.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Herz)
-                    .CheckIstGewinner(teamTyp);
+            var konterMaetsche = Trumpfrunden.Count(f => f[opposingTeam].IstKonterMatch);
+            var istHerzGewinner = Trumpfrunden
+                .Single(f => f.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Herz)
+                .CheckIstGewinner(teamTyp);
 
             if (istHerzGewinner == true)
             {

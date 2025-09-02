@@ -35,10 +35,7 @@ namespace JassApp.Presentation.Shell.Initialization
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApp(Program.Configuration.GetSection("AzureAd"));
 
-            services.AddAuthorization(options =>
-            {
-                options.FallbackPolicy = options.DefaultPolicy;
-            });
+            services.AddAuthorization(options => { options.FallbackPolicy = options.DefaultPolicy; });
 
             services.AddControllersWithViews()
                 .AddMicrosoftIdentityUI();

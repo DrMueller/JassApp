@@ -1,8 +1,9 @@
 ﻿using JassApp.Common.Settings.Provisioning.Models;
 
-namespace JassApp.Common.Settings.Provisioning.Services;
-
-public interface ISettingsProvider
+namespace JassApp.Common.Settings.Provisioning.Services
 {
-    AppSettings AppSettings { get; }
+    public interface ISettingsProvider
+    {
+        AppSettings AppSettings { get; }
+    }
 }
