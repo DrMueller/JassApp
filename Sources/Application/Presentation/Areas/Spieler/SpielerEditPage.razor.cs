@@ -7,7 +7,6 @@ using JassApp.Domain.Spieler.Services;
 using JassApp.Domain.Spieler.Specifications;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace JassApp.Presentation.Areas.Spieler
 {
@@ -53,7 +52,12 @@ namespace JassApp.Presentation.Areas.Spieler
                 });
         }
 
-        private async Task HandleValidSubmitAsync(EditContext arg)
+        private void Cancel()
+        {
+            Navigator.NavigateTo(SpielerOverviewPage.Path);
+        }
+
+        private async Task SaveAsync()
         {
             var spieler = EditModel!.Id == 0
                 ? new Domain.Spieler.Models.Spieler(
@@ -70,7 +74,7 @@ namespace JassApp.Presentation.Areas.Spieler
 
             if (Infos.IsEmpty)
             {
-                await uow.SaveAsync();
+                await uow.CommitAsync();
                 Navigator.NavigateTo(SpielerOverviewPage.Path);
             }
         }

@@ -1,7 +1,11 @@
 ﻿@using MudBlazor
 @if (IsLoading)
 {
-    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true"/>
+    <MudStack Spacing="2">
+        <MudSkeleton Height="40" Animation="Animation.Pulse"/>
+        <MudSkeleton Height="40" Animation="Animation.Pulse"/>
+        <MudSkeleton Height="40" Animation="Animation.Pulse"/>
+    </MudStack>
 }
 else
 {

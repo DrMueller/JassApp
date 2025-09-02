@@ -3,28 +3,38 @@
 @using MudBlazor
 @attribute [Route(Path)]
 
-<MudPaper Class="pa-4">
-    <Informations Entries="Infos"></Informations>
-    <LoadingIndicator IsLoading="IsLoading">
-        <MudGrid>
-            <MudItem xs="3">
-                <MudNumericField @bind-Value="Punktwert" Label="Punktwert" Variant="Variant.Text" Min="0"/>
-            </MudItem>
-            <MudItem xs="3">
-                <CoiffeurTypSelect OnSelectedTypChanged="f => SelectedTyp = f"></CoiffeurTypSelect>
-            </MudItem>
-        </MudGrid>
+<Informations Entries="Infos"></Informations>
+<LoadingIndicator IsLoading="IsLoading">
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="4">
+                    <MudNumericField @bind-Value="Punktwert" Label="Punktwert" Variant="Variant.Text" Min="0"/>
+                </MudItem>
+                <MudItem xs="4">
+                    <CoiffeurTypSelect OnSelectedTypChanged="f => SelectedTyp = f"></CoiffeurTypSelect>
+                </MudItem>
+                <MudItem xs="4">
+                    <SpielerSelect Label="Starter" OnSpielerChanged="s => StartSpieler = s" Spieler="@Spieler">
+                    </SpielerSelect>
+                </MudItem>
 
-        <SpielerSelect OnSpielerChanged="s => StartSpieler = s" Spieler="@Spieler">
-        </SpielerSelect>
+                <MudItem xs="12">
+                    <TeamConfiguration OnSpieler1Selected="spieler => SelectedSpieler1 = spieler"
+                                       OnSpieler2Selected="spieler => SelectedSpieler2 = spieler"
+                                       OnSpieler3Selected="spieler => SelectedSpieler3 = spieler"
+                                       OnSpieler4Selected="spieler => SelectedSpieler4 = spieler"
+                                       Spieler="@Spieler">
+                    </TeamConfiguration>
+                </MudItem>
 
-        <TeamConfiguration OnSpieler1Selected="spieler => SelectedSpieler1 = spieler"
-                           OnSpieler2Selected="spieler => SelectedSpieler2 = spieler"
-                           OnSpieler3Selected="spieler => SelectedSpieler3 = spieler"
-                           OnSpieler4Selected="spieler => SelectedSpieler4 = spieler"
-                           Spieler="@Spieler">
-        </TeamConfiguration>
+                <MudItem xs="12" class="d-flex justify-end">
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
+                        <MudButton OnClick="StartGameAsync">Start</MudButton>
+                    </MudButtonGroup>
+                </MudItem>
+            </MudGrid>
 
-        <MudButton OnClick="StartGameAsync" Color="Color.Primary" Variant="Variant.Filled">Start</MudButton>
-    </LoadingIndicator>
-</MudPaper>
+        </MudCardContent>
+    </MudCard>
+</LoadingIndicator>

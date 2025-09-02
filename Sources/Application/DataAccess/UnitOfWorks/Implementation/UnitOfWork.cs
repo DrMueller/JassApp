@@ -29,7 +29,7 @@ namespace JassApp.DataAccess.UnitOfWorks.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task SaveAsync()
+        public async Task CommitAsync()
         {
             //DebugChanges();
             await _dbContext.SaveChangesAsync();

@@ -19,6 +19,7 @@ namespace JassApp.Domain.Coiffeur.Models
         bool IstStartSpieler,
         JassTeamSpielerPosition Position);
 
+    [PublicAPI]
     public record JassTeamId(int Value);
 
     [PublicAPI]

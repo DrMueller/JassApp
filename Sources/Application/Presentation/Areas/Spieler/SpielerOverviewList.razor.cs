@@ -37,7 +37,7 @@ namespace JassApp.Presentation.Areas.Spieler
             Infos = await spielerRepo.DeleteAsync(spielerId);
             if (Infos.IsEmpty)
             {
-                await uow.SaveAsync();
+                await uow.CommitAsync();
                 await LoadAsync();
             }
         }

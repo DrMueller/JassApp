@@ -5,6 +5,6 @@
         TRepo GetRepository<TRepo>()
             where TRepo : IRepository;
 
-        Task SaveAsync();
+        Task CommitAsync();
     }
 }

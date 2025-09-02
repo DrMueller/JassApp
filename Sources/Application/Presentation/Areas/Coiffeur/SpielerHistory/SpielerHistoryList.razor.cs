@@ -1,4 +1,4 @@
-﻿using JassApp.Domain.Spieler.BusinessObjects;
+﻿using JassApp.Domain.Spieler.Specifications;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.Coiffeur.SpielerHistory

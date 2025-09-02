@@ -3,6 +3,7 @@ using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
 using JassApp.Domain.Coiffeur.Services;
 using JassApp.Domain.Shared.Data.Querying;
+using JassApp.Domain.Shared.Data.Writing;
 using JassApp.Domain.Spieler.Specifications;
 using JassApp.Presentation.Areas.Coiffeur.RunningGame;
 using JassApp.Presentation.Infrastructure.Navigation.Models;
@@ -25,7 +26,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         public required ICoiffeurSpielrundeFactory RundeFactory { get; set; }
 
         [Inject]
-        public required ICoiffeurSpielrundeRepository RundeRepo { get; set; }
+        public required IUnitOfWorkFactory UowFactory { get; set; }
 
         private InformationEntries? Infos { get; set; }
 
@@ -65,18 +66,22 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
                 return;
             }
 
-            (Infos, var newId) = await RundeRepo
-                .SaveAsync(runde)
-                .ToTupleAsync(() => 0);
+            using var uow = UowFactory.Create();
+            var rundeRepo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
+
+            (Infos, var rundeTable) = await rundeRepo
+                .SaveAsync(runde).ToNullableTupleAsync(() => null);
 
             if (Infos.HasErrorsOrWarnings)
             {
                 return;
             }
 
+            await uow.CommitAsync();
+
             Navigator.NavigateTo
             (AppPath.Create(RunningGamePage.Path)
-                .Format(newId));
+                .Format(rundeTable!.Id));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Overview
             using var uow = UowFactory.Create();
             var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
             await repo.DeleteAsync(new CoiffeurSpielrundeId(rundeId));
-            await uow.SaveAsync();
+            await uow.CommitAsync();
 
             await LoadAsync();
         }

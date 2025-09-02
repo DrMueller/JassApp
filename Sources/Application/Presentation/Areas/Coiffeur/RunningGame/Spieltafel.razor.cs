@@ -1,5 +1,6 @@
 ﻿using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
+using JassApp.Domain.Shared.Data.Writing;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
@@ -9,7 +10,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         private CancellationTokenSource? _cts;
 
         [Inject]
-        public required ICoiffeurSpielrundeRepository Repo { get; set; }
+        public required IUnitOfWorkFactory UowFactory { get; set; }
 
         [Parameter]
         [EditorRequired]
@@ -27,7 +28,11 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
             try
             {
                 await Task.Delay(3000, _cts.Token);
-                await Repo.SaveAsync(Spielrunde);
+
+                using var uow = UowFactory.Create();
+                var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
+                await repo.SaveAsync(Spielrunde);
+                await uow.CommitAsync();
             }
             catch (TaskCanceledException)
             {

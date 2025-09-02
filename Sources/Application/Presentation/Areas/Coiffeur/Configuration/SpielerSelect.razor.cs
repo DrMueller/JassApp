@@ -12,6 +12,9 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         [EditorRequired]
         public required IReadOnlyCollection<Domain.Spieler.Models.Spieler> Spieler { get; set; }
 
+        [Parameter]
+        public required string Label { get; set; } = "Spieler";
+
         private Domain.Spieler.Models.Spieler? SelectedSpieler { get; set; }
 
         private async Task HandleSpielerChangedAsync(Domain.Spieler.Models.Spieler arg)

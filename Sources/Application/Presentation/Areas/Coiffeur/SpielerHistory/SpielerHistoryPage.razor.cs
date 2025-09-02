@@ -1,5 +1,5 @@
-﻿using JassApp.Domain.Spieler.BusinessObjects;
-using JassApp.Domain.Spieler.Services;
+﻿using JassApp.Domain.Shared.Data.Querying;
+using JassApp.Domain.Spieler.Specifications;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.Coiffeur.SpielerHistory
@@ -9,7 +9,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.SpielerHistory
         public const string Path = "coiffeur/game/playerhistory";
 
         [Inject]
-        public required ISpielerQueryService QueryService { get; set; }
+        public required IQueryService QueryService { get; set; }
 
         private IReadOnlyCollection<SpielerHistoryEntryBo>? Entries { get; set; }
 
@@ -17,7 +17,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.SpielerHistory
 
         protected override async Task OnInitializedAsync()
         {
-            Entries = await QueryService.LoadHistoryAsync();
+            Entries = await QueryService.QueryAsync(new SpielerHistorySpec());
         }
     }
 }

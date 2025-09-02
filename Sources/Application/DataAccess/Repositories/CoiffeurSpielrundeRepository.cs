@@ -19,7 +19,7 @@ namespace JassApp.DataAccess.Repositories
             Remove(rundeTable);
         }
 
-        public async Task<Either<InformationEntries, int>> SaveAsync(CoiffeurSpielrunde runde)
+        public async Task<Either<InformationEntries, CoiffeurSpielrundeTable>> SaveAsync(CoiffeurSpielrunde runde)
         {
             var rundeTable = await LoadSertAsync(runde.Id);
 
@@ -29,7 +29,7 @@ namespace JassApp.DataAccess.Repositories
             MapJassTeams(runde, rundeTable);
             MapTrumpfrunden(runde, rundeTable);
 
-            return rundeTable.Id;
+            return rundeTable;
         }
 
         private static void MapJassTeam(JassTeam model, JassTeamTable table)
