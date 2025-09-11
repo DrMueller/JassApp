@@ -2,43 +2,75 @@
 using JassApp.Domain.Coiffeur.Repositories;
 using JassApp.Domain.Shared.Data.Writing;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 {
-    public partial class Spieltafel
+    public partial class Spieltafel : IAsyncDisposable
     {
-        private CancellationTokenSource? _cts;
+        private readonly CancellationTokenSource _cts = new();
 
-        [Inject]
-        public required IUnitOfWorkFactory UowFactory { get; set; }
+        private bool _isDirty;
+        private Task? _loopTask;
 
         [Parameter]
         [EditorRequired]
         public required CoiffeurSpielrunde Spielrunde { get; set; }
 
-        private async Task HandleValueChangedAsync()
+        [Inject]
+        public required IUnitOfWorkFactory UowFactory { get; set; }
+
+        private Color DirtyColor => _isDirty ? Color.Error : Color.Success;
+
+        public async ValueTask DisposeAsync()
         {
-            if (_cts != null)
+            await _cts.CancelAsync();
+            if (_loopTask is not null)
             {
-                await _cts.CancelAsync();
+#pragma warning disable VSTHRD003
+                await _loopTask;
+#pragma warning restore VSTHRD003
             }
 
-            _cts = new CancellationTokenSource();
+            _cts.Dispose();
+        }
 
+        protected override void OnInitialized()
+        {
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5)); // interval
+            _loopTask = SaveAsync(timer, _cts.Token);
+        }
+
+        private void HandleValueChanged()
+        {
+            _isDirty = true;
+            StateHasChanged();
+        }
+
+        private async Task SaveAsync(PeriodicTimer timer, CancellationToken ct)
+        {
             try
             {
-                await Task.Delay(3000, _cts.Token);
-
-                using var uow = UowFactory.Create();
-                var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
-                await repo.SaveAsync(Spielrunde);
-                await uow.CommitAsync();
+                while (await timer.WaitForNextTickAsync(ct))
+                {
+                    while (await timer.WaitForNextTickAsync(ct))
+                    {
+                        using var uow = UowFactory.Create();
+                        var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
+                        await repo.SaveAsync(Spielrunde);
+                        await uow.CommitAsync();
+                        _isDirty = false;
+                        StateHasChanged();
+                    }
+                }
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
             }
-
-            StateHasChanged();
+            finally
+            {
+                timer.Dispose();
+            }
         }
     }
 }

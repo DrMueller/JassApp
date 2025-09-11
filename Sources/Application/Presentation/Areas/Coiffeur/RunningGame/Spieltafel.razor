@@ -1,10 +1,18 @@
 ﻿@using JassApp.Presentation.Areas.Coiffeur.RunningGame.Runde
 @using JassApp.Presentation.Areas.Coiffeur.RunningGame.Totals
 @using MudBlazor
+
 <MudPaper Class="pa-4">
     <MudTable CustomFooter="true" FixedHeader="true" FixedFooter="true" Items="@Spielrunde.Trumpfrunden" Dense="true" Bordered="true" Hover="false" Elevation="0" Class="w-100">
         <HeaderContent>
-            <MudTh style="width: 100px;">@Spielrunde.PunktwertDescription</MudTh>
+            <MudTh style="width:100px;">
+                <div style="display:flex; align-items:center; gap:4px;">
+                    @Spielrunde.PunktwertDescription
+                    <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive"
+                             Color="DirtyColor"
+                             Size="Size.Small" />
+                </div>
+            </MudTh>
             <MudTh colspan="2" align="center">
                 <TeamDetails Team="@Spielrunde.JassTeam1"/>
             </MudTh>
@@ -14,7 +22,7 @@
         </HeaderContent>
 
         <RowTemplate Context="r">
-            <TrumpfRundeDisplay OnValueChanged="HandleValueChangedAsync"
+            <TrumpfRundeDisplay OnValueChanged="HandleValueChanged"
                                 CoiffeurTrumpfrunde="r">
             </TrumpfRundeDisplay>
         </RowTemplate>
