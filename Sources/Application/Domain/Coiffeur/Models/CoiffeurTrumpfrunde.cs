@@ -37,6 +37,8 @@ namespace JassApp.Domain.Coiffeur.Models
             CoiffeurTrumpf = coiffeurTrumpf;
         }
 
+        public int AmountOfResultate => _resultate.Count(f => f.Punkte.HasValue);
+
         public CoiffeurTrumpf CoiffeurTrumpf { get; }
 
         public string Description =>

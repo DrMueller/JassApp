@@ -1,5 +1,4 @@
-﻿using JassApp.Domain.Coiffeur.Models;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 {
@@ -7,6 +6,6 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
     {
         [Parameter]
         [EditorRequired]
-        public required JassTeam Team { get; set; }
+        public required string TeamDescription { get; set; }
     }
 }

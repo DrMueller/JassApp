@@ -69,6 +69,27 @@ namespace JassApp.Domain.Coiffeur.Models
             return new Punktetotal(ownPunkte, ownPunkte - opposingPunkte);
         }
 
+        public string GetTeamDescription(JassTeamTyp teamTyp)
+        {
+            var team = JassTeams.Single(f => f.Typ == teamTyp);
+
+            var playedRounds = Trumpfrunden
+                .Sum(f => f.AmountOfResultate);
+
+            var team1 = JassTeams.Single(f => f.Typ == JassTeamTyp.Team1);
+            var team2 = JassTeams.Single(f => f.Typ == JassTeamTyp.Team2);
+
+            var reihenfolge = new SpielerReihenfolge(
+                team1.Spieler1,
+                team1.Spieler2,
+                team2.Spieler1,
+                team2.Spieler2);
+
+            var activeSpieler = reihenfolge.CalculateActiveSpieler(playedRounds);
+
+            return team.GetRundeDescription(activeSpieler);
+        }
+
         private JassTeamTyp GetOpposingTeamType(JassTeamTyp teamTyp)
         {
             return teamTyp == JassTeamTyp.Team1 ? JassTeamTyp.Team2 : JassTeamTyp.Team1;

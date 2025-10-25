@@ -40,16 +40,7 @@ namespace JassApp.Domain.Coiffeur.Models
             Typ = typ;
         }
 
-        public string Description
-        {
-            get
-            {
-                var spieler1Name = Spieler1.IstStartSpieler ? $"{Spieler1.Name}*" : Spieler1.Name;
-                var spieler2Name = Spieler2.IstStartSpieler ? $"{Spieler2.Name}*" : Spieler2.Name;
-
-                return $"{spieler1Name} & {spieler2Name}";
-            }
-        }
+        public string Description => $"{Spieler1.Name} & {Spieler2.Name}";
 
         public JassTeamId Id { get; }
         public JassTeamSpieler Spieler1 => _spieler.Single(f => f.Position == JassTeamSpielerPosition.Spieler1);
@@ -64,6 +55,23 @@ namespace JassApp.Domain.Coiffeur.Models
                 new JassTeamId(0),
                 typ,
                 jassTeamSpieler);
+        }
+
+        public string GetRundeDescription(JassTeamSpieler activeSpieler)
+        {
+            var spieler1Name = Spieler1.IstStartSpieler ? $"{Spieler1.Name}*" : Spieler1.Name;
+            var spieler2Name = Spieler2.IstStartSpieler ? $"{Spieler2.Name}*" : Spieler2.Name;
+
+            if (activeSpieler.Id == Spieler1.Id)
+            {
+                spieler1Name = $"[{spieler1Name}]";
+            }
+            else if (activeSpieler.Id == Spieler2.Id)
+            {
+                spieler2Name = $"[{spieler2Name}]";
+            }
+
+            return $"{spieler1Name} & {spieler2Name}";
         }
     }
 }
