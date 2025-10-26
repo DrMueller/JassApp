@@ -7,20 +7,20 @@ namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
     [PublicAPI]
     public static class JassTeamTestBuilder
     {
-        public static(JassTeam Team1, JassTeam Team2) Create()
+        public static(JassTeam Team1, JassTeam Team2) Create(int startSpielerPos = 2)
         {
             var team1Spieler1 = new JassTeamSpieler(
                 new JassTeamSpielerId(1),
                 new SpielerId(1),
                 "Test1",
-                false,
+                startSpielerPos == 0,
                 JassTeamSpielerPosition.Spieler1);
 
             var team1Spieler2 = new JassTeamSpieler(
                 new JassTeamSpielerId(2),
                 new SpielerId(2),
                 "Tes2",
-                true,
+                startSpielerPos == 2,
                 JassTeamSpielerPosition.Spieler2);
 
             var team1 = new JassTeam(
@@ -32,14 +32,14 @@ namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
                 new JassTeamSpielerId(3),
                 new SpielerId(3),
                 "Test3",
-                false,
+                startSpielerPos == 1,
                 JassTeamSpielerPosition.Spieler1);
 
             var team2Spieler2 = new JassTeamSpieler(
                 new JassTeamSpielerId(4),
                 new SpielerId(4),
                 "Test4",
-                true,
+                startSpielerPos == 3,
                 JassTeamSpielerPosition.Spieler2);
 
             var team2 = new JassTeam(

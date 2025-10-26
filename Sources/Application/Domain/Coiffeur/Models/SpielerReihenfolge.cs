@@ -1,27 +1,25 @@
 ﻿namespace JassApp.Domain.Coiffeur.Models
 {
-    public class SpielerReihenfolge(
-        JassTeamSpieler spieler1,
-        JassTeamSpieler spieler2,
-        JassTeamSpieler spieler3,
-        JassTeamSpieler spieler4)
+    public class SpielerReihenfolge
     {
+        private readonly IDictionary<int, JassTeamSpieler> _sortedSpieler;
+
+        public SpielerReihenfolge(IReadOnlyCollection<JassTeam> teams)
+        {
+            _sortedSpieler = new Dictionary<int, JassTeamSpieler>
+            {
+                { 0, teams.Single(t => t.Typ == JassTeamTyp.Team1).Spieler1 },
+                { 1, teams.Single(t => t.Typ == JassTeamTyp.Team2).Spieler1 },
+                { 2, teams.Single(t => t.Typ == JassTeamTyp.Team1).Spieler2 },
+                { 3, teams.Single(t => t.Typ == JassTeamTyp.Team2).Spieler2 },
+            };
+        }
+
         public JassTeamSpieler CalculateActiveSpieler(int amountOfRundenPlayed)
         {
-            var position = (spieler1.Position switch
-            {
-                JassTeamSpielerPosition.Spieler1 => 0,
-                JassTeamSpielerPosition.Spieler2 => 1,
-                _ => throw new InvalidOperationException("Unknown player position.")
-            } + amountOfRundenPlayed) % 4;
-            return position switch
-            {
-                0 => spieler1,
-                1 => spieler2,
-                2 => spieler3,
-                3 => spieler4,
-                _ => throw new InvalidOperationException("Invalid calculation for active player.")
-            };
+            var startIndex = _sortedSpieler.Values.ToList().FindIndex(s => s.IstStartSpieler);
+
+            return _sortedSpieler[(startIndex + amountOfRundenPlayed) % 4];
         }
     }
 }
