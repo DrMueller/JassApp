@@ -1,38 +1,38 @@
 ﻿@using MudBlazor
-<MudGrid>
-    <MudItem xs="6">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Team 1</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <div class="d-flex gap-4">
-                    <SpielerSelect OnSpielerChanged="OnSpieler1Selected" Spieler="@Spieler">
-                    </SpielerSelect>
-                    <SpielerSelect OnSpielerChanged="OnSpieler2Selected" Spieler="@Spieler">
-                    </SpielerSelect>
-                </div>
-            </MudCardContent>
-        </MudCard>
+<MudGrid Class="mt-4">
+
+    <!-- Top row -->
+    <!-- top left: Team 2 - Player 2 -->
+    <MudItem xs="6" Class="d-flex justify-center">
+        <MudStack AlignItems="AlignItems.Center" Spacing="1">
+            <MudText Typo="Typo.subtitle2">Team 2 – Player 2</MudText>
+            <SpielerSelect OnSpielerChanged="OnSpieler4Selected" Spieler="@Spieler"/>
+        </MudStack>
     </MudItem>
 
-    <MudItem xs="6">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Team 2</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <div class="d-flex gap-4">
-                    <SpielerSelect OnSpielerChanged="OnSpieler3Selected" Spieler="@Spieler">
-                    </SpielerSelect>
-                    <SpielerSelect OnSpielerChanged="OnSpieler4Selected" Spieler="@Spieler">
-                    </SpielerSelect>
-                </div>
-            </MudCardContent>
-        </MudCard>
+    <!-- top right: Team 1 - Player 2 -->
+    <MudItem xs="6" Class="d-flex justify-center">
+        <MudStack AlignItems="AlignItems.Center" Spacing="1">
+            <MudText Typo="Typo.subtitle2">Team 1 – Player 2</MudText>
+            <SpielerSelect OnSpielerChanged="OnSpieler2Selected" Spieler="@Spieler"/>
+        </MudStack>
     </MudItem>
+
+    <!-- Bottom row -->
+    <!-- bottom left: Team 1 - Player 1 -->
+    <MudItem xs="6" Class="d-flex justify-center mt-6">
+        <MudStack AlignItems="AlignItems.Center" Spacing="1">
+            <MudText Typo="Typo.subtitle2">Team 1 – Player 1</MudText>
+            <SpielerSelect OnSpielerChanged="OnSpieler1Selected" Spieler="@Spieler"/>
+        </MudStack>
+    </MudItem>
+
+    <!-- bottom right: Team 2 - Player 1 -->
+    <MudItem xs="6" Class="d-flex justify-center mt-6">
+        <MudStack AlignItems="AlignItems.Center" Spacing="1">
+            <MudText Typo="Typo.subtitle2">Team 2 – Player 1</MudText>
+            <SpielerSelect OnSpielerChanged="OnSpieler3Selected" Spieler="@Spieler"/>
+        </MudStack>
+    </MudItem>
+
 </MudGrid>
