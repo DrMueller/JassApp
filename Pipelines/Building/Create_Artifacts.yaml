@@ -25,6 +25,16 @@ jobs:
       command: restore
       projects: 'Sources/**/*.csproj'
 
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@5
+    displayName: "Replace tokens in appsettings.json"
+    inputs:
+      rootDirectory: "$(Build.Repository.LocalPath)"
+      targetFiles: |
+        **/appsettings.json
+      tokenPattern: rm
+      verbosity: detailed
+      keepToken: true
+
   - task: DotNetCoreCLI@2
     displayName: Publish Blazor
     inputs:

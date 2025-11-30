@@ -7,5 +7,7 @@ namespace JassApp.Common.Settings.Provisioning.Models
     {
         public const string SectionKey = "AppSettings";
         public string ConnectionString { get; set; } = null!;
+        public string AppVersion { get; set; } = null!;
+        public string GitHubCommit { get; set; } = null!;
     }
 }
