@@ -28,13 +28,13 @@ namespace JassApp.Domain.Coiffeur.Models
 
         public DateTime GestartetAm { get; }
         public CoiffeurSpielrundeId Id { get; }
-        public int PunkteWert { get; }
-        public string PunktwertDescription => $"{PunkteWert} Rp.";
-        public IReadOnlyCollection<JassTeam> JassTeams { get; }
-        public IReadOnlyCollection<CoiffeurTrumpfrunde> Trumpfrunden { get; }
 
         public JassTeam JassTeam1 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team1);
         public JassTeam JassTeam2 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team2);
+        public IReadOnlyCollection<JassTeam> JassTeams { get; }
+        public int PunkteWert { get; }
+        public string PunktwertDescription => $"{PunkteWert} Rp.";
+        public IReadOnlyCollection<CoiffeurTrumpfrunde> Trumpfrunden { get; }
 
         public int? CalculateMaetche(JassTeamTyp teamTyp)
         {
@@ -80,6 +80,16 @@ namespace JassApp.Domain.Coiffeur.Models
             var activeSpieler = reihenfolge.CalculateActiveSpieler(playedRounds);
 
             return team.GetRundeDescription(activeSpieler);
+        }
+
+        public IReadOnlyCollection<string> GetOffeneTruempfe(JassTeamTyp team)
+        {
+            return Trumpfrunden
+                .Where(f => !f[team].IstGespielt)
+                .Select(f => f.CoiffeurTrumpf)
+                .OrderBy(f => f.Typ)
+                .Select(f => f.Name)
+                .ToList();
         }
 
         private JassTeamTyp GetOpposingTeamType(JassTeamTyp teamTyp)

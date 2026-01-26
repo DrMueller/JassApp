@@ -6,6 +6,10 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
     {
         [Parameter]
         [EditorRequired]
+        public required EventCallback OnOpenTruempfeRequested { get; set; }
+
+        [Parameter]
+        [EditorRequired]
         public required string TeamDescription { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@using JassApp.Domain.Coiffeur.Models
 @using JassApp.Presentation.Areas.Coiffeur.RunningGame.Runde
 @using JassApp.Presentation.Areas.Coiffeur.RunningGame.Totals
+@using JassApp.Presentation.Shared.Voice
 @using MudBlazor
 <MudPaper Class="pa-4">
     <MudTable CustomFooter="true" FixedHeader="true" FixedFooter="true" Items="@Spielrunde.Trumpfrunden" Dense="true" Bordered="true" Hover="false" Elevation="0" Class="w-100">
@@ -14,10 +15,13 @@
                 </div>
             </MudTh>
             <MudTh colspan="2" align="center">
-                <TeamDetails TeamDescription="@Spielrunde.GetTeamDescription(JassTeamTyp.Team1)"/>
+                <TeamDetails OnOpenTruempfeRequested="() => SayOpenTruempfeAsync(JassTeamTyp.Team1)"
+TeamDescription="@Spielrunde.GetTeamDescription(JassTeamTyp.Team1)"/>
             </MudTh>
             <MudTh colspan="2" align="center">
-                <TeamDetails TeamDescription="@Spielrunde.GetTeamDescription(JassTeamTyp.Team2)"/>
+                <TeamDetails
+                    OnOpenTruempfeRequested="() => SayOpenTruempfeAsync(JassTeamTyp.Team2)"
+                    TeamDescription="@Spielrunde.GetTeamDescription(JassTeamTyp.Team2)"/>
             </MudTh>
         </HeaderContent>
 
@@ -33,3 +37,5 @@
         </FooterContent>
     </MudTable>
 </MudPaper>
+
+<Voice @ref="VoiceRef"></Voice>

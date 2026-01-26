@@ -9,6 +9,8 @@
                 !string.IsNullOrEmpty(RawInput) &&
                 RawInput.EndsWith("**");
 
+        public bool IstGespielt => Punkte != null;
+
         public bool IstMatch =>
             !string.IsNullOrEmpty(RawInput) &&
             RawInput.EndsWith("*")

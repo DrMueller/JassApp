@@ -1,6 +1,7 @@
 ﻿using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
 using JassApp.Domain.Shared.Data.Writing;
+using JassApp.Presentation.Shared.Voice;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -21,6 +22,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         public required IUnitOfWorkFactory UowFactory { get; set; }
 
         private Color DirtyColor => _isDirty ? Color.Error : Color.Success;
+        private Voice VoiceRef { get; set; } = null!;
 
         public async ValueTask DisposeAsync()
         {
@@ -71,6 +73,15 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
             {
                 timer.Dispose();
             }
+        }
+
+        private async Task SayOpenTruempfeAsync(JassTeamTyp team)
+        {
+            var offeneTruempfe = Spielrunde.GetOffeneTruempfe(team);
+
+            var str = string.Join(", ", offeneTruempfe.Select(t => t.ToString()));
+
+            await VoiceRef.SpeakAsync([str]);
         }
     }
 }
