@@ -1,0 +1,12 @@
+parameters:
+  ConnectedServiceName: '8f844eb9-4cc9-486f-b55b-7d40da6c41c0'
+
+steps:
+- task: SqlAzureDacpacDeployment@1
+  displayName: 'Apply SQL Scripts'
+  inputs:
+    azureSubscription: '${{ parameters.ConnectedServiceName }}'
+    AuthenticationType: connectionString
+    ConnectionString: '$(AppSettings.ConnectionString)'
+    deployType: SqlTask
+    SqlFile: '$(System.DefaultWorkingDirectory)/**/SQL/Migration.sql'

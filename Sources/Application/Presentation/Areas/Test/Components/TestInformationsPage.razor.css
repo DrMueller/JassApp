@@ -1,0 +1,235 @@
+﻿/* wwwroot/css/jasstafel.css */
+
+/* Optional: kreidige System-Fonts, ohne externe Imports */
+:root {
+    --wood-1: #5a3b22;
+    --wood-2: #3f2817;
+    --wood-glow: rgba(255, 220, 160, .18);
+    --board-1: #0f2a22;
+    --board-2: #0b1f1a;
+    --chalk: #f4f1e7;
+    --chalk-dim: rgba(244,241,231,.78);
+    --chalk-faint: rgba(244,241,231,.35);
+    --danger: #ff7b7b;
+    --ok: #8bffb4;
+    --shadow: rgba(0,0,0,.45);
+    --radius: 18px;
+}
+
+/* Seitenhintergrund */
+body {
+    margin: 0;
+    background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.06), transparent 55%), radial-gradient(1000px 700px at 80% 20%, rgba(255,255,255,.04), transparent 55%), linear-gradient(180deg, #0b0f10, #070a0b);
+    color: var(--chalk);
+}
+
+/* Hauptcontainer (Tafel) */
+.jass-board {
+    position: relative;
+    max-width: 1080px;
+    margin: 28px auto;
+    padding: 26px;
+    border-radius: calc(var(--radius) + 10px);
+    background: linear-gradient(135deg, var(--wood-1), var(--wood-2));
+    box-shadow: 0 22px 60px var(--shadow), inset 0 0 0 2px rgba(255,255,255,.05), inset 0 0 18px var(--wood-glow);
+}
+
+/* Innenflaeche (Tafel/Schiefer) */
+.jass-board__inner {
+    border-radius: var(--radius);
+    padding: 22px;
+    background: radial-gradient(900px 500px at 30% 20%, rgba(255,255,255,.06), transparent 55%), radial-gradient(900px 500px at 70% 60%, rgba(255,255,255,.04), transparent 60%), linear-gradient(180deg, var(--board-1), var(--board-2));
+    box-shadow: inset 0 0 0 2px rgba(244,241,231,.22), inset 0 0 30px rgba(0,0,0,.55);
+}
+
+/* Kreide-Textlook */
+.chalk {
+    color: var(--chalk);
+    text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 6px rgba(244,241,231,.10);
+    letter-spacing: .02em;
+}
+
+.chalk--dim {
+    color: var(--chalk-dim);
+}
+
+.chalk--faint {
+    color: var(--chalk-faint);
+}
+
+/* Ueberschrift */
+.jass-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+    .jass-title h1 {
+        margin: 0;
+        font-size: 1.55rem;
+        font-weight: 750;
+    }
+
+    .jass-title .meta {
+        font-size: .95rem;
+        color: var(--chalk-dim);
+    }
+
+/* Grid fuer Bereiche */
+.jass-grid {
+    display: grid;
+    grid-template-columns: 1.25fr .75fr;
+    gap: 16px;
+}
+
+@media (max-width: 920px) {
+    .jass-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Kreidekasten (Panels) */
+.jass-panel {
+    border-radius: 14px;
+    background: rgba(255,255,255,.03);
+    border: 1px dashed rgba(244,241,231,.25);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+    padding: 14px;
+}
+
+/* Jasstafel-Scoretable */
+.jass-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(244,241,231,.22);
+    background: rgba(0,0,0,.14);
+}
+
+    .jass-table th,
+    .jass-table td {
+        padding: 10px 12px;
+        text-align: center;
+        font-variant-numeric: tabular-nums;
+        color: var(--chalk);
+    }
+
+    .jass-table thead th {
+        font-weight: 750;
+        border-bottom: 1px solid rgba(244,241,231,.22);
+        background: rgba(255,255,255,.03);
+    }
+
+    .jass-table tbody tr:not(:last-child) td {
+        border-bottom: 1px dashed rgba(244,241,231,.18);
+    }
+
+    .jass-table td:not(:last-child),
+    .jass-table th:not(:last-child) {
+        border-right: 1px dashed rgba(244,241,231,.18);
+    }
+
+/* Handgeschriebener Trenner / Kreidestrich */
+.chalk-line {
+    height: 2px;
+    margin: 12px 0;
+    background: linear-gradient(90deg, transparent, rgba(244,241,231,.55), rgba(244,241,231,.20), rgba(244,241,231,.55), transparent);
+    filter: blur(.2px);
+    opacity: .9;
+}
+
+/* Buttons wie Kreide-Schilder */
+.jass-btn {
+    appearance: none;
+    border: 1px solid rgba(244,241,231,.35);
+    background: rgba(255,255,255,.04);
+    color: var(--chalk);
+    border-radius: 999px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 650;
+    letter-spacing: .02em;
+    box-shadow: 0 10px 22px rgba(0,0,0,.35), inset 0 0 0 1px rgba(0,0,0,.25);
+    transition: transform .08s ease, background .12s ease, border-color .12s ease;
+}
+
+    .jass-btn:hover {
+        background: rgba(255,255,255,.07);
+        border-color: rgba(244,241,231,.55);
+    }
+
+    .jass-btn:active {
+        transform: translateY(1px);
+    }
+
+.jass-btn--ok {
+    border-color: rgba(139,255,180,.55);
+}
+
+.jass-btn--danger {
+    border-color: rgba(255,123,123,.55);
+}
+
+/* Inputs im Tafelstil */
+.jass-input, .jass-select {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(244,241,231,.25);
+    background: rgba(0,0,0,.18);
+    color: var(--chalk);
+    padding: 10px 12px;
+    outline: none;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+}
+
+    .jass-input:focus, .jass-select:focus {
+        border-color: rgba(244,241,231,.55);
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,.25), 0 0 0 3px rgba(244,241,231,.10);
+    }
+
+/* Kleine Badges (z.B. Coiffeur-Status: Frei/Belegt) */
+.jass-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px dashed rgba(244,241,231,.30);
+    background: rgba(255,255,255,.03);
+    color: var(--chalk-dim);
+    font-size: .9rem;
+}
+
+.jass-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--chalk-faint);
+    box-shadow: 0 0 10px rgba(244,241,231,.10);
+}
+
+.jass-dot--ok {
+    background: var(--ok);
+    box-shadow: 0 0 12px rgba(139,255,180,.20);
+}
+
+.jass-dot--danger {
+    background: var(--danger);
+    box-shadow: 0 0 12px rgba(255,123,123,.20);
+}
+
+/* "Kreide-Staub" Overlay */
+.jass-board__inner::after {
+    content: "";
+    position: absolute;
+    inset: 26px;
+    border-radius: var(--radius);
+    pointer-events: none;
+    background: radial-gradient(2px 2px at 12% 18%, rgba(244,241,231,.20), transparent 60%), radial-gradient(2px 2px at 28% 62%, rgba(244,241,231,.14), transparent 60%), radial-gradient(2px 2px at 71% 33%, rgba(244,241,231,.12), transparent 60%), radial-gradient(2px 2px at 85% 74%, rgba(244,241,231,.10), transparent 60%);
+    opacity: .35;
+    filter: blur(.2px);
+}
