@@ -10,7 +10,8 @@ resources:
 
 variables:
   BuildConfiguration: 'Release'
-  PublishPath: '$(Build.ArtifactStagingDirectory)/App'
+  PublishPath: '$(Build.ArtifactStagingDirectory)'
+  SqlOutputFile: '$(Build.ArtifactStagingDirectory)/SQL/Migration.sql'
 
 jobs:
 - job: 'BuildAndPublishAsArtifact'
@@ -44,11 +45,22 @@ jobs:
 
       projects: 'Sources/Application/JassApp.csproj'
 
-      arguments: '--configuration $(BuildConfiguration) --output $(PublishPath) /p:DeleteExistingFiles=True'
+      arguments: '--configuration $(BuildConfiguration) --output $(PublishPath)/App /p:DeleteExistingFiles=True'
 
       zipAfterPublish: true
 
       modifyOutputPath: false
+
+  - script: 'dotnet tool install --global dotnet-ef --version 9.0.10'
+    displayName: 'Install EF'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Create ef sql migration script'
+    inputs:
+      command: custom
+      custom: ef
+      arguments: ' migrations script --configuration Release --output $(SqlOutputFile) --idempotent --context AppDbContext'
+      workingDirectory: '$(System.DefaultWorkingDirectory)\Sources\Application'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Save Artifact'
