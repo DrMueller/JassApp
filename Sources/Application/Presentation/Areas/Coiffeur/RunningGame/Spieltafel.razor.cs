@@ -81,6 +81,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
             var str = string.Join(", ", offeneTruempfe.Select(t => t.ToString()));
 
+            await VoiceRef.PrimeAsync();
             await VoiceRef.SpeakAsync([str]);
         }
     }
