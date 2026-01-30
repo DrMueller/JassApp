@@ -1,6 +1,6 @@
 ﻿@page "/tts-check"
 @using Microsoft.JSInterop
-@inject IJSRuntime JS
+@inject IJSRuntime Js
 
 <h3>TTS Check</h3>
 
@@ -18,7 +18,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _tts = await JS.InvokeAsync<IJSObjectReference>("import", "./tts.js");
+        _tts = await Js.InvokeAsync<IJSObjectReference>("import", "./tts.js");
         _supported = await _tts.InvokeAsync<bool>("isSupported");
     }
 
