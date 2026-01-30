@@ -8,7 +8,7 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
     public class CoiffeurSpielrundeFactory(
         ITrumpfRundenFactory trumpfrundenFactory) : ICoiffeurSpielrundeFactory
     {
-        public static string SpielerNichtEindeutigErrorMessage = "Spieler müssen eindeutig sein.";
+        public static readonly string SpielerNichtEindeutigErrorMessage = "Spieler müssen eindeutig sein.";
 
         public Either<InformationEntries, CoiffeurSpielrunde> TryCreating(
             int punkteWert,
@@ -32,13 +32,30 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
                 return spielerValidation;
             }
 
+            if (startSpieler == null)
+            {
+                return InformationEntries.CreateFromError(
+                    "Startspieler muss gesetzt sein."
+                );
+            }
+
+            if (startSpieler.Id != spieler1?.Id &&
+                startSpieler.Id != spieler2?.Id &&
+                startSpieler.Id != spieler3?.Id &&
+                startSpieler.Id != spieler4?.Id)
+            {
+                return InformationEntries.CreateFromError(
+                    "Startspieler muss einer der ausgewählten Spieler sein."
+                );
+            }
+
             var trumpfRunden = trumpfrundenFactory.Create(typ);
 
             var teamSpieler1 = new JassTeamSpieler(
                 new JassTeamSpielerId(0),
                 spieler1!.Id,
                 spieler1.Name,
-                startSpieler!.Id == spieler1.Id,
+                startSpieler.Id == spieler1.Id,
                 JassTeamSpielerPosition.Spieler1);
 
             var teamSpieler2 = new JassTeamSpieler(
