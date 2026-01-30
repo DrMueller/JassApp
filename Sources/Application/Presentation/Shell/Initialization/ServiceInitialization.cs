@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace JassApp.Presentation.Shell.Initialization
 {
@@ -19,6 +20,7 @@ namespace JassApp.Presentation.Shell.Initialization
 
             services.AddCors();
             services.AddAntiforgery();
+            services.AddSpeechSynthesis();
 
             services.AddHsts(options =>
             {

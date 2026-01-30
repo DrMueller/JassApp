@@ -1,73 +1,25 @@
-﻿using JassApp.Presentation.Infrastructure.JavaScript.Services;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
+using Toolbelt.Blazor.SpeechSynthesis;
 
 namespace JassApp.Presentation.Shared.Voice
 {
     public partial class Voice
     {
-        private IJSObjectReference? _module;
-
         [Inject]
-        public required IJavaScriptLocator JsLocator { get; set; }
+        public required SpeechSynthesis SpeechSynthesis { get; set; }
 
-        [Inject]
-        private IJSRuntime JsRuntime { get; set; } = default!;
-
-        private string? ErrorMessage { get; set; }
-
-        public async Task PrimeAsync(string lang = "de-CH")
+        public async Task SpeakAsync(string text)
         {
-            try
+            var utterancet = new SpeechSynthesisUtterance
             {
-                ErrorMessage = null;
-                await AssureJavascriptModuleAsync();
-                await _module!.InvokeAsync<bool>("prime", lang);
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-                StateHasChanged();
-                throw;
-            }
-        }
+                Text = text,
+                Lang = "de-CH",
+                Pitch = 1.5,
+                Rate = 1.3,
+                Volume = 1.0
+            };
 
-        public async Task SpeakAsync(string text, string lang = "de-CH")
-        {
-            try
-            {
-                ErrorMessage = null;
-                await AssureJavascriptModuleAsync();
-                await _module!.InvokeVoidAsync("speak", text, lang);
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-                StateHasChanged();
-                throw;
-            }
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                try
-                {
-                    await AssureJavascriptModuleAsync();
-                }
-                catch (Exception ex)
-                {
-                    ErrorMessage = ex.Message;
-                    StateHasChanged();
-                }
-            }
-        }
-
-        private async Task AssureJavascriptModuleAsync()
-        {
-            var jsFilePath = await JsLocator.LocateJsFilePathAsync<Voice>();
-            _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>("import", jsFilePath);
+            await SpeechSynthesis.SpeakAsync(utterancet);
         }
     }
 }
