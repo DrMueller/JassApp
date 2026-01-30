@@ -1,1 +1,8 @@
-﻿
+﻿@using MudBlazor
+
+@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+    <MudAlert Severity="Severity.Error" Variant="Variant.Filled">
+        Voice error: @ErrorMessage
+    </MudAlert>
+}

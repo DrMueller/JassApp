@@ -42,8 +42,6 @@ export async function prime(lang = "de-CH") {
 
     await getVoicesReadyPromise();
 
-    // On iOS Safari, speech often requires a user gesture to unlock audio.
-    // The common workaround is to speak a very short utterance in response to a click/tap.
     const u = new SpeechSynthesisUtterance(" ");
     u.lang = lang;
     u.rate = 1;
@@ -65,40 +63,14 @@ export async function prime(lang = "de-CH") {
     });
 }
 
-export async function speakList(items, delayMs = 0, lang = "de-CH") {
+export async function speak(text, lang = "de-CH") {
     if (!("speechSynthesis" in window)) throw new Error("SpeechSynthesis not supported.");
 
     await getVoicesReadyPromise();
 
-    queue = items.slice();
-    next(delayMs, lang);
-}
-
-function next(delayMs, lang) {
-    if (queue.length === 0) {
-        isSpeaking = false;
-        return;
-    }
-
-    if (isSpeaking) {
-        // Avoid overlapping utterances; Safari can get stuck otherwise.
-        try { window.speechSynthesis.cancel(); } catch { }
-    }
-
-    isSpeaking = true;
-    const text = queue.shift();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = lang;
     u.rate = 1.8;
-
-    u.onend = () => {
-        setTimeout(() => next(delayMs, lang), delayMs);
-    };
-
-    u.onerror = () => {
-        // Skip problematic utterance, continue queue.
-        setTimeout(() => next(delayMs, lang), delayMs);
-    };
 
     window.speechSynthesis.speak(u);
 }

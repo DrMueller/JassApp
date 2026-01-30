@@ -1,4 +1,4 @@
-name: $(Date:yyyyMMdd)$(Rev:.r)
+name: 1.0$(rev:.r) # build numbering format
 
 trigger:
   batch: true

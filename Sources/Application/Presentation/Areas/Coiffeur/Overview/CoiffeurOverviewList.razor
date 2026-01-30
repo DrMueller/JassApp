@@ -9,11 +9,10 @@
                 <MudTableSortLabel SortBy="new Func<CoiffeurSpielrunde, object>(x => x.Id)">ID</MudTableSortLabel>
             </MudTh>
             <MudTh>
-                <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<CoiffeurSpielrunde, object>(x => x.GestartetAm)">Gestartet am</MudTableSortLabel>
+                <MudTableSortLabel InitialDirection="SortDirection.Descending" SortBy="new Func<CoiffeurSpielrunde, object>(x => x.GestartetAm)">Gestartet am</MudTableSortLabel>
             </MudTh>
             <MudTh>Team 1</MudTh>
             <MudTh>Team 2</MudTh>
-
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="ID">@context.Id.Value</MudTd>
