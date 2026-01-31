@@ -35,10 +35,6 @@
     <Compile Include="DataAccess\Tables\TrumpfrundeTable.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Presentation\Areas\JassStatistiken\TestPage.razor" />
-  </ItemGroup>
-
 	
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />

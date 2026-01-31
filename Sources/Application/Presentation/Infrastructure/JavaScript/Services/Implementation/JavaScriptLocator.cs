@@ -1,17 +1,18 @@
-﻿using JetBrains.Annotations;
+﻿using JassApp.Presentation.Infrastructure.Caching.Controllers;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Components;
 
 namespace JassApp.Presentation.Infrastructure.JavaScript.Services.Implementation
 {
     [UsedImplicitly]
-    public class JavaScriptLocator : IJavaScriptLocator
+    public class JavaScriptLocator(ICachingService cachingService) : IJavaScriptLocator
     {
-        public Task<string> LocateAbsoluteJsFilePathAsync(string absolutePath)
+        public async Task<string> LocateAbsoluteJsFilePathAsync(string absolutePath)
         {
-            return Task.FromResult(absolutePath);
+            return await AppendCacheSuffixAsync(absolutePath);
         }
 
-        public Task<string> LocateJsFilePathAsync<T>() where T : ComponentBase
+        public async Task<string> LocateJsFilePathAsync<T>() where T : ComponentBase
         {
             var type = typeof(T);
 
@@ -26,7 +27,17 @@ namespace JassApp.Presentation.Infrastructure.JavaScript.Services.Implementation
 
             var path = relativeNamespace.Replace(".", "/");
             path += ".razor.js";
-            return Task.FromResult(path);
+
+            path = await AppendCacheSuffixAsync(path);
+
+            return path;
+        }
+
+        private async Task<string> AppendCacheSuffixAsync(string path)
+        {
+            var cacheSuffix = await cachingService.LoadCachingSuffixAsync();
+
+            return path + cacheSuffix;
         }
     }
 }
