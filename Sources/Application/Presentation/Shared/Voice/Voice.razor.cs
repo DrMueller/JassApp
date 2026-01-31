@@ -15,7 +15,7 @@ namespace JassApp.Presentation.Shared.Voice
                 Text = text,
                 Lang = "de-CH",
                 Pitch = 1.5,
-                Rate = 1.3,
+                Rate = 1.0,
                 Volume = 1.0
             };
 
