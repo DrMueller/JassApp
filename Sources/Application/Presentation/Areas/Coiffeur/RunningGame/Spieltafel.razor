@@ -4,6 +4,9 @@
 @using JassApp.Presentation.Shared.Voice
 @using MudBlazor
 <MudPaper Class="pa-4">
+    <p>
+        Test124
+    </p>
     <MudTable CustomFooter="true" FixedHeader="true" FixedFooter="true" Items="@Spielrunde.Trumpfrunden" Dense="true" Bordered="true" Hover="false" Elevation="0" Class="w-100">
         <HeaderContent>
             <MudTh style="width:100px;">
@@ -16,7 +19,7 @@
             </MudTh>
             <MudTh colspan="2" align="center">
                 <TeamDetails OnOpenTruempfeRequested="() => SayOpenTruempfeAsync(JassTeamTyp.Team1)"
-TeamDescription="@Spielrunde.GetTeamDescription(JassTeamTyp.Team1)"/>
+                             TeamDescription="@Spielrunde.GetTeamDescription(JassTeamTyp.Team1)"/>
             </MudTh>
             <MudTh colspan="2" align="center">
                 <TeamDetails

@@ -1,5 +1,7 @@
 ﻿using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
+using JassApp.Domain.Coiffeur.Specifications;
+using JassApp.Domain.Shared.Data.Querying;
 using JassApp.Domain.Shared.Data.Writing;
 using JassApp.Presentation.Shared.Voice;
 using Microsoft.AspNetCore.Components;
@@ -13,6 +15,13 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         private bool _isDirty;
         private Task? _loopTask;
+
+        [Inject]
+        public required IQueryService QueryService { get; set; }
+
+        [Parameter]
+        [EditorRequired]
+        public required bool SpectatorMode { get; set; }
 
         [Parameter]
         [EditorRequired]
@@ -43,6 +52,19 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
             _loopTask = SaveAsync(timer, _cts.Token);
         }
 
+        private async Task CheckInfoVoicesAsync()
+        {
+            if (Spielrunde.CheckShouldSmoke())
+            {
+                await VoiceRef.SpeakAsync("Raucherpause");
+            }
+
+            if (Spielrunde.CheckShouldOrderShots())
+            {
+                await VoiceRef.SpeakAsync("Shots bestellen");
+            }
+        }
+
         private void HandleValueChanged()
         {
             _isDirty = true;
@@ -57,12 +79,25 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
                 {
                     while (await timer.WaitForNextTickAsync(ct))
                     {
-                        using var uow = UowFactory.Create();
-                        var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
-                        await repo.SaveAsync(Spielrunde);
-                        await uow.CommitAsync();
-                        _isDirty = false;
-                        StateHasChanged();
+                        if (!SpectatorMode)
+                        {
+                            if (!_isDirty)
+                            {
+                                continue;
+                            }
+
+                            using var uow = UowFactory.Create();
+                            var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
+                            await repo.SaveAsync(Spielrunde);
+                            await uow.CommitAsync();
+                            _isDirty = false;
+                            StateHasChanged();
+                            await CheckInfoVoicesAsync();
+                        }
+                        else
+                        {
+                            Spielrunde = await QueryService.QuerySingleAsync(new CoiffeurSpielrundeSpec(Spielrunde.Id));
+                        }
                     }
                 }
             }
@@ -77,11 +112,9 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         private async Task SayOpenTruempfeAsync(JassTeamTyp team)
         {
-            var offeneTruempfe = Spielrunde.GetOffeneTruempfe(team);
+            var offeneTruempfe = Spielrunde.GetOffeneTruempfeDescription(team);
 
-            var str = string.Join(", ", offeneTruempfe.Select(t => t.ToString()));
-
-            await VoiceRef.SpeakAsync(str);
+            await VoiceRef.SpeakAsync(offeneTruempfe);
         }
     }
 }

@@ -10,6 +10,8 @@
             <MudGrid>
                 <MudItem xs="4">
                     <MudNumericField @bind-Value="Punktwert" Label="Punktwert" Variant="Variant.Text" Min="0"/>
+                    <MudCheckBox @bind-Value="IncludeRaucherpausen">Raucherpausen</MudCheckBox>
+                    <MudCheckBox @bind-Value="IncludeShots">Shots</MudCheckBox>
                 </MudItem>
                 <MudItem xs="4">
                     <CoiffeurTypSelect OnSelectedTypChanged="f => SelectedTyp = f"></CoiffeurTypSelect>
@@ -18,7 +20,6 @@
                     <SpielerSelect Label="Starter" OnSpielerChanged="s => StartSpieler = s" Spieler="@Spieler">
                     </SpielerSelect>
                 </MudItem>
-
                 <MudItem xs="12">
                     <TeamConfiguration OnSpieler1Selected="spieler => SelectedSpieler1 = spieler"
                                        OnSpieler2Selected="spieler => SelectedSpieler2 = spieler"
@@ -27,14 +28,12 @@
                                        Spieler="@Spieler">
                     </TeamConfiguration>
                 </MudItem>
-
                 <MudItem xs="12" class="d-flex justify-end">
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
                         <MudButton OnClick="StartGameAsync">Start</MudButton>
                     </MudButtonGroup>
                 </MudItem>
             </MudGrid>
-
         </MudCardContent>
     </MudCard>
 </LoadingIndicator>

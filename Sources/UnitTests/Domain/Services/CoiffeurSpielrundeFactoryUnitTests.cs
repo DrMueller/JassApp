@@ -45,7 +45,9 @@ namespace JassApp.UnitTests.Domain.Services
                 spieler2,
                 spieler3,
                 spieler4,
-                spieler1);
+                spieler1,
+                true,
+                true);
 
             // Assert
             var actualSpielRunde = actualSpielRundeResult.ShouldBeRight();
@@ -73,7 +75,9 @@ namespace JassApp.UnitTests.Domain.Services
                 new Spieler(new SpielerId(duplicateSpielerId), "Spieler21", []),
                 spieler3,
                 new Spieler(new SpielerId(4), "Spieler4", []),
-                spieler3);
+                spieler3,
+                true,
+                true);
 
             // Assert
             var actualInfoEntries = actualResult.ShouldBeLeft();

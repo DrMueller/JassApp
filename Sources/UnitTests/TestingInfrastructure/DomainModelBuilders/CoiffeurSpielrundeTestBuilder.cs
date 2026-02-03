@@ -19,7 +19,8 @@ namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
                 DateTime.Now,
                 10,
                 trumpfrunden,
-                [team1, team2]);
+                [team1, team2],
+                new CoiffeurSpielrundeOptionen(true, true));
         }
     }
 }

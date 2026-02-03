@@ -24,6 +24,10 @@
                     <MudIcon Icon="@Icons.Material.Filled.Edit"/>
                 </MudButton>
 
+                <MudButton Size="Size.Small" OnClick="() => SpectateRunde(context.Id.Value)" Color="Color.Primary" Variant="Variant.Filled">
+                    <MudIcon Icon="@Icons.Material.Filled.RemoveRedEye"/>
+                </MudButton>
+
                 <MudButton Size="Size.Small" OnClick="() => DeleteRundeAsync(context.Id.Value)" Color="Color.Primary"
                            Variant="Variant.Filled">
                     <MudIcon Icon="@Icons.Material.Filled.Delete"/>

@@ -10,7 +10,7 @@ namespace JassApp.Domain.Coiffeur.Specifications
 {
     public class CoiffeurSpielrundeSpec : IQuerySpecification<CoiffeurSpielrunde>
     {
-        private Maybe<CoiffeurSpielrundeId> _idMaybe = None.Value;
+        private readonly Maybe<CoiffeurSpielrundeId> _idMaybe = None.Value;
 
         public CoiffeurSpielrundeSpec()
         {
@@ -47,7 +47,8 @@ namespace JassApp.Domain.Coiffeur.Specifications
                             new SpielerId(ts.Spieler.Id),
                             ts.Spieler.Name,
                             ts.IstStartSpieler,
-                            ts.Position)).ToList())).ToList())
+                            ts.Position)).ToList())).ToList(),
+                    new CoiffeurSpielrundeOptionen(f.DoIncludeRaucherpausen, f.DoIncludeShots))
             );
 
             return map;

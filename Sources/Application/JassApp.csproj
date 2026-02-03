@@ -11,15 +11,19 @@
     <Compile Remove="Common\NewFolder\**" />
     <Compile Remove="DataAccess\Configurations\NewFolder\**" />
     <Compile Remove="DataAccess\Tables\**" />
+    <Compile Remove="NewFolder\**" />
     <Content Remove="Common\NewFolder\**" />
     <Content Remove="DataAccess\Configurations\NewFolder\**" />
     <Content Remove="DataAccess\Tables\**" />
+    <Content Remove="NewFolder\**" />
     <EmbeddedResource Remove="Common\NewFolder\**" />
     <EmbeddedResource Remove="DataAccess\Configurations\NewFolder\**" />
     <EmbeddedResource Remove="DataAccess\Tables\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Common\NewFolder\**" />
     <None Remove="DataAccess\Configurations\NewFolder\**" />
     <None Remove="DataAccess\Tables\**" />
+    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +44,7 @@
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
     <PackageReference Include="Lamar" Version="15.0.1" />
     <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="15.0.1" />
+    <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.47.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -58,6 +63,7 @@
 	
   <ItemGroup>
     <Folder Include="DataAccess\Migrations\" />
+    <Folder Include="Integrations\Speech\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

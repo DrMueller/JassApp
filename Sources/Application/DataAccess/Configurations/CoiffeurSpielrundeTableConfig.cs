@@ -18,6 +18,12 @@ namespace JassApp.DataAccess.Configurations
             builder.Property(f => f.CoiffeurSpielrundeTyp)
                 .IsRequired();
 
+            builder.Property(f => f.DoIncludeRaucherpausen)
+                .IsRequired();
+
+            builder.Property(f => f.DoIncludeShots)
+                .IsRequired();
+
             builder
                 .HasMany(f => f.Trumpfrunden)
                 .WithOne()

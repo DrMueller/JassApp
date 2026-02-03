@@ -17,7 +17,9 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
             Spieler.Models.Spieler? spieler2,
             Spieler.Models.Spieler? spieler3,
             Spieler.Models.Spieler? spieler4,
-            Spieler.Models.Spieler? startSpieler)
+            Spieler.Models.Spieler? startSpieler,
+            bool includeRaucherpausen,
+            bool includeShots)
         {
             if (punkteWert == 0)
             {
@@ -90,7 +92,8 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
                 DateTime.Now,
                 punkteWert,
                 trumpfRunden,
-                jassTeams);
+                jassTeams,
+                new CoiffeurSpielrundeOptionen(includeRaucherpausen, includeShots));
         }
 
         private static InformationEntries ValidateSpieler(

@@ -8,22 +8,29 @@ namespace JassApp.Domain.Coiffeur.Models
     [PublicAPI]
     public class CoiffeurSpielrunde
     {
+        private int _shotsAfterNRounds;
+
         public CoiffeurSpielrunde(
             CoiffeurSpielrundeId id,
             DateTime gestartetAm,
             int punkteWert,
             IReadOnlyCollection<CoiffeurTrumpfrunde> trumpfrunden,
-            IReadOnlyCollection<JassTeam> jassTeams)
+            IReadOnlyCollection<JassTeam> jassTeams,
+            CoiffeurSpielrundeOptionen optionen)
         {
             Guard.ValueNotDefault(() => punkteWert);
             Guard.CollectionNotNullOrEmpty(() => trumpfrunden);
             Guard.ObjectNotNull(() => jassTeams);
+            Guard.ObjectNotNull(() => optionen);
 
             Id = id;
             GestartetAm = gestartetAm;
             PunkteWert = punkteWert;
             Trumpfrunden = trumpfrunden;
             JassTeams = jassTeams;
+            Optionen = optionen;
+
+            _shotsAfterNRounds = Random.Shared.Next(10, 20);
         }
 
         public DateTime GestartetAm { get; }
@@ -32,6 +39,7 @@ namespace JassApp.Domain.Coiffeur.Models
         public JassTeam JassTeam1 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team1);
         public JassTeam JassTeam2 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team2);
         public IReadOnlyCollection<JassTeam> JassTeams { get; }
+        public CoiffeurSpielrundeOptionen Optionen { get; }
         public int PunkteWert { get; }
         public string PunktwertDescription => $"{PunkteWert} Rp.";
         public IReadOnlyCollection<CoiffeurTrumpfrunde> Trumpfrunden { get; }
@@ -69,6 +77,76 @@ namespace JassApp.Domain.Coiffeur.Models
             return new Punktetotal(ownPunkte, ownPunkte - opposingPunkte);
         }
 
+        public bool CheckShouldOrderShots()
+        {
+            var playedAmount = Trumpfrunden
+                .Sum(f => f.AmountOfResultate);
+
+            if (!Optionen.DoIncludeShots)
+            {
+                return false;
+            }
+
+            return playedAmount == _shotsAfterNRounds;
+        }
+
+        public bool CheckShouldSmoke()
+        {
+            if (!Optionen.DoIncludeRaucherpausen)
+            {
+                return false;
+            }
+
+            var playedRounds = Trumpfrunden
+                .Sum(f => f.AmountOfResultate);
+
+            if (Trumpfrunden.Count == 12)
+            {
+                return playedRounds == 6;
+            }
+
+            if (Trumpfrunden.Count == 13)
+            {
+                return playedRounds == 7;
+            }
+
+            return false;
+        }
+
+        public string GetOffeneTruempfeDescription(JassTeamTyp team)
+        {
+            var offen = Trumpfrunden
+                .Where(f => !f[team].IstGespielt)
+                .Select(f => f.CoiffeurTrumpf)
+                .OrderBy(f => f.Typ)
+                .Select(f => f.Name)
+                .ToList();
+
+            if (offen.Count == 0)
+            {
+                return "Keine offenen Trümpfe";
+            }
+
+            if (offen.Count == Trumpfrunden.Count)
+            {
+                return "Alle Trümpfe offen";
+            }
+
+            if (offen.Count >= Trumpfrunden.Count - 3)
+            {
+                var gespielt = Trumpfrunden
+                    .Where(f => f[team].IstGespielt)
+                    .Select(f => f.CoiffeurTrumpf)
+                    .OrderBy(f => f.Typ)
+                    .Select(f => f.Name)
+                    .ToList();
+
+                return "Alles ausser " + string.Join(", ", gespielt);
+            }
+
+            return string.Join(", ", offen);
+        }
+
         public string GetTeamDescription(JassTeamTyp teamTyp)
         {
             var team = JassTeams.Single(f => f.Typ == teamTyp);
@@ -80,16 +158,6 @@ namespace JassApp.Domain.Coiffeur.Models
             var activeSpieler = reihenfolge.CalculateActiveSpieler(playedRounds);
 
             return team.GetRundeDescription(activeSpieler);
-        }
-
-        public IReadOnlyCollection<string> GetOffeneTruempfe(JassTeamTyp team)
-        {
-            return Trumpfrunden
-                .Where(f => !f[team].IstGespielt)
-                .Select(f => f.CoiffeurTrumpf)
-                .OrderBy(f => f.Typ)
-                .Select(f => f.Name)
-                .ToList();
         }
 
         private JassTeamTyp GetOpposingTeamType(JassTeamTyp teamTyp)

@@ -28,6 +28,9 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         [Inject]
         public required IUnitOfWorkFactory UowFactory { get; set; }
 
+        private bool IncludeRaucherpausen { get; set; }
+        private bool IncludeShots { get; set; }
+
         private InformationEntries? Infos { get; set; }
 
         private bool IsLoading => Spieler == null;
@@ -58,7 +61,9 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
                     SelectedSpieler2,
                     SelectedSpieler3,
                     SelectedSpieler4,
-                    StartSpieler)
+                    StartSpieler,
+                    IncludeRaucherpausen,
+                    IncludeShots)
                 .ToTuple(() => null!);
 
             if (Infos.HasErrorsOrWarnings)

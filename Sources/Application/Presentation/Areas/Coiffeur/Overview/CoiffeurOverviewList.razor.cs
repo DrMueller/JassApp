@@ -53,12 +53,17 @@ namespace JassApp.Presentation.Areas.Coiffeur.Overview
 
         private void EditRunde(int rundeId)
         {
-            Navigator.NavigateTo(AppPath.Create(RunningGamePage.Path).Format(rundeId), true);
+            Navigator.NavigateTo(AppPath.Create(RunningGamePage.Path).Format(rundeId, false), true);
         }
 
         private async Task LoadAsync()
         {
             Runden = await QueryService.QueryAsync(new CoiffeurSpielrundeSpec());
+        }
+
+        private void SpectateRunde(int rundeId)
+        {
+            Navigator.NavigateTo(AppPath.Create(RunningGamePage.Path).Format(rundeId, true), true);
         }
     }
 }

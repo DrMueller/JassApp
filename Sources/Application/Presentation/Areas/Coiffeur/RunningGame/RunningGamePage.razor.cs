@@ -7,7 +7,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 {
     public partial class RunningGamePage
     {
-        public const string Path = "coiffeur/game/{gameId:int}";
+        public const string Path = "coiffeur/game/{gameId:int}/{spectatorMode:boolean}";
 
         [Parameter]
         [EditorRequired]
@@ -15,6 +15,10 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         [Inject]
         public required IQueryService QueryService { get; set; }
+
+        [Parameter]
+        [EditorRequired]
+        public required bool SpectatorMode { get; set; }
 
         private bool IsLoading => Spielrunde == null;
 

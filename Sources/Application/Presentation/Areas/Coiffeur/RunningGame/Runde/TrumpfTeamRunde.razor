@@ -3,7 +3,11 @@
     <MudTextField
         T="string"
         Value="Value"
-        ValueChanged="f => HandleValueChangedAsync(f)" Immediate="true"/>
+        ValueChanged="f => HandleValueChangedAsync(f)" Immediate="true"
+        UserAttributes="@(new Dictionary<string, object>
+                        {
+                            ["inputmode"] = "numeric"
+                        })"/>
 </MudTd>
 <MudTd>
     <MudText>@CoiffeurTrumpfrunde.CalculatePunktedifferenz(TeamTyp)</MudText>
