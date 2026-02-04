@@ -7,7 +7,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 {
     public partial class RunningGamePage
     {
-        public const string Path = "coiffeur/game/{gameId:int}/{spectatorMode:boolean}";
+        public const string Path = "coiffeur/game/{gameId:int}/{spectatorMode:bool}";
 
         [Parameter]
         [EditorRequired]
