@@ -1,4 +1,5 @@
-﻿using JassApp.Domain.Coiffeur.Models;
+﻿using JassApp.Common.LanguageExtensions.Types.Maybes;
+using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
 using JassApp.Domain.Coiffeur.Specifications;
 using JassApp.Domain.Shared.Data.Querying;
@@ -48,7 +49,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         protected override void OnInitialized()
         {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5)); // interval
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(3)); // interval
             _loopTask = SaveAsync(timer, _cts.Token);
         }
 
@@ -59,10 +60,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
                 await VoiceRef.SpeakAsync("Raucherpause");
             }
 
-            if (Spielrunde.CheckShouldOrderShots())
-            {
-                await VoiceRef.SpeakAsync("Shots bestellen");
-            }
+            await Spielrunde.CheckWhoShouldOrderShots()
+                .WhenSomeAsync(async spieler => await VoiceRef.SpeakAsync($"{spieler} bestellt Shots!"));
         }
 
         private void HandleValueChanged()

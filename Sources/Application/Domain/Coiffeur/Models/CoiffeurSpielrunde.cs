@@ -1,4 +1,6 @@
 ﻿using JassApp.Common.LanguageExtensions.Invariance;
+using JassApp.Common.LanguageExtensions.Types.Maybes;
+using JassApp.Common.LanguageExtensions.Types.Maybes.Implementation;
 using JetBrains.Annotations;
 
 namespace JassApp.Domain.Coiffeur.Models
@@ -77,19 +79,6 @@ namespace JassApp.Domain.Coiffeur.Models
             return new Punktetotal(ownPunkte, ownPunkte - opposingPunkte);
         }
 
-        public bool CheckShouldOrderShots()
-        {
-            var playedAmount = Trumpfrunden
-                .Sum(f => f.AmountOfResultate);
-
-            if (!Optionen.DoIncludeShots)
-            {
-                return false;
-            }
-
-            return playedAmount == _shotsAfterNRounds;
-        }
-
         public bool CheckShouldSmoke()
         {
             if (!Optionen.DoIncludeRaucherpausen)
@@ -111,6 +100,34 @@ namespace JassApp.Domain.Coiffeur.Models
             }
 
             return false;
+        }
+
+        public Maybe<string> CheckWhoShouldOrderShots()
+        {
+            var playedAmount = Trumpfrunden
+                .Sum(f => f.AmountOfResultate);
+
+            if (!Optionen.DoIncludeShots)
+            {
+                return None.Value;
+            }
+
+            var shouldOrder = playedAmount == _shotsAfterNRounds;
+            if (shouldOrder)
+            {
+                var allPlayers = new List<string>
+                {
+                    JassTeam1.Spieler1.Name,
+                    JassTeam2.Spieler2.Name,
+                    JassTeam1.Spieler2.Name,
+                    JassTeam2.Spieler1.Name
+                };
+
+                var randomPlayer = allPlayers[Random.Shared.Next(allPlayers.Count)];
+                return randomPlayer;
+            }
+
+            return None.Value;
         }
 
         public string GetOffeneTruempfeDescription(JassTeamTyp team)
