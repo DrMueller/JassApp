@@ -3,7 +3,8 @@
 <MudTd DataLabel="CoiffeurTrumpf">@CoiffeurTrumpfrunde.Description</MudTd>
 
 <TrumpfTeamRunde OnValueChanged="OnValueChanged"
-                 TeamTyp="JassTeamTyp.Team1" CoiffeurTrumpfrunde="@CoiffeurTrumpfrunde">
+                 TrumpfrundeResultat="@CoiffeurTrumpfrunde[JassTeamTyp.Team1]"  CoiffeurTrumpfrunde="@CoiffeurTrumpfrunde">
 </TrumpfTeamRunde>
 
-<TrumpfTeamRunde OnValueChanged="OnValueChanged" TeamTyp="JassTeamTyp.Team2" CoiffeurTrumpfrunde="@CoiffeurTrumpfrunde"></TrumpfTeamRunde>
+<TrumpfTeamRunde TrumpfrundeResultat="@CoiffeurTrumpfrunde[JassTeamTyp.Team2]"
+    OnValueChanged="OnValueChanged" CoiffeurTrumpfrunde="@CoiffeurTrumpfrunde"></TrumpfTeamRunde>

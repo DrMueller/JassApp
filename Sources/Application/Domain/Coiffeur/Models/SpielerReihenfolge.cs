@@ -1,4 +1,4 @@
-﻿namespace JassApp.Domain.Coiffeur.Models
+namespace JassApp.Domain.Coiffeur.Models
 {
     public class SpielerReihenfolge
     {

@@ -7,38 +7,6 @@
     <UserSecretsId>99283cf6-0876-429c-be3c-d7279f38250f</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Common\NewFolder\**" />
-    <Compile Remove="DataAccess\Configurations\NewFolder\**" />
-    <Compile Remove="DataAccess\Tables\**" />
-    <Compile Remove="NewFolder\**" />
-    <Content Remove="Common\NewFolder\**" />
-    <Content Remove="DataAccess\Configurations\NewFolder\**" />
-    <Content Remove="DataAccess\Tables\**" />
-    <Content Remove="NewFolder\**" />
-    <EmbeddedResource Remove="Common\NewFolder\**" />
-    <EmbeddedResource Remove="DataAccess\Configurations\NewFolder\**" />
-    <EmbeddedResource Remove="DataAccess\Tables\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="Common\NewFolder\**" />
-    <None Remove="DataAccess\Configurations\NewFolder\**" />
-    <None Remove="DataAccess\Tables\**" />
-    <None Remove="NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Presentation\Areas\JassStatistiken\TestPage.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="DataAccess\Tables\Base\TableBase.cs" />
-    <Compile Include="DataAccess\Tables\JassTeamSpielerTable.cs" />
-    <Compile Include="DataAccess\Tables\JassTeamTable.cs" />
-    <Compile Include="DataAccess\Tables\SpielerTable.cs" />
-    <Compile Include="DataAccess\Tables\CoiffeurSpielrundeTable.cs" />
-    <Compile Include="DataAccess\Tables\TrumpfrundeTable.cs" />
-  </ItemGroup>
-
 	
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />

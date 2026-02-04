@@ -166,14 +166,43 @@ namespace JassApp.Domain.Coiffeur.Models
 
         public string GetTeamDescription(JassTeamTyp teamTyp)
         {
+            var team1Finished = Trumpfrunden.Count(f => f[JassTeamTyp.Team1].IstGespielt) == Trumpfrunden.Count;
+            var team2Finished = Trumpfrunden.Count(f => f[JassTeamTyp.Team2].IstGespielt) == Trumpfrunden.Count;
+
+            var spieler = new Dictionary<int, JassTeamSpieler>
+            {
+                { 0, JassTeam1.Spieler1 },
+                { 1, JassTeam2.Spieler1 },
+                { 2, JassTeam1.Spieler2 },
+                { 3, JassTeam2.Spieler2 }
+            };
+
+            var playedRounds = Trumpfrunden.Sum(f => f.AmountOfResultate);
+
+            var startIndex = spieler.Values.ToList().FindIndex(s => s.IstStartSpieler);
+
+            var spielerCount = 4;
+
+            if (team1Finished)
+            {
+                spieler[0] = JassTeam1.Spieler1;
+                spieler[1] = JassTeam1.Spieler2;
+                spieler[2] = JassTeam1.Spieler1;
+                spieler[3] = JassTeam1.Spieler2;
+            }
+            else if (team2Finished)
+            {
+                spieler[0] = JassTeam2.Spieler1;
+                spieler[1] = JassTeam2.Spieler2;
+                spieler[2] = JassTeam2.Spieler1;
+                spieler[3] = JassTeam2.Spieler2;
+            }
+
+            var mod = (startIndex + playedRounds) % spielerCount;
+
+            var activeSpieler = spieler[mod];
+
             var team = JassTeams.Single(f => f.Typ == teamTyp);
-
-            var playedRounds = Trumpfrunden
-                .Sum(f => f.AmountOfResultate);
-
-            var reihenfolge = new SpielerReihenfolge(JassTeams);
-            var activeSpieler = reihenfolge.CalculateActiveSpieler(playedRounds);
-
             return team.GetRundeDescription(activeSpieler);
         }
 

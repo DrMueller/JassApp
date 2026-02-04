@@ -12,11 +12,14 @@ namespace JassApp.Domain.Coiffeur.Models
             TrumpfrundeId id,
             int punkteModifikator,
             CoiffeurTrumpf coiffeurTrumpf,
-            string? resultatTeam1,
-            string? resultatTeam2) : this(id, punkteModifikator, coiffeurTrumpf)
+            TrumpfrundeResultat resultatTeam1,
+            TrumpfrundeResultat resultatTeam2) : this(id, punkteModifikator, coiffeurTrumpf)
         {
-            _resultate.Single(f => f.TeamTyp == JassTeamTyp.Team1).RawInput = resultatTeam1 ?? string.Empty;
-            _resultate.Single(f => f.TeamTyp == JassTeamTyp.Team2).RawInput = resultatTeam2 ?? string.Empty;
+            _resultate =
+            [
+                resultatTeam1,
+                resultatTeam2
+            ];
         }
 
         public CoiffeurTrumpfrunde(

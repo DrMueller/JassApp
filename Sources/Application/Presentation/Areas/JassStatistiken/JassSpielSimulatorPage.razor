@@ -1,8 +1,0 @@
-﻿@using JassApp.Presentation.Shared.LoadingIndication
-@using MudBlazor
-@attribute [Route(Path)]
-
-<LoadingIndicator IsLoading="IsLoading">
-    <MudButton OnClick="CreateNeueRunde" Color="Color.Primary" Variant="Variant.Filled">Neu</MudButton>
-    <JassSpielSimulation Runde="@Runde"></JassSpielSimulation>
-</LoadingIndicator>

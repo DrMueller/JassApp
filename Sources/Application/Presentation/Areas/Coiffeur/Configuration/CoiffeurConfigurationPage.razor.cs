@@ -86,7 +86,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
 
             Navigator.NavigateTo
             (AppPath.Create(RunningGamePage.Path)
-                .Format(rundeTable!.Id));
+                .Format(rundeTable!.Id, false));
         }
     }
 }

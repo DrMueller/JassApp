@@ -35,9 +35,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\JassApp.csproj" />
   </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Domain\Models\" />
-  </ItemGroup>
 
 </Project>

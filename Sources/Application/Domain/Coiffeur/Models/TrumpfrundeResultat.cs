@@ -1,53 +1,15 @@
 ﻿namespace JassApp.Domain.Coiffeur.Models
 {
-    public class TrumpfrundeResultat(JassTeamTyp teamTyp)
+    public class TrumpfrundeResultat(JassTeamTyp teamTyp, int? punkte, bool istMatsch, bool istKontermatsch)
     {
-        private string _rawInput = string.Empty;
-
-        public bool IstKonterMatch
-            =>
-                !string.IsNullOrEmpty(RawInput) &&
-                RawInput.EndsWith("**");
+        public TrumpfrundeResultat(JassTeamTyp teamTyp) : this(teamTyp, null, false, false)
+        {
+        }
 
         public bool IstGespielt => Punkte != null;
-
-        public bool IstMatch =>
-            !string.IsNullOrEmpty(RawInput) &&
-            RawInput.EndsWith("*")
-            && !IstKonterMatch;
-
-        public int? Punkte
-        {
-            get
-            {
-                var rawPunkte = _rawInput.Replace("*", "");
-                return int.TryParse(rawPunkte, out var punkte) ? punkte : null;
-            }
-        }
-
-        public string RawInput
-        {
-            get => _rawInput;
-            set
-            {
-                var rawPunkte = value.Replace("*", "");
-                var canParse = int.TryParse(rawPunkte, out var punkte);
-                if (!canParse)
-                {
-                    _rawInput = string.Empty;
-                    return;
-                }
-
-                if (punkte > 16)
-                {
-                    _rawInput = "16";
-                    return;
-                }
-
-                _rawInput = value;
-            }
-        }
-
+        public bool IstKonterMatch { get; set; } = istKontermatsch;
+        public bool IstMatch { get; set; } = istMatsch;
+        public int? Punkte { get; set; } = punkte;
         public JassTeamTyp TeamTyp { get; } = teamTyp;
     }
 }

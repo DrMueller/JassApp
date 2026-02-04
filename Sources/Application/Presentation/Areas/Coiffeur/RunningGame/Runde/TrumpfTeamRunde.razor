@@ -1,15 +1,19 @@
 ﻿@using MudBlazor
 <MudTd>
-    <MudTextField
-        T="string"
-        Value="Value"
-        ValueChanged="f => HandleValueChangedAsync(f)" Immediate="true"
-        UserAttributes="@(new Dictionary<string, object>
-                        {
-                            ["inputmode"] = "numeric",
-                            ["pattern"] = "[0-9]*"
-                        })"/>
+    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+        <MudNumericField
+            Max="16"
+            Min="0"
+                      @bind-Value="TrumpfrundeResultat.Punkte"
+                      @bind-Value:after="HandleValueChangedAsync"
+                      Immediate="true"/>
+
+        <MudCheckBox @bind-Value="TrumpfrundeResultat.IstMatch"
+                     @bind-Value:after="HandleValueChangedAsync">*</MudCheckBox>
+        <MudCheckBox @bind-Value="TrumpfrundeResultat.IstKonterMatch"
+                     @bind-Value:after="HandleValueChangedAsync">**</MudCheckBox>
+    </MudStack>
 </MudTd>
 <MudTd>
-    <MudText>@CoiffeurTrumpfrunde.CalculatePunktedifferenz(TeamTyp)</MudText>
+    <MudText>@CoiffeurTrumpfrunde.CalculatePunktedifferenz(TrumpfrundeResultat.TeamTyp)</MudText>
 </MudTd>

@@ -58,8 +58,13 @@ namespace JassApp.DataAccess.Repositories
                 var trumpfrundeTable = spielrundeTable.Trumpfrunden.SingleOrAddById(trumpfrunde.ID.Value);
                 trumpfrundeTable.PunkteModifikator = trumpfrunde.PunkteModifikator;
                 trumpfrundeTable.CoiffeurTrumpfTyp = trumpfrunde.CoiffeurTrumpf.Typ;
-                trumpfrundeTable.ResultatTeam1 = trumpfrunde[JassTeamTyp.Team1].RawInput;
-                trumpfrundeTable.ResultatTeam2 = trumpfrunde[JassTeamTyp.Team2].RawInput;
+                trumpfrundeTable.ResultatTeam1 = trumpfrunde[JassTeamTyp.Team1].Punkte;
+                trumpfrundeTable.IstMatschTeam1 = trumpfrunde[JassTeamTyp.Team1].IstMatch;
+                trumpfrundeTable.IstKonterMatchTeam1 = trumpfrunde[JassTeamTyp.Team1].IstKonterMatch;
+
+                trumpfrundeTable.ResultatTeam2 = trumpfrunde[JassTeamTyp.Team2].Punkte;
+                trumpfrundeTable.IstMatschTeam2 = trumpfrunde[JassTeamTyp.Team2].IstMatch;
+                trumpfrundeTable.IstKonterMatchTeam2 = trumpfrunde[JassTeamTyp.Team2].IstKonterMatch;
             }
         }
 

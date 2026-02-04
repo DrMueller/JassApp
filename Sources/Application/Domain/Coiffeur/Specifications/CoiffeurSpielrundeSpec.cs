@@ -37,8 +37,16 @@ namespace JassApp.Domain.Coiffeur.Specifications
                         new TrumpfrundeId(tr.Id),
                         tr.PunkteModifikator,
                         CoiffeurTrumpf.CreateFromTyp(tr.CoiffeurTrumpfTyp),
-                        tr.ResultatTeam1,
-                        tr.ResultatTeam2)).ToList(),
+                        new TrumpfrundeResultat(
+                            JassTeamTyp.Team1,
+                            tr.ResultatTeam1,
+                            tr.IstMatschTeam1,
+                            tr.IstKonterMatchTeam1),
+                        new TrumpfrundeResultat(
+                            JassTeamTyp.Team2,
+                            tr.ResultatTeam2,
+                            tr.IstMatschTeam2,
+                            tr.IstKonterMatchTeam2))).ToList(),
                     f.JassTeams.Select(t => new JassTeam(
                         new JassTeamId(t.Id),
                         t.JassTeamTyp,
