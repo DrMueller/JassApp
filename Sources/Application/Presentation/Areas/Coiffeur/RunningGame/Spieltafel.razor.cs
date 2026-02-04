@@ -50,7 +50,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         protected override void OnInitialized()
         {
             var timer = new PeriodicTimer(TimeSpan.FromSeconds(3)); // interval
-            _loopTask = SaveAsync(timer, _cts.Token);
+            _loopTask = AlignDataAsync(timer, _cts.Token);
         }
 
         private async Task CheckInfoVoicesAsync()
@@ -70,7 +70,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
             StateHasChanged();
         }
 
-        private async Task SaveAsync(PeriodicTimer timer, CancellationToken ct)
+        private async Task AlignDataAsync(PeriodicTimer timer, CancellationToken ct)
         {
             try
             {
@@ -96,6 +96,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
                         else
                         {
                             Spielrunde = await QueryService.QuerySingleAsync(new CoiffeurSpielrundeSpec(Spielrunde.Id));
+                            StateHasChanged();
                         }
                     }
                 }
