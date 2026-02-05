@@ -166,44 +166,44 @@ namespace JassApp.Domain.Coiffeur.Models
 
         public string GetTeamDescription(JassTeamTyp teamTyp)
         {
+            var orderAll = new List<(JassTeamTyp Team, JassTeamSpieler Spieler)>
+            {
+                (JassTeamTyp.Team1, JassTeam1.Spieler1),
+                (JassTeamTyp.Team2, JassTeam2.Spieler1),
+                (JassTeamTyp.Team1, JassTeam1.Spieler2),
+                (JassTeamTyp.Team2, JassTeam2.Spieler2)
+            };
+
+            var startIndexAll = orderAll.FindIndex(s => s.Spieler.IstStartSpieler);
+            if (startIndexAll < 0)
+            {
+                startIndexAll = 0;
+            }
+
+            // Pro eingetragene Runde ist der nächste Spieler dran.
+            var playedTotal = Trumpfrunden.Sum(f => f.AmountOfResultate);
+
+            // Basierend auf der 4er-Reihenfolge bestimmen wir den aktuellen Geber.
+            // Damit gelten automatisch auch die "weiter zählen"-Beispiele beim Abschluss.
+            var dealerIndexAll = (startIndexAll + playedTotal) % orderAll.Count;
+
             var team1Finished = Trumpfrunden.Count(f => f[JassTeamTyp.Team1].IstGespielt) == Trumpfrunden.Count;
             var team2Finished = Trumpfrunden.Count(f => f[JassTeamTyp.Team2].IstGespielt) == Trumpfrunden.Count;
 
-            var spieler = new Dictionary<int, JassTeamSpieler>
+            if (team1Finished ^ team2Finished)
             {
-                { 0, JassTeam1.Spieler1 },
-                { 1, JassTeam2.Spieler1 },
-                { 2, JassTeam1.Spieler2 },
-                { 3, JassTeam2.Spieler2 }
-            };
+                var finishedTeam = team1Finished ? JassTeamTyp.Team1 : JassTeamTyp.Team2;
 
-            var playedRounds = Trumpfrunden.Sum(f => f.AmountOfResultate);
-
-            var startIndex = spieler.Values.ToList().FindIndex(s => s.IstStartSpieler);
-
-            var spielerCount = 4;
-
-            if (team1Finished)
-            {
-                spieler[0] = JassTeam1.Spieler1;
-                spieler[1] = JassTeam1.Spieler2;
-                spieler[2] = JassTeam1.Spieler1;
-                spieler[3] = JassTeam1.Spieler2;
-            }
-            else if (team2Finished)
-            {
-                spieler[0] = JassTeam2.Spieler1;
-                spieler[1] = JassTeam2.Spieler2;
-                spieler[2] = JassTeam2.Spieler1;
-                spieler[3] = JassTeam2.Spieler2;
+                while (orderAll[dealerIndexAll].Team != finishedTeam)
+                {
+                    dealerIndexAll = (dealerIndexAll + 1) % orderAll.Count;
+                }
             }
 
-            var mod = (startIndex + playedRounds) % spielerCount;
-
-            var activeSpieler = spieler[mod];
+            var dealer = orderAll[dealerIndexAll].Spieler;
 
             var team = JassTeams.Single(f => f.Typ == teamTyp);
-            return team.GetRundeDescription(activeSpieler);
+            return team.GetRundeDescription(dealer);
         }
 
         private JassTeamTyp GetOpposingTeamType(JassTeamTyp teamTyp)

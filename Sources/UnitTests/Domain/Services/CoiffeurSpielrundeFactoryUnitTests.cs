@@ -66,15 +66,15 @@ namespace JassApp.UnitTests.Domain.Services
             // Arrange
             const int duplicateSpielerId = 1;
 
-            var spieler3 = new Spieler(new SpielerId(3), "Spieler3", []);
+            var spieler3 = new global::JassApp.Domain.Spieler.Models.Spieler(new SpielerId(3), "Spieler3", []);
 
             // Act
             var actualResult = _sut.TryCreating(1,
                 CoiffeurSpielrundeTyp.WithGschobna,
-                new Spieler(new SpielerId(duplicateSpielerId), "Spieler1", []),
-                new Spieler(new SpielerId(duplicateSpielerId), "Spieler21", []),
+                new global::JassApp.Domain.Spieler.Models.Spieler(new SpielerId(duplicateSpielerId), "Spieler1", []),
+                new global::JassApp.Domain.Spieler.Models.Spieler(new SpielerId(duplicateSpielerId), "Spieler21", []),
                 spieler3,
-                new Spieler(new SpielerId(4), "Spieler4", []),
+                new global::JassApp.Domain.Spieler.Models.Spieler(new SpielerId(4), "Spieler4", []),
                 spieler3,
                 true,
                 true);
