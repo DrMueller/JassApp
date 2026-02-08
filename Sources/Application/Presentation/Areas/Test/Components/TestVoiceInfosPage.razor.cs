@@ -162,6 +162,8 @@ namespace JassApp.Presentation.Areas.Test.Components
             await RefreshStateAsync();
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Global
+        // ReSharper disable once NotAccessedPositionalProperty.Global
         public record VoiceInfo(string Name, string Lang, bool Default, bool LocalService);
 
         public record SynthState(bool Supported, bool Speaking, bool Pending, bool Paused);

@@ -21,15 +21,15 @@ else
                 <input style="width:160px;" @bind="_preferredLang"/>
             </div>
 
+
             <div style="min-width:320px;">
                 <label>Voice</label><br/>
-                <select style="width:100%;" @bind="_preferredVoiceName">
-                    <option value="">(auto)</option>
+                <MudSelect @bind-Value="_preferredVoiceName">
                     @foreach (var v in _voices)
                     {
-                        <option value="@v.Name">@($"{v.Name} ({v.Lang}){(v.Default ? " [default]" : "")}")</option>
+                        <MudSelectItem Value="@v.Name">@($"{v.Name} ({v.Lang}){(v.Default ? " [default]" : "")}")</MudSelectItem>
                     }
-                </select>
+                </MudSelect>
             </div>
 
             <MudButton OnClick="PrimeAsync">Prime</MudButton>
