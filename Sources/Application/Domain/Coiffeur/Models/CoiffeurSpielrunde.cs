@@ -52,7 +52,7 @@ namespace JassApp.Domain.Coiffeur.Models
         {
             var ownMaetsche = Trumpfrunden.Count(f => f[teamTyp].IstMatch);
             var opposingTeam = GetOpposingTeamType(teamTyp);
-            var konterMaetsche = Trumpfrunden.Count(f => f[opposingTeam].IstKonterMatch);
+            var konterMaetsche = Trumpfrunden.Count(f => f[opposingTeam].IstKontermatsch);
             var istHerzGewinner = Trumpfrunden
                 .Single(f => f.CoiffeurTrumpf.Typ == CoiffeurTrumpfTyp.Herz)
                 .CheckIstGewinner(teamTyp);

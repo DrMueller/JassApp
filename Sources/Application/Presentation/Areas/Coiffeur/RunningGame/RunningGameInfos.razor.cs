@@ -1,5 +1,6 @@
 ﻿using JassApp.Common.LanguageExtensions.Types.Maybes;
 using JassApp.Domain.Coiffeur.Models;
+using JassApp.Presentation.Infrastructure.Timers;
 using JassApp.Presentation.Shared.Voices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -8,10 +9,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 {
     public partial class RunningGameInfos : IAsyncDisposable
     {
-        private readonly CancellationTokenSource _cts = new();
-        private Task? _loopTask;
+        private RunningTask? _runningTask;
         private bool _shotsWereInformed;
-
         private bool _smokeWasInformed;
 
         [Inject]
@@ -26,60 +25,42 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         public async ValueTask DisposeAsync()
         {
-            await _cts.CancelAsync();
-            if (_loopTask is not null)
+            if (_runningTask is not null)
             {
-#pragma warning disable VSTHRD003
-                await _loopTask;
-#pragma warning restore VSTHRD003
+                await _runningTask.DisposeAsync();
             }
-
-            _cts.Dispose();
         }
 
         protected override void OnAfterRender(bool firstRender)
         {
             if (firstRender)
             {
-                var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
-                _loopTask = CheckDataAsync(timer, _cts.Token);
+                var ts = TimeSpan.FromSeconds(5);
+                _runningTask = TimerRunner.Run(CheckDataAsync, ts);
             }
         }
 
-        private async Task CheckDataAsync(PeriodicTimer timer, CancellationToken ct)
+        private async Task CheckDataAsync()
         {
-            try
-            {
-                while (await timer.WaitForNextTickAsync(ct))
-                {
-                    await VoiceSupportRef.CheckSupportAsync();
+            await VoiceSupportRef.CheckSupportAsync();
 
-                    if (Spielrunde.CheckShouldSmoke() && !_smokeWasInformed)
+            if (Spielrunde.CheckShouldSmoke() && !_smokeWasInformed)
+            {
+                _smokeWasInformed = true;
+                await InformAsync("Raucherpause");
+            }
+
+            await Spielrunde.CheckWhoShouldOrderShots()
+                .WhenSomeAsync(async spieler =>
+                {
+                    if (_shotsWereInformed)
                     {
-                        _smokeWasInformed = true;
-                        await InformAsync("Raucherpause");
+                        return;
                     }
 
-                    await Spielrunde.CheckWhoShouldOrderShots()
-                        .WhenSomeAsync(async spieler =>
-                        {
-                            if (_shotsWereInformed)
-                            {
-                                return;
-                            }
-
-                            _shotsWereInformed = true;
-                            await InformAsync($"{spieler} bestellt Shots!");
-                        });
-                }
-            }
-            catch (OperationCanceledException)
-            {
-            }
-            finally
-            {
-                timer.Dispose();
-            }
+                    _shotsWereInformed = true;
+                    await InformAsync($"{spieler} bestellt Shots!");
+                });
         }
 
         private async Task InformAsync(string info)

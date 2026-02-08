@@ -14,7 +14,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
             sut.IstGespielt.Should().BeFalse();
             sut.Punkte.Should().BeNull();
             sut.IstMatch.Should().BeFalse();
-            sut.IstKonterMatch.Should().BeFalse();
+            sut.IstKontermatsch.Should().BeFalse();
         }
 
         [Fact]

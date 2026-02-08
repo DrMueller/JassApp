@@ -3,6 +3,7 @@ using JassApp.Domain.Coiffeur.Repositories;
 using JassApp.Domain.Coiffeur.Specifications;
 using JassApp.Domain.Shared.Data.Querying;
 using JassApp.Domain.Shared.Data.Writing;
+using JassApp.Presentation.Infrastructure.Timers;
 using JassApp.Presentation.Shared.Voices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -11,10 +12,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 {
     public partial class Spieltafel : IAsyncDisposable
     {
-        private readonly CancellationTokenSource _cts = new();
-
         private bool _isDirty;
-        private Task? _loopTask;
+        private RunningTask? _runningTask;
 
         [Inject]
         public required IQueryService QueryService { get; set; }
@@ -35,59 +34,38 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         public async ValueTask DisposeAsync()
         {
-            await _cts.CancelAsync();
-            if (_loopTask is not null)
+            if (_runningTask is not null)
             {
-#pragma warning disable VSTHRD003
-                await _loopTask;
-#pragma warning restore VSTHRD003
+                await _runningTask.DisposeAsync();
             }
-
-            _cts.Dispose();
         }
 
         protected override void OnInitialized()
         {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
-            _loopTask = AlignDataAsync(timer, _cts.Token);
+            var ts = TimeSpan.FromSeconds(5);
+            _runningTask = TimerRunner.Run(AlignDataAsync, ts);
         }
 
-        private async Task AlignDataAsync(PeriodicTimer timer, CancellationToken ct)
+        private async Task AlignDataAsync()
         {
-            try
+            if (!SpectatorMode)
             {
-                while (await timer.WaitForNextTickAsync(ct))
+                if (!_isDirty)
                 {
-                    while (await timer.WaitForNextTickAsync(ct))
-                    {
-                        if (!SpectatorMode)
-                        {
-                            if (!_isDirty)
-                            {
-                                continue;
-                            }
-
-                            using var uow = UowFactory.Create();
-                            var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
-                            await repo.SaveAsync(Spielrunde);
-                            await uow.CommitAsync();
-                            _isDirty = false;
-                            StateHasChanged();
-                        }
-                        else
-                        {
-                            Spielrunde = await QueryService.QuerySingleAsync(new CoiffeurSpielrundeSpec(Spielrunde.Id));
-                            StateHasChanged();
-                        }
-                    }
+                    return;
                 }
+
+                using var uow = UowFactory.Create();
+                var repo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
+                await repo.SaveAsync(Spielrunde);
+                await uow.CommitAsync();
+                _isDirty = false;
+                StateHasChanged();
             }
-            catch (OperationCanceledException)
+            else
             {
-            }
-            finally
-            {
-                timer.Dispose();
+                Spielrunde = await QueryService.QuerySingleAsync(new CoiffeurSpielrundeSpec(Spielrunde.Id));
+                StateHasChanged();
             }
         }
 
