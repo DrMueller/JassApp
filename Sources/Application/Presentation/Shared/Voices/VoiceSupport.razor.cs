@@ -67,7 +67,7 @@ namespace JassApp.Presentation.Shared.Voices
 
         private async Task AssureJavascriptModuleAsync()
         {
-            var jsFilePath = await JsLocator.LocateJsFilePathAsync<VoiceSupport>();
+            var jsFilePath = await JsLocator.LocateJsFilePathAsync(this);
             _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>("import", jsFilePath);
         }
     }

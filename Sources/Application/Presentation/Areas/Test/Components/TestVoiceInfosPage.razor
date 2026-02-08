@@ -1,0 +1,66 @@
+﻿@using MudBlazor
+@attribute [Route(Path)]
+
+<h3>Voice API Tester</h3>
+
+@if (!_isInitialized)
+{
+    <p>Initialisiere…</p>
+}
+else
+{
+    <div style="display:grid; gap:12px; max-width:900px;">
+        <div>
+            <label>Text</label><br/>
+            <textarea style="width:100%; height:90px;" @bind="_text"></textarea>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:end;">
+            <div>
+                <label>Bevorzugte Sprache</label><br/>
+                <input style="width:160px;" @bind="_preferredLang"/>
+            </div>
+
+            <div style="min-width:320px;">
+                <label>Voice</label><br/>
+                <select style="width:100%;" @bind="_preferredVoiceName">
+                    <option value="">(auto)</option>
+                    @foreach (var v in _voices)
+                    {
+                        <option value="@v.Name">@($"{v.Name} ({v.Lang}){(v.Default ? " [default]" : "")}")</option>
+                    }
+                </select>
+            </div>
+
+            <MudButton OnClick="PrimeAsync">Prime</MudButton>
+            <MudButton OnClick="SpeakAsync">Speak</MudButton>
+            <MudButton OnClick="CancelAsync">Cancel</MudButton>
+            <MudButton OnClick="RefreshVoicesAsync">Refresh voices</MudButton>
+            <MudButton OnClick="ClearLog">Clear log</MudButton>
+        </div>
+
+        <div>
+            <b>Status:</b> supported=@(_state?.Supported ?? false),
+            speaking=@(_state?.Speaking ?? false),
+            pending=@(_state?.Pending ?? false),
+            paused=@(_state?.Paused ?? false)
+        </div>
+
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px;">
+            <b>Event log</b>
+            <div style="max-height:320px; overflow:auto; margin-top:8px; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:12px;">
+                @if (_log.Count == 0)
+                {
+                    <div>(leer)</div>
+                }
+                else
+                {
+                    @foreach (var line in _log)
+                    {
+                        <div>@line</div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

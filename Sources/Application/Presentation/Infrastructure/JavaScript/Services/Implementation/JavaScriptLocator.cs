@@ -12,9 +12,9 @@ namespace JassApp.Presentation.Infrastructure.JavaScript.Services.Implementation
             return await AppendCacheSuffixAsync(absolutePath);
         }
 
-        public async Task<string> LocateJsFilePathAsync<T>() where T : ComponentBase
+        public async Task<string> LocateJsFilePathAsync(ComponentBase component)
         {
-            var type = typeof(T);
+            var type = component.GetType();
 
             var assemblyFullName = type.Assembly.FullName;
             var assemblyName = type.Assembly.FullName!.Substring(0, assemblyFullName!.IndexOf(','));
