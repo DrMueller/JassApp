@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace JassApp.Presentation.Shell.Initialization
 {
@@ -10,6 +11,8 @@ namespace JassApp.Presentation.Shell.Initialization
     {
         public static void Initialize(IServiceCollection services)
         {
+            services.AddSpeechSynthesis(); // <- Add this line.
+
             services.AddControllers();
             services.AddMudServices();
             services.Configure<AppSettings>(Program.Configuration.GetSection(AppSettings.SectionKey));
