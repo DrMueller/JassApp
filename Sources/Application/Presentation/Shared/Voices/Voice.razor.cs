@@ -19,6 +19,11 @@ namespace JassApp.Presentation.Shared.Voices
             await _module!.InvokeVoidAsync("speak", text);
         }
 
+        public async Task PrimeSpeechAsync()
+        {
+            await _module!.InvokeVoidAsync("primeSpeech");
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)

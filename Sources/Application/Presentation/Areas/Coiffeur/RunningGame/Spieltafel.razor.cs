@@ -30,7 +30,6 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         public required IUnitOfWorkFactory UowFactory { get; set; }
 
         private Color DirtyColor => _isDirty ? Color.Error : Color.Success;
-        private Voice VoiceRef { get; set; } = null!;
 
         public async ValueTask DisposeAsync()
         {
@@ -73,13 +72,6 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         {
             _isDirty = true;
             StateHasChanged();
-        }
-
-        private async Task SayOpenTruempfeAsync(JassTeamTyp team)
-        {
-            var offeneTruempfe = Spielrunde.GetOffeneTruempfeDescription(team);
-
-            await VoiceRef.SpeakAsync(offeneTruempfe);
         }
     }
 }
