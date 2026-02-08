@@ -1,11 +1,15 @@
 ﻿namespace JassApp.Presentation.Infrastructure.Timers
 {
-    public record RunningTask(Task Task, CancellationTokenSource TokenSource)
+    public class RunningTask(Task task, CancellationTokenSource tokenSource)
     {
         public async Task DisposeAsync()
         {
-            await TokenSource.CancelAsync();
-            TokenSource.Dispose();
+            await tokenSource.CancelAsync();
+            tokenSource.Dispose();
+
+#pragma warning disable VSTHRD003
+            await task;
+#pragma warning restore VSTHRD003
         }
     }
 
@@ -15,7 +19,6 @@
         {
             var timer = new PeriodicTimer(callbackSpan);
             var ct = new CancellationTokenSource();
-
             var task = RunAsync(timer, ct.Token, callback);
 
             return new RunningTask(task, ct);

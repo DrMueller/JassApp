@@ -61,6 +61,7 @@ namespace JassApp.Presentation.Shared.Voices
             if (firstRender)
             {
                 await AssureJavascriptModuleAsync();
+                await CheckSupportAsync();
             }
         }
 
