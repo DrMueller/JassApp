@@ -4,7 +4,6 @@ using JassApp.Domain.Coiffeur.Specifications;
 using JassApp.Domain.Shared.Data.Querying;
 using JassApp.Domain.Shared.Data.Writing;
 using JassApp.Presentation.Infrastructure.Timers;
-using JassApp.Presentation.Shared.Voices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
