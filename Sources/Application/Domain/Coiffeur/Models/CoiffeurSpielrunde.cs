@@ -46,6 +46,8 @@ namespace JassApp.Domain.Coiffeur.Models
         public string PunktwertDescription => $"{PunkteWert} Rp.";
         public IReadOnlyCollection<CoiffeurTrumpfrunde> Trumpfrunden { get; }
 
+        public bool WasFinished => Trumpfrunden.All(f => f[JassTeamTyp.Team1].IstGespielt && f[JassTeamTyp.Team2].IstGespielt);
+
         public int? CalculateMaetche(JassTeamTyp teamTyp)
         {
             var ownMaetsche = Trumpfrunden.Count(f => f[teamTyp].IstMatch);
@@ -86,20 +88,10 @@ namespace JassApp.Domain.Coiffeur.Models
                 return false;
             }
 
-            var playedRounds = Trumpfrunden
+            var playedResultate = Trumpfrunden
                 .Sum(f => f.AmountOfResultate);
 
-            if (Trumpfrunden.Count == 12)
-            {
-                return playedRounds == 6;
-            }
-
-            if (Trumpfrunden.Count == 13)
-            {
-                return playedRounds == 7;
-            }
-
-            return false;
+            return playedResultate == 12;
         }
 
         public Maybe<string> CheckWhoShouldOrderShots()

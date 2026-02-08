@@ -2,5 +2,6 @@
 @attribute [Route(Path)]
 
 <LoadingIndicator IsLoading="@IsLoading">
+    <RunningGameInfos Spielrunde="@Spielrunde"></RunningGameInfos>
     <Spieltafel Spielrunde="@Spielrunde" SpectatorMode="@SpectatorMode"></Spieltafel>
 </LoadingIndicator>

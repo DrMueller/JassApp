@@ -1,10 +1,9 @@
-﻿using JassApp.Common.LanguageExtensions.Types.Maybes;
-using JassApp.Domain.Coiffeur.Models;
+﻿using JassApp.Domain.Coiffeur.Models;
 using JassApp.Domain.Coiffeur.Repositories;
 using JassApp.Domain.Coiffeur.Specifications;
 using JassApp.Domain.Shared.Data.Querying;
 using JassApp.Domain.Shared.Data.Writing;
-using JassApp.Presentation.Shared.Voice;
+using JassApp.Presentation.Shared.Voices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -49,25 +48,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         protected override void OnInitialized()
         {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(3)); // interval
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
             _loopTask = AlignDataAsync(timer, _cts.Token);
-        }
-
-        private async Task CheckInfoVoicesAsync()
-        {
-            if (Spielrunde.CheckShouldSmoke())
-            {
-                await VoiceRef.SpeakAsync("Raucherpause");
-            }
-
-            await Spielrunde.CheckWhoShouldOrderShots()
-                .WhenSomeAsync(async spieler => await VoiceRef.SpeakAsync($"{spieler} bestellt Shots!"));
-        }
-
-        private void HandleValueChanged()
-        {
-            _isDirty = true;
-            StateHasChanged();
         }
 
         private async Task AlignDataAsync(PeriodicTimer timer, CancellationToken ct)
@@ -91,7 +73,6 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
                             await uow.CommitAsync();
                             _isDirty = false;
                             StateHasChanged();
-                            await CheckInfoVoicesAsync();
                         }
                         else
                         {
@@ -108,6 +89,12 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
             {
                 timer.Dispose();
             }
+        }
+
+        private void HandleValueChanged()
+        {
+            _isDirty = true;
+            StateHasChanged();
         }
 
         private async Task SayOpenTruempfeAsync(JassTeamTyp team)

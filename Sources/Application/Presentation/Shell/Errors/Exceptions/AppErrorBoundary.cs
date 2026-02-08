@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace JassApp.Presentation.Shell.ExceptionHandling
+namespace JassApp.Presentation.Shell.Errors.Exceptions
 {
     [UsedImplicitly]
     public class AppErrorBoundary : ErrorBoundary

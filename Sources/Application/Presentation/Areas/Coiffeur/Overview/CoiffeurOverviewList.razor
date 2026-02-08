@@ -13,12 +13,14 @@
             </MudTh>
             <MudTh>Team 1</MudTh>
             <MudTh>Team 2</MudTh>
+            <MudTh>Fertig?</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="ID">@context.Id.Value</MudTd>
             <MudTd DataLabel="Gestartet am">@context.GestartetAm.ToString(CultureInfo.InvariantCulture)</MudTd>
             <MudTd DataLabel="Team 1">@context.JassTeam1.Description</MudTd>
             <MudTd DataLabel="Team 2">@context.JassTeam2.Description</MudTd>
+            <MudTd DataLabel="Fertig?">@context.WasFinished</MudTd>
             <MudTd>
                 <MudButton Size="Size.Small" OnClick="() => EditRunde(context.Id.Value)" Color="Color.Primary" Variant="Variant.Filled">
                     <MudIcon Icon="@Icons.Material.Filled.Edit"/>

@@ -1,4 +1,6 @@
-﻿namespace JassApp.Presentation.Shell.Initialization
+﻿using JassApp.Presentation.Shell.Errors.NotFound;
+
+namespace JassApp.Presentation.Shell.Initialization
 {
     public static class AppInitialization
     {
@@ -12,6 +14,7 @@
                 app.UseHsts();
             }
 
+            app.UseNotFoundRedirect();
             app.UseHttpsRedirection();
             app.UseAntiforgery();
             app.MapStaticAssets();

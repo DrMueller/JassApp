@@ -1,4 +1,4 @@
-﻿namespace JassApp.Presentation.Shell.ExceptionHandling
+﻿namespace JassApp.Presentation.Shell.Errors.Exceptions
 {
     public record AppError(
         string ErrorType,

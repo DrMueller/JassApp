@@ -1,0 +1,26 @@
+﻿@using MudBlazor
+@attribute [Route(Path)]
+
+<div class="nf-wrap">
+    <div class="nf-card">
+        <div class="nf-emoji" aria-hidden="true">🕵️‍♂️🔎</div>
+
+        <h1 class="nf-title">404 – Seite nicht gefunden</h1>
+        <p class="nf-text">
+            Wir haben überall gesucht. Sogar im Cache. <br/>
+            Diese URL ist weg wie ein Semikolon in JavaScript.
+        </p>
+
+        <div class="nf-actions">
+            <MudButton OnClick="GoHome">
+                Zur Startseite
+            </MudButton>
+
+            <MudButton OnClick="RandomExcuse">
+                Zufälle Ausrede
+            </MudButton>
+        </div>
+
+        <p class="nf-excuse">@_excuse</p>
+    </div>
+</div>

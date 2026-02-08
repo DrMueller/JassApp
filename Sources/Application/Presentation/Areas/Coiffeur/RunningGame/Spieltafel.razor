@@ -1,12 +1,9 @@
 ﻿@using JassApp.Domain.Coiffeur.Models
 @using JassApp.Presentation.Areas.Coiffeur.RunningGame.Runde
 @using JassApp.Presentation.Areas.Coiffeur.RunningGame.Totals
-@using JassApp.Presentation.Shared.Voice
+@using JassApp.Presentation.Shared.Voices
 @using MudBlazor
 <MudPaper Class="pa-4">
-    <p>
-        @Spielrunde.Optionen.Description
-    </p>
     <MudTable CustomFooter="true" FixedHeader="true" FixedFooter="true" Items="@Spielrunde.Trumpfrunden" Dense="true" Bordered="true" Hover="false" Elevation="0" Class="w-100">
         <HeaderContent>
             <MudTh style="width:100px;">

@@ -1,4 +1,5 @@
-﻿@using JassApp.Presentation.Shell.ExceptionHandling
+﻿@using JassApp.Presentation.Shell.Errors.Exceptions
+@using JassApp.Presentation.Shell.Errors.NotFound
 @using JassApp.Presentation.Shell.Layout
 <AppErrorBoundary @ref="ErrorBoundary" OnExceptionThrown="HandleExceptionThrown">
     <ChildContent>
@@ -7,6 +8,9 @@
                 <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)"/>
                 <FocusOnNavigate RouteData="routeData" Selector="h1"/>
             </Found>
+            <NotFound>
+                <NotFoundPage/>
+            </NotFound>
         </Router>
     </ChildContent>
     <ErrorContent>

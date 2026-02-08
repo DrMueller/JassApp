@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Components;
 
-namespace JassApp.Presentation.Shell.ExceptionHandling
+namespace JassApp.Presentation.Shell.Errors.Exceptions
 {
     [UsedImplicitly]
     public partial class ErrorInfo

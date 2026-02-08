@@ -1,4 +1,4 @@
-﻿using JassApp.Presentation.Shell.ExceptionHandling;
+﻿using JassApp.Presentation.Shell.Errors.Exceptions;
 
 namespace JassApp.Presentation.Shell
 {
