@@ -1,9 +1,10 @@
-﻿@using JassApp.Presentation.Shared.Voices
+﻿@using JassApp.Presentation.Shared.LoadingIndication
+@using JassApp.Presentation.Shared.Voices
 @using MudBlazor
 <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="pa-1" Style="border:1px solid black;">
     <MudText>@TeamDescription</MudText>
-    <MudIconButton Icon="@Icons.Material.Filled.SurroundSound"
-                   OnClick="HandleOpenTruempfeRequestedAsync"/>
+    <LoadingIconButton Icon="@Icons.Material.Filled.SurroundSound"
+                       OnClick="HandleOpenTruempfeRequestedAsync" />
 </MudStack>
 
 <Voice @ref="VoiceRef"></Voice>

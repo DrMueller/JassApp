@@ -1,0 +1,11 @@
+﻿@using MudBlazor
+@if (_isLoading)
+{
+    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+}
+else
+{
+    <MudIconButton Disabled="@_isLoading"
+                   Icon="@Icon"
+                   OnClick="HandleClickAsync"/>
+}
