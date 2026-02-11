@@ -1,4 +1,5 @@
 ﻿@using JassApp.Presentation.Shared.LoadingIndication
+@using JassApp.Presentation.Shared.Voices.Components
 @using MudBlazor
 <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="pa-1" Style="border:1px solid black;">
     <MudText>@TeamDescription</MudText>
@@ -6,4 +7,4 @@
                        OnClick="HandleOpenTruempfeRequestedAsync"/>
 </MudStack>
 
-@* <Voice @ref="VoiceRef"></Voice> *@
+<Voice @ref="VoiceRef"></Voice>

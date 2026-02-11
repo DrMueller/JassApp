@@ -1,4 +1,4 @@
-﻿using JassApp.Presentation.Shared.Voices;
+﻿using JassApp.Presentation.Shared.Voices.Components;
 using Microsoft.AspNetCore.Components;
 using Toolbelt.Blazor.SpeechSynthesis;
 

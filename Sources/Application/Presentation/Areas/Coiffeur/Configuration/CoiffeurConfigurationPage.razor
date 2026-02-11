@@ -1,5 +1,6 @@
 ﻿@using JassApp.Presentation.Shared.Infos
 @using JassApp.Presentation.Shared.LoadingIndication
+@using JassApp.Presentation.Shared.Voices.Components
 @using MudBlazor
 @attribute [Route(Path)]
 
@@ -15,6 +16,7 @@
                 </MudItem>
                 <MudItem xs="4">
                     <CoiffeurTypSelect OnSelectedTypChanged="f => SelectedTyp = f"></CoiffeurTypSelect>
+                    <VoiceSelect></VoiceSelect>
                 </MudItem>
                 <MudItem xs="4">
                     <SpielerSelect Label="Starter" OnSpielerChanged="s => StartSpieler = s" Spieler="@Spieler">

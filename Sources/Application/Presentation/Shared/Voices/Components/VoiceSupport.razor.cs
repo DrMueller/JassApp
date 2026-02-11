@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
 
-namespace JassApp.Presentation.Shared.Voices
+namespace JassApp.Presentation.Shared.Voices.Components
 {
     public partial class VoiceSupport
     {

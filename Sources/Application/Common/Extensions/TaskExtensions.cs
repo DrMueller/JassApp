@@ -24,5 +24,12 @@ namespace JassApp.Common.Extensions
                 .Select(selector)
                 .ToList();
         }
+
+        [SuppressMessage("Usage", "VSTHRD003:Avoid awaiting foreign Tasks", Justification = "Dont have AwaitableTaskFactory at the moment")]
+        public static async ValueTask<TNew> MapAsync<T, TNew>(this ValueTask<T> task, Func<T, TNew> map)
+        {
+            var data = await task;
+            return map(data);
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using JassApp.Common.LanguageExtensions.Types.Maybes;
 using JassApp.Domain.Coiffeur.Models;
 using JassApp.Presentation.Infrastructure.Timers;
-using JassApp.Presentation.Shared.Voices;
+using JassApp.Presentation.Shared.Voices.Components;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
