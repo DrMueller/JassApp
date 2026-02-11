@@ -8,7 +8,7 @@
                Label="Stimme">
         @foreach (var voice in Voices!)
         {
-            <MudSelectItem Value="@voice">@voice.Name</MudSelectItem>
+            <MudSelectItem Value="@voice">@voice.Name - @voice.Lang</MudSelectItem>
         }
     </MudSelect>
 }
