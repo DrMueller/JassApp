@@ -1,6 +1,5 @@
 ﻿using JassApp.Common.InformationHandling;
 using JassApp.Common.LanguageExtensions.Types.Eithers;
-using JassApp.DataAccess.Extensions;
 using JassApp.DataAccess.Repositories.Base;
 using JassApp.DataAccess.Tables;
 using JassApp.Domain.Coiffeur.Models;
@@ -43,6 +42,16 @@ namespace JassApp.DataAccess.Repositories
             MapSieler(model.Spieler2, spieler2Table, JassTeamSpielerPosition.Spieler2);
         }
 
+        private static void MapJassTeams(CoiffeurSpielrunde runde, CoiffeurSpielrundeTable rundeTable)
+        {
+            foreach (var jassTeam in runde.JassTeams)
+            {
+                var jassTeamTable = rundeTable.JassTeams.SingleOrAdd(f => f.JassTeamTyp == jassTeam.Typ);
+                jassTeamTable.JassTeamTyp = jassTeam.Typ;
+                MapJassTeam(jassTeam, jassTeamTable);
+            }
+        }
+
         private static void MapSieler(JassTeamSpieler model, JassTeamSpielerTable table, JassTeamSpielerPosition position)
         {
             table.Position = position;
@@ -55,7 +64,7 @@ namespace JassApp.DataAccess.Repositories
         {
             foreach (var trumpfrunde in runde.Trumpfrunden)
             {
-                var trumpfrundeTable = spielrundeTable.Trumpfrunden.SingleOrAddById(trumpfrunde.ID.Value);
+                var trumpfrundeTable = spielrundeTable.Trumpfrunden.SingleOrAdd(trumpfrunde.ID.Value);
                 trumpfrundeTable.PunkteModifikator = trumpfrunde.PunkteModifikator;
                 trumpfrundeTable.CoiffeurTrumpfTyp = trumpfrunde.CoiffeurTrumpf.Typ;
                 trumpfrundeTable.ResultatTeam1 = trumpfrunde[JassTeamTyp.Team1].Punkte;
@@ -80,16 +89,6 @@ namespace JassApp.DataAccess.Repositories
             await AddAsync(runde);
 
             return runde;
-        }
-
-        private static void MapJassTeams(CoiffeurSpielrunde runde, CoiffeurSpielrundeTable rundeTable)
-        {
-            foreach (var jassTeam in runde.JassTeams)
-            {
-                var jassTeamTable = rundeTable.JassTeams.SingleOrAdd(f => f.JassTeamTyp == jassTeam.Typ);
-                jassTeamTable.JassTeamTyp = jassTeam.Typ;
-                MapJassTeam(jassTeam, jassTeamTable);
-            }
         }
 
         private IQueryable<CoiffeurSpielrundeTable> QueryCoiffeurSpielrunde()

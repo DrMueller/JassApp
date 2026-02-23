@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using JassApp.Common.Extensions;
 using JassApp.DataAccess.DbContexts.Contexts;
 using JassApp.DataAccess.Tables.Base;
 using JetBrains.Annotations;
@@ -14,48 +13,6 @@ namespace JassApp.DataAccess.Repositories.Base
         public void Initialize(IAppDbContext dbContext)
         {
             _dbContext = dbContext;
-        }
-
-        protected static void AlignCollection<T>(
-            ICollection<T> entityList,
-            IReadOnlyCollection<int>? foreignKeyIdsToAdd,
-            Func<T, int> foreignKeySelector,
-            Action<T, int> foreignKeySetter)
-            where T : TableBase, new()
-        {
-            if (foreignKeyIdsToAdd == null || !foreignKeyIdsToAdd.Any())
-            {
-                entityList.Clear();
-                return;
-            }
-
-            var existingIds = entityList.Select(foreignKeySelector).ToList();
-            var newidsToAdd = foreignKeyIdsToAdd.Except(existingIds).ToList();
-            var idsToDelete = existingIds.Except(foreignKeyIdsToAdd).ToList();
-
-            var listToAdd = new List<T>();
-            foreach (var id in newidsToAdd)
-            {
-                var entity = new T();
-                foreignKeySetter(entity, id);
-                listToAdd.Add(entity);
-            }
-
-            entityList.AddRange(listToAdd);
-            entityList.RemoveAll(f => idsToDelete.Contains(foreignKeySelector(f)));
-        }
-
-        protected static void RemoveDeletedEntities<TEntity, TModel>(
-            ICollection<TEntity> entities,
-            IReadOnlyCollection<TModel> models,
-            Func<TModel, int> keySelector)
-            where TEntity : TableBase
-        {
-            var existingIds = entities.Select(f => f.Id).ToList();
-
-            var modelKeys = models.Select(keySelector).ToList();
-            var idsToDelete = existingIds.Except(modelKeys).ToList();
-            entities.RemoveAll(f => idsToDelete.Contains(f.Id));
         }
 
         protected async Task AddAsync<T>(T entity)
