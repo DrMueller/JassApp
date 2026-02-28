@@ -14,7 +14,7 @@ namespace JassApp.Presentation.Shared.Voices.Services.Implementation
 
             return await storage
                 .GetStringAsync(VoiceKey)
-                .MapAsync(identity => voices.Single(f => f.VoiceIdentity == identity))
+                .MapAsync(identity => voices.First(f => f.VoiceIdentity == identity))
                 .ReduceAsync(() => GetDefaultVoice(voices));
         }
 
