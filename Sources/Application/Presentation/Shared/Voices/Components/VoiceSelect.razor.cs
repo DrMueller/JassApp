@@ -37,5 +37,14 @@ namespace JassApp.Presentation.Shared.Voices.Components
 
             Voices = voices.OrderBy(f => f.Name).ToList();
         }
+
+        private async Task SpeakTestAsync()
+        {
+            await SpeechSynthesis.SpeakAsync(new SpeechSynthesisUtterance
+            {
+                Text = "Hallo, das ist ein Stimmtest. Eins, zwei, drei. Test abgeschlossen.",
+                Voice = SelectedVoice
+            });
+        }
     }
 }

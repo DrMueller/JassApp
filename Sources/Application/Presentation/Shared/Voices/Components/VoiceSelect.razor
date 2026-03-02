@@ -2,13 +2,20 @@
 @using Toolbelt.Blazor.SpeechSynthesis
 @if (!IsLoading)
 {
-    <MudSelect ValueChanged="HandleVoiceChangedAsync"
-               Value="SelectedVoice"
-               T="SpeechSynthesisVoice"
-               Label="Stimme">
-        @foreach (var voice in Voices!)
-        {
-            <MudSelectItem Value="@voice">@voice.Name - @voice.Lang</MudSelectItem>
-        }
-    </MudSelect>
+    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Hearing"
+                       Variant="Variant.Text"
+                       Color="Color.Primary"
+                       OnClick="SpeakTestAsync" />
+
+        <MudSelect ValueChanged="HandleVoiceChangedAsync"
+                   Value="SelectedVoice"
+                   T="SpeechSynthesisVoice"
+                   Label="Stimme">
+            @foreach (var voice in Voices!)
+            {
+                <MudSelectItem Value="@voice">@voice.Name - @voice.Lang</MudSelectItem>
+            }
+        </MudSelect>
+    </MudStack>
 }
