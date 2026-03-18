@@ -1,7 +1,9 @@
-﻿@using JassApp.Presentation.Shared.LoadingIndication
+﻿@using JassApp.Presentation.Shared.Audio
+@using JassApp.Presentation.Shared.LoadingIndication
 @attribute [Route(Path)]
 
 <LoadingIndicator IsLoading="@IsLoading">
+    <AudioPlayer Src="/audio/jeopardy.mp3" />
     <RunningGameInfos Spielrunde="@Spielrunde"></RunningGameInfos>
     <Spieltafel Spielrunde="@Spielrunde" SpectatorMode="@SpectatorMode"></Spieltafel>
 </LoadingIndicator>
