@@ -26,6 +26,8 @@
     </PackageReference>
     <PackageReference Include="MudBlazor" Version="8.10.0" />
     <PackageReference Include="Toolbelt.Blazor.SpeechSynthesis" Version="11.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.23.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
   </ItemGroup>
 
 	

@@ -35,6 +35,8 @@ namespace JassApp.Presentation.Shell.Initialization
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
             });
 
+            services.AddApplicationInsightsTelemetry(Program.Configuration);
+
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApp(Program.Configuration.GetSection("AzureAd"));
 

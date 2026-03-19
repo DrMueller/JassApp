@@ -57,16 +57,8 @@ namespace JassApp.Presentation.Shared.Audio
             _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>("import", jsFilePath);
         }
 
-        private ValueTask EnsureModuleAsync()
-        {
-            return _module is null
-                ? throw new InvalidOperationException("AudioPlayer JS module has not been initialized yet.")
-                : ValueTask.CompletedTask;
-        }
-
         private async Task PlayAsync()
         {
-            await EnsureModuleAsync();
             await _module!.InvokeVoidAsync("play", _audioRef);
 
             _isPlaying = true;
@@ -75,7 +67,6 @@ namespace JassApp.Presentation.Shared.Audio
 
         private async Task StopAsync()
         {
-            await EnsureModuleAsync();
             await _module!.InvokeVoidAsync("stop", _audioRef);
 
             _isPlaying = false;

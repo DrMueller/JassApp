@@ -5,6 +5,7 @@ namespace JassApp.Common.Settings.Provisioning.Models
     [PublicAPI]
     public class AppSettings
     {
+        public string EnvironmentName { get; set; } = null!;
         public const string SectionKey = "AppSettings";
         public string AppVersion { get; set; } = null!;
         public string ConnectionString { get; set; } = null!;
