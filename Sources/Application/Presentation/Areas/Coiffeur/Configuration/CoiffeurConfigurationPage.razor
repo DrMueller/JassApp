@@ -17,15 +17,17 @@
                     <CoiffeurTypSelect OnSelectedTypChanged="f => SelectedTyp = f"></CoiffeurTypSelect>
                 </MudItem>
                 <MudItem xs="4">
-                    <SpielerSelect Label="Starter" OnSpielerChanged="s => StartSpieler = s" Spieler="@Spieler!">
+                    @* ReSharper disable once CSharpWarnings::CS8604 *@
+                    <SpielerSelect Label="Starter" OnSpielerChanged="s => StartSpieler = s" Spieler="@Spieler">
                     </SpielerSelect>
                 </MudItem>
                 <MudItem xs="12">
+                    @* ReSharper disable once CSharpWarnings::CS8604 *@
                     <TeamConfiguration OnSpieler1Selected="spieler => SelectedSpieler1 = spieler"
                                        OnSpieler2Selected="spieler => SelectedSpieler2 = spieler"
                                        OnSpieler3Selected="spieler => SelectedSpieler3 = spieler"
                                        OnSpieler4Selected="spieler => SelectedSpieler4 = spieler"
-                                       Spieler="@Spieler!">
+                                       Spieler="@Spieler">
                     </TeamConfiguration>
                 </MudItem>
                 <MudItem xs="12" class="d-flex justify-end">

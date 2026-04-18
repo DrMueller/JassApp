@@ -4,6 +4,7 @@
 
 <LoadingIndicator IsLoading="@IsLoading">
     <AudioPlayer Src="/audio/jeopardy.mp3" />
-    <RunningGameInfos Spielrunde="@Spielrunde!"></RunningGameInfos>
-    <Spieltafel Spielrunde="@Spielrunde!" SpectatorMode="@SpectatorMode"></Spieltafel>
+    @* ReSharper disable once CSharpWarnings::CS8604 *@
+    <RunningGameInfos Spielrunde="@Spielrunde"></RunningGameInfos>
+    <Spieltafel Spielrunde="@Spielrunde" SpectatorMode="@SpectatorMode"></Spieltafel>
 </LoadingIndicator>
