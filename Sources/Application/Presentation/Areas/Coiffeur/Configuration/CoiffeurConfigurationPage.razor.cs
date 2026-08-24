@@ -30,6 +30,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
 
         private bool IncludeRaucherpausen { get; set; }
         private bool IncludeShots { get; set; }
+        private bool IsJasstrainingslager { get; set; }
 
         private InformationEntries? Infos { get; set; }
 
@@ -63,7 +64,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
                     SelectedSpieler4,
                     StartSpieler,
                     IncludeRaucherpausen,
-                    IncludeShots)
+                    IncludeShots,
+                    IsJasstrainingslager)
                 .ToTuple(() => null!);
 
             if (Infos.HasErrorsOrWarnings)
@@ -75,7 +77,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
             var rundeRepo = uow.GetRepository<ICoiffeurSpielrundeRepository>();
 
             (Infos, var rundeTable) = await rundeRepo
-                .SaveAsync(runde).ToNullableTupleAsync(() => null);
+                .SaveAsync(runde)
+                .ToNullableTupleAsync(() => null);
 
             if (Infos.HasErrorsOrWarnings)
             {

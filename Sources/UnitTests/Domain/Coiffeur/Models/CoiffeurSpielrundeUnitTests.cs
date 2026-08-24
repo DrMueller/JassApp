@@ -8,7 +8,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
     public class CoiffeurSpielrundeUnitTests
     {
         [Fact]
-        public void CalculateTotalPunkte_ReturnsOwnSumAndDifference()
+        public void CalculateTotalPunkte_NotBeingJasstraingslager_ReturnsOwnSumAndDifference()
         {
             var (team1, team2) = JassTeamTestBuilder.Create();
 
@@ -28,11 +28,11 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false, false));
+                new CoiffeurSpielrundeOptionen(false, false, false));
 
             var total = sut.CalculateTotalPunkte(JassTeamTyp.Team1);
-            total.Punkte.Should().Be(60); // (100-80)*1 + (120-100)*2
-            total.DifferenzZuGegner.Should().Be(60);
+            total.Punkte.Should().Be(80); // (100-80)*1 + (120-100)*2+(1 Matsch * 20)
+            total.DifferenzZuGegner.Should().Be(80);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false, true));
+                new CoiffeurSpielrundeOptionen(false, true, false));
 
             sut.CheckShouldSmoke().Should().BeFalse();
         }
@@ -69,7 +69,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false, false));
+                new CoiffeurSpielrundeOptionen(false, false, false));
 
             sut.PunktwertDescription.Should().Be("10 Rp.");
         }

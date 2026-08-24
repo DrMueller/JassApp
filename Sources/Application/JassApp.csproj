@@ -7,6 +7,13 @@
     <UserSecretsId>99283cf6-0876-429c-be3c-d7279f38250f</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Integrations\**" />
+    <Content Remove="Integrations\**" />
+    <EmbeddedResource Remove="Integrations\**" />
+    <None Remove="Integrations\**" />
+  </ItemGroup>
+
 	
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
@@ -33,7 +40,6 @@
 	
   <ItemGroup>
     <Folder Include="DataAccess\Migrations\" />
-    <Folder Include="Integrations\Speech\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

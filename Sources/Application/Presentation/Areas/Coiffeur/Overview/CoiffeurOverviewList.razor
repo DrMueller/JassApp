@@ -13,6 +13,8 @@
             </MudTh>
             <MudTh>Team 1</MudTh>
             <MudTh>Team 2</MudTh>
+            <MudTh>JTL</MudTh>
+            <MudTh>Auszahlung</MudTh>
             <MudTh>Fertig?</MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -20,6 +22,11 @@
             <MudTd DataLabel="Gestartet am">@context.GestartetAm.ToString(CultureInfo.InvariantCulture)</MudTd>
             <MudTd DataLabel="Team 1">@context.JassTeam1.Description</MudTd>
             <MudTd DataLabel="Team 2">@context.JassTeam2.Description</MudTd>
+
+            <MudTd DataLabel="JTL">@context.Optionen.IsJassTrainingslager</MudTd>
+
+            <MudTd DataLabel="JTL">@context.CalculateAuszahlung()</MudTd>
+
             <MudTd DataLabel="Fertig?">@context.WasFinished</MudTd>
             <MudTd>
                 <MudButton Size="Size.Small" OnClick="() => EditRunde(context.Id.Value)" Color="Color.Primary" Variant="Variant.Filled">
@@ -30,7 +37,9 @@
                     <MudIcon Icon="@Icons.Material.Filled.RemoveRedEye"/>
                 </MudButton>
 
-                <MudButton Size="Size.Small" OnClick="() => DeleteRundeAsync(context.Id.Value)" Color="Color.Primary"
+                <MudButton Size="Size.Small" OnClick="() => DeleteRundeAsync(context.Id.Value)"
+                           Disabled="!context.CanBeDeleted"
+                           Color="Color.Primary"
                            Variant="Variant.Filled">
                     <MudIcon Icon="@Icons.Material.Filled.Delete"/>
                 </MudButton>

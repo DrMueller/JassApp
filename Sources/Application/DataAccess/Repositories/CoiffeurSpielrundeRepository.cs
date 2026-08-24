@@ -26,6 +26,7 @@ namespace JassApp.DataAccess.Repositories
             rundeTable.GestartetAm = runde.GestartetAm;
             rundeTable.DoIncludeRaucherpausen = runde.Optionen.DoIncludeRaucherpausen;
             rundeTable.DoIncludeShots = runde.Optionen.DoIncludeShots;
+            rundeTable.IsJassTrainingslager = runde.Optionen.IsJassTrainingslager;
 
             MapJassTeams(runde, rundeTable);
             MapTrumpfrunden(runde, rundeTable);

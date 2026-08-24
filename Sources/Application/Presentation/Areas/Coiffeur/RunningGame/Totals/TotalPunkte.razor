@@ -7,11 +7,32 @@
     <MudTd>
     </MudTd>
     <MudTd>
-        <b>@($"{Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team1).Punkte} ({Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team1).DifferenzZuGegner})")</b>
+        <b>
+            @Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team1).Punkte
+            (@Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team1).DifferenzZuGegner)
+        </b>
     </MudTd>
     <MudTd>
     </MudTd>
     <MudTd>
-        <b>@($"{Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team2).Punkte} ({Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team2).DifferenzZuGegner})")</b>
+        <b>
+            @Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team2).Punkte
+            (@Spielrunde.CalculateTotalPunkte(JassTeamTyp.Team2).DifferenzZuGegner)
+        </b>
+    </MudTd>
+</MudTFootRow>
+
+<MudTFootRow>
+    <MudTd>
+        <b>Auszahlung</b>
+    </MudTd>
+    <MudTd>
+    </MudTd>
+    <MudTd>
+        <b>
+            @Spielrunde.CalculateAuszahlung()
+        </b>
+    </MudTd>
+    <MudTd>
     </MudTd>
 </MudTFootRow>

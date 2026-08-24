@@ -1,6 +1,7 @@
 ﻿using JassApp.Common.LanguageExtensions.Invariance;
 using JassApp.Common.LanguageExtensions.Types.Maybes;
 using JassApp.Common.LanguageExtensions.Types.Maybes.Implementation;
+using JassApp.Domain.Coiffeur.Models.Auszahlungen;
 using JetBrains.Annotations;
 
 namespace JassApp.Domain.Coiffeur.Models
@@ -10,6 +11,8 @@ namespace JassApp.Domain.Coiffeur.Models
     [PublicAPI]
     public class CoiffeurSpielrunde
     {
+        public const int MatschPunkteWert = 20;
+
         private int _shotsAfterNRounds;
 
         public CoiffeurSpielrunde(
@@ -35,6 +38,7 @@ namespace JassApp.Domain.Coiffeur.Models
             _shotsAfterNRounds = Random.Shared.Next(10, 20);
         }
 
+        public bool CanBeDeleted => !WasFinished;
         public DateTime GestartetAm { get; }
         public CoiffeurSpielrundeId Id { get; }
 
@@ -43,12 +47,43 @@ namespace JassApp.Domain.Coiffeur.Models
         public IReadOnlyCollection<JassTeam> JassTeams { get; }
         public CoiffeurSpielrundeOptionen Optionen { get; }
         public int PunkteWert { get; }
-        public string PunktwertDescription => $"{PunkteWert} Rp.";
+
+        public string PunktwertDescription
+        {
+            get
+            {
+                var str = $"{PunkteWert} Rp.";
+
+                if (Optionen.IsJassTrainingslager)
+                {
+                    str += " JTL";
+                }
+
+                return str;
+            }
+        }
+
         public IReadOnlyCollection<CoiffeurTrumpfrunde> Trumpfrunden { get; }
 
         public bool WasFinished => Trumpfrunden.All(f => f[JassTeamTyp.Team1].IstGespielt && f[JassTeamTyp.Team2].IstGespielt);
 
-        public int? CalculateMaetche(JassTeamTyp teamTyp)
+        public string CalculateAuszahlung()
+        {
+            var punkteTeam1 = CalculateTotalPunkte(JassTeamTyp.Team1);
+            var punkteTeam2 = CalculateTotalPunkte(JassTeamTyp.Team2);
+            var maetscheTeam1 = CalculateMaetche(JassTeamTyp.Team1);
+            var maetscheTeam2 = CalculateMaetche(JassTeamTyp.Team2);
+
+            var auszahlung1 = new CoiffeurSpielrundeAuszahlungFuerTeam(punkteTeam1, maetscheTeam1);
+
+            var auszahl2 = new CoiffeurSpielrundeAuszahlungFuerTeam(punkteTeam2, maetscheTeam2);
+
+            var auszahlungTotal = CoiffeurSpielrundeAuszahlung.Create(auszahlung1, auszahl2, PunkteWert, Optionen.IsJassTrainingslager);
+
+            return auszahlungTotal.Description;
+        }
+
+        public int CalculateMaetche(JassTeamTyp teamTyp)
         {
             var ownMaetsche = Trumpfrunden.Count(f => f[teamTyp].IstMatch);
             var opposingTeam = GetOpposingTeamType(teamTyp);
@@ -77,6 +112,15 @@ namespace JassApp.Domain.Coiffeur.Models
                 Trumpfrunden
                     .Select(tr => tr.CalculatePunktedifferenz(opposingTeamType))
                     .Sum();
+
+            if (!Optionen.IsJassTrainingslager)
+            {
+                var thisTeamMatche = CalculateMaetche(teamTyp);
+                var opposingTeamMaetsche = CalculateMaetche(GetOpposingTeamType(teamTyp));
+
+                opposingPunkte += opposingTeamMaetsche * MatschPunkteWert;
+                ownPunkte += thisTeamMatche * MatschPunkteWert;
+            }
 
             return new Punktetotal(ownPunkte, ownPunkte - opposingPunkte);
         }

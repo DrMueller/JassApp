@@ -56,7 +56,7 @@ namespace JassApp.Domain.Coiffeur.Specifications
                             ts.Spieler.Name,
                             ts.IstStartSpieler,
                             ts.Position)).ToList())).ToList(),
-                    new CoiffeurSpielrundeOptionen(f.DoIncludeRaucherpausen, f.DoIncludeShots))
+                    new CoiffeurSpielrundeOptionen(f.DoIncludeRaucherpausen, f.DoIncludeShots, f.IsJassTrainingslager))
             );
 
             return map;

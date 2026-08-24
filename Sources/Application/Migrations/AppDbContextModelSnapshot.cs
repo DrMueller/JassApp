@@ -42,6 +42,9 @@ namespace JassApp.Migrations
                     b.Property<DateTime>("GestartetAm")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsJassTrainingslager")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Punktewert")
                         .HasColumnType("int");
 

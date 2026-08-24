@@ -47,6 +47,7 @@ namespace JassApp.UnitTests.Domain.Services
                 spieler4,
                 spieler1,
                 true,
+                true,
                 true);
 
             // Assert
@@ -76,6 +77,7 @@ namespace JassApp.UnitTests.Domain.Services
                 spieler3,
                 new global::JassApp.Domain.Spieler.Models.Spieler(new SpielerId(4), "Spieler4", []),
                 spieler3,
+                true,
                 true,
                 true);
 

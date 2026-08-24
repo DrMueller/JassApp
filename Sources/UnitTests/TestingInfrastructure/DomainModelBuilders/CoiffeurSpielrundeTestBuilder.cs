@@ -20,7 +20,7 @@ namespace JassApp.UnitTests.TestingInfrastructure.DomainModelBuilders
                 10,
                 trumpfrunden,
                 [team1, team2],
-                new CoiffeurSpielrundeOptionen(true, true));
+                new CoiffeurSpielrundeOptionen(true, true, true));
         }
     }
 }

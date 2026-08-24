@@ -24,6 +24,9 @@ namespace JassApp.DataAccess.Configurations
             builder.Property(f => f.DoIncludeShots)
                 .IsRequired();
 
+            builder.Property(f => f.IsJassTrainingslager)
+                .IsRequired();
+
             builder
                 .HasMany(f => f.Trumpfrunden)
                 .WithOne()
