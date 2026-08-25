@@ -1,4 +1,5 @@
 ﻿using JassApp.Presentation.Areas.Coiffeur.Configuration;
+using JassApp.Presentation.Areas.Coiffeur.Auswertung;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -14,6 +15,11 @@ namespace JassApp.Presentation.Areas.Coiffeur.Overview
         private void CreateNewCoiffeurPartie()
         {
             Navigator.NavigateTo(CoiffeurConfigurationPage.Path);
+        }
+
+        private void OpenAuswertung()
+        {
+            Navigator.NavigateTo(AuswertungPage.Path);
         }
     }
 }

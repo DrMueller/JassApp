@@ -1,0 +1,182 @@
+@using JassApp.Presentation.Shared.Infos
+@using JassApp.Presentation.Shared.LoadingIndication
+@using MudBlazor
+@attribute [Route(Path)]
+
+<Informations Entries="Infos"></Informations>
+<LoadingIndicator IsLoading="IsLoading || IsRunning">
+    <MudPaper Class="pa-4">
+        <MudGrid>
+            <MudItem xs="12" md="4">
+                <MudSelect T="int?" Label="Spieler" @bind-Value="Filter.SpielerId" Variant="Variant.Outlined" Required="true">
+                    @foreach (var spieler in Spieler)
+                    {
+                        <MudSelectItem T="int?" Value="spieler.SpielerId">@spieler.Anzeigename</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudSelect T="int?" Label="Gegner" @bind-Value="Filter.GegnerId" Variant="Variant.Outlined" Clearable="true">
+                    @foreach (var spieler in Spieler)
+                    {
+                        <MudSelectItem T="int?" Value="spieler.SpielerId">@spieler.Anzeigename</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudSelect T="JasstrainingslagerFilterTyp" Label="Jasstrainingslager" @bind-Value="Filter.JasstrainingslagerFilter" Variant="Variant.Outlined">
+                    <MudSelectItem Value="JasstrainingslagerFilterTyp.Alle">Alle</MudSelectItem>
+                    <MudSelectItem Value="JasstrainingslagerFilterTyp.Ja">Ja</MudSelectItem>
+                    <MudSelectItem Value="JasstrainingslagerFilterTyp.Nein">Nein</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudDatePicker Label="Von" @bind-Date="Filter.Von" Variant="Variant.Outlined"></MudDatePicker>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudDatePicker Label="Bis" @bind-Date="Filter.Bis" Variant="Variant.Outlined"></MudDatePicker>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudSelect T="JassApp.Domain.Coiffeur.Models.CoiffeurTrumpfTyp?" Label="Trumpfrunden-Typ" @bind-Value="Filter.TrumpfrundeTypFilter" Variant="Variant.Outlined" Clearable="true">
+                    @foreach (var typ in LoadTrumpfTypes())
+                    {
+                        <MudSelectItem T="JassApp.Domain.Coiffeur.Models.CoiffeurTrumpfTyp?" Value="typ">@typ</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-end">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AuswertenAsync">Auswerten</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <MudTabs Rounded="true" PanelClass="pa-4">
+        <MudTabPanel Text="Spielrunden">
+            <MudText Typo="Typo.h6">Gesamtübersicht</MudText>
+            <MudTable T="AuswertungSummaryModel" Items="new[] { SpielrundenErgebnis.Summary }" Dense="true" Hover="false" Elevation="0" Breakpoint="Breakpoint.Sm" HorizontalScrollbar="true">
+                <HeaderContent>
+                    <MudTh>Anzahl</MudTh>
+                    <MudTh>Punkte Spieler</MudTh>
+                    <MudTh>Punkte Gegner</MudTh>
+                    <MudTh>Punktedifferenz</MudTh>
+                    <MudTh>Mätsche Spieler</MudTh>
+                    <MudTh>Mätsche Gegner</MudTh>
+                    <MudTh>Mätsch-Differenz</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Anzahl">@context.Anzahl</MudTd>
+                    <MudTd DataLabel="Punkte Spieler">@context.PunkteSpieler</MudTd>
+                    <MudTd DataLabel="Punkte Gegner">@context.PunkteGegner</MudTd>
+                    <MudTd DataLabel="Punktedifferenz">@context.PunkteDifferenz</MudTd>
+                    <MudTd DataLabel="Mätsche Spieler">@context.MaetscheSpieler</MudTd>
+                    <MudTd DataLabel="Mätsche Gegner">@context.MaetscheGegner</MudTd>
+                    <MudTd DataLabel="Mätsch-Differenz">@context.MaetschDifferenz</MudTd>
+                </RowTemplate>
+            </MudTable>
+
+            <MudText Typo="Typo.h6" Class="mt-6">Details</MudText>
+            <MudTable T="SpielrundenDetailModel" Items="SpielrundenErgebnis.Details" Dense="true" Hover="true" Elevation="0" Breakpoint="Breakpoint.Sm" HorizontalScrollbar="true">
+                <HeaderContent>
+                    <MudTh>Datum</MudTh>
+                    <MudTh>Spieler-Team</MudTh>
+                    <MudTh>Gegner-Team</MudTh>
+                    <MudTh>Punkte Spieler</MudTh>
+                    <MudTh>Punkte Gegner</MudTh>
+                    <MudTh>Punktedifferenz</MudTh>
+                    <MudTh>Mätsche Spieler</MudTh>
+                    <MudTh>Mätsche Gegner</MudTh>
+                    <MudTh>Mätsch-Differenz</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>@context.GestartetAm.ToString("dd.MM.yyyy")</MudTd>
+                    <MudTd>@context.SpielerTeam</MudTd>
+                    <MudTd>@context.GegnerTeam</MudTd>
+                    <MudTd>@context.PunkteSpieler</MudTd>
+                    <MudTd>@context.PunkteGegner</MudTd>
+                    <MudTd>@context.PunkteDifferenz</MudTd>
+                    <MudTd>@context.MaetscheSpieler</MudTd>
+                    <MudTd>@context.MaetscheGegner</MudTd>
+                    <MudTd>@context.MaetschDifferenz</MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    <MudText>0 Treffer</MudText>
+                </NoRecordsContent>
+            </MudTable>
+
+            @if (!Filter.GegnerId.HasValue)
+            {
+                <MudText Typo="Typo.h6" Class="mt-6">Gegner-Bilanz</MudText>
+                <MudTable T="GegnerBilanzModel" Items="SpielrundenErgebnis.GegnerBilanzen" Dense="true" Hover="true" Elevation="0" Breakpoint="Breakpoint.Sm" HorizontalScrollbar="true">
+                    <HeaderContent>
+                        <MudTh>Gegner</MudTh>
+                        <MudTh>Anzahl Runden</MudTh>
+                        <MudTh>Punkte Spieler</MudTh>
+                        <MudTh>Punkte Gegner</MudTh>
+                        <MudTh>Punktedifferenz</MudTh>
+                        <MudTh>Mätsche Spieler</MudTh>
+                        <MudTh>Mätsche Gegner</MudTh>
+                        <MudTh>Mätsch-Differenz</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd>@context.Gegner</MudTd>
+                        <MudTd>@context.AnzahlSpielrunden</MudTd>
+                        <MudTd>@context.PunkteSpieler</MudTd>
+                        <MudTd>@context.PunkteGegner</MudTd>
+                        <MudTd>@context.PunkteDifferenz</MudTd>
+                        <MudTd>@context.MaetscheSpieler</MudTd>
+                        <MudTd>@context.MaetscheGegner</MudTd>
+                        <MudTd>@context.MaetschDifferenz</MudTd>
+                    </RowTemplate>
+                    <NoRecordsContent>
+                        <MudText>0 Treffer</MudText>
+                    </NoRecordsContent>
+                </MudTable>
+            }
+
+        </MudTabPanel>
+
+        <MudTabPanel Text="Trumpfrunden">
+            <MudText Typo="Typo.h6">Gesamtübersicht</MudText>
+            <MudTable T="TrumpfrundenSummaryModel" Items="new[] { TrumpfrundenErgebnis.Summary }" Dense="true" Hover="false" Elevation="0" Breakpoint="Breakpoint.Sm" HorizontalScrollbar="true">
+                <HeaderContent>
+                    <MudTh>Anzahl</MudTh>
+                    <MudTh>Punkte Spieler</MudTh>
+                    <MudTh>Punkte Gegner</MudTh>
+                    <MudTh>Punktedifferenz</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Anzahl">@context.Anzahl</MudTd>
+                    <MudTd DataLabel="Punkte Spieler">@context.PunkteSpieler</MudTd>
+                    <MudTd DataLabel="Punkte Gegner">@context.PunkteGegner</MudTd>
+                    <MudTd DataLabel="Punktedifferenz">@context.PunkteDifferenz</MudTd>
+                </RowTemplate>
+            </MudTable>
+
+            <MudText Typo="Typo.h6" Class="mt-6">Details</MudText>
+            <MudTable T="TrumpfrundenDetailModel" Items="TrumpfrundenErgebnis.Details" Dense="true" Hover="true" Elevation="0" Breakpoint="Breakpoint.Sm" HorizontalScrollbar="true">
+                <HeaderContent>
+                    <MudTh>Datum</MudTh>
+                    <MudTh>Typ</MudTh>
+                    <MudTh>Spieler-Team</MudTh>
+                    <MudTh>Gegner-Team</MudTh>
+                    <MudTh>Punkte Spieler</MudTh>
+                    <MudTh>Punkte Gegner</MudTh>
+                    <MudTh>Punktedifferenz</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>@context.GestartetAm.ToString("dd.MM.yyyy")</MudTd>
+                    <MudTd>@context.TrumpfrundeTyp</MudTd>
+                    <MudTd>@context.SpielerTeam</MudTd>
+                    <MudTd>@context.GegnerTeam</MudTd>
+                    <MudTd>@context.PunkteSpieler</MudTd>
+                    <MudTd>@context.PunkteGegner</MudTd>
+                    <MudTd>@context.PunkteDifferenz</MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    <MudText>0 Treffer</MudText>
+                </NoRecordsContent>
+            </MudTable>
+
+        </MudTabPanel>
+    </MudTabs>
+</LoadingIndicator>
