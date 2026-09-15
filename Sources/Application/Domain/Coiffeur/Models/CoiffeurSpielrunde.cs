@@ -76,9 +76,9 @@ namespace JassApp.Domain.Coiffeur.Models
 
             var auszahlung1 = new CoiffeurSpielrundeAuszahlungFuerTeam(punkteTeam1, maetscheTeam1);
 
-            var auszahl2 = new CoiffeurSpielrundeAuszahlungFuerTeam(punkteTeam2, maetscheTeam2);
+            var auszahlung2 = new CoiffeurSpielrundeAuszahlungFuerTeam(punkteTeam2, maetscheTeam2);
 
-            var auszahlungTotal = CoiffeurSpielrundeAuszahlung.Create(auszahlung1, auszahl2, PunkteWert, Optionen.IsJassTrainingslager);
+            var auszahlungTotal = CoiffeurSpielrundeAuszahlung.Create(auszahlung1, auszahlung2, PunkteWert, Optionen.IsJassTrainingslager);
 
             return auszahlungTotal.Description;
         }

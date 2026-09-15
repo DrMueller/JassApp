@@ -16,11 +16,11 @@
 
                 var punkte1DiffTeam2 = Math.Max(Team2.TotalPunkte.DifferenzZuGegner!.Value, 0);
 
-                var franken1 = new Franken(punkte1DiffTeam1,
+                var franken1 = new Franken(punkte1DiffTeam2,
                     Team2.Maetsche * 2,
                     PunkteWertInRappen);
 
-                var franken2 = new Franken(punkte1DiffTeam2,
+                var franken2 = new Franken(punkte1DiffTeam1,
                     Team1.Maetsche * 2,
                     PunkteWertInRappen);
 
