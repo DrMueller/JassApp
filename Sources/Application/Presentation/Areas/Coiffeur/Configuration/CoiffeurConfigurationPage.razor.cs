@@ -9,6 +9,7 @@ using JassApp.Presentation.Areas.Coiffeur.RunningGame;
 using JassApp.Presentation.Infrastructure.Navigation.Models;
 using JassApp.Presentation.Infrastructure.Navigation.Services;
 using Microsoft.AspNetCore.Components;
+using SpielerModel = JassApp.Domain.Spieler.Models.Spieler;
 
 namespace JassApp.Presentation.Areas.Coiffeur.Configuration
 {
@@ -90,6 +91,36 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
             Navigator.NavigateTo
             (AppPath.Create(RunningGamePage.Path)
                 .Format(rundeTable!.Id, false));
+        }
+
+        private void HandleSpieler1Selected(SpielerModel spieler)
+        {
+            SelectedSpieler1 = spieler;
+            UpdateIsJasstrainingslager();
+        }
+
+        private void HandleSpieler2Selected(SpielerModel spieler)
+        {
+            SelectedSpieler2 = spieler;
+            UpdateIsJasstrainingslager();
+        }
+
+        private void HandleSpieler3Selected(SpielerModel spieler)
+        {
+            SelectedSpieler3 = spieler;
+            UpdateIsJasstrainingslager();
+        }
+
+        private void HandleSpieler4Selected(SpielerModel spieler)
+        {
+            SelectedSpieler4 = spieler;
+            UpdateIsJasstrainingslager();
+        }
+
+        private void UpdateIsJasstrainingslager()
+        {
+            IsJasstrainingslager = JassTrainingslagerRegel.ShouldAutoSelect(
+                [SelectedSpieler1, SelectedSpieler2, SelectedSpieler3, SelectedSpieler4]);
         }
     }
 }

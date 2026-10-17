@@ -38,6 +38,12 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
             }
         }
 
+        public void MarkDirty()
+        {
+            _isDirty = true;
+            StateHasChanged();
+        }
+
         protected override void OnInitialized()
         {
             var ts = TimeSpan.FromSeconds(5);
@@ -69,8 +75,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
 
         private void HandleValueChanged()
         {
-            _isDirty = true;
-            StateHasChanged();
+            MarkDirty();
         }
     }
 }

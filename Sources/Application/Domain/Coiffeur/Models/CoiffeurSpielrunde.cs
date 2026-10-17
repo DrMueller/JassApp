@@ -45,8 +45,13 @@ namespace JassApp.Domain.Coiffeur.Models
         public JassTeam JassTeam1 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team1);
         public JassTeam JassTeam2 => JassTeams.Single(f => f.Typ == JassTeamTyp.Team2);
         public IReadOnlyCollection<JassTeam> JassTeams { get; }
-        public CoiffeurSpielrundeOptionen Optionen { get; }
+        public CoiffeurSpielrundeOptionen Optionen { get; private set; }
         public int PunkteWert { get; }
+
+        public void SetIsJassTrainingslager(bool isJassTrainingslager)
+        {
+            Optionen = Optionen with { IsJassTrainingslager = isJassTrainingslager };
+        }
 
         public string PunktwertDescription
         {

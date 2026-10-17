@@ -24,10 +24,10 @@
                 </MudItem>
                 <MudItem xs="12">
                     @* ReSharper disable once CSharpWarnings::CS8604 *@
-                    <TeamConfiguration OnSpieler1Selected="spieler => SelectedSpieler1 = spieler"
-                                       OnSpieler2Selected="spieler => SelectedSpieler2 = spieler"
-                                       OnSpieler3Selected="spieler => SelectedSpieler3 = spieler"
-                                       OnSpieler4Selected="spieler => SelectedSpieler4 = spieler"
+                    <TeamConfiguration OnSpieler1Selected="HandleSpieler1Selected"
+                                       OnSpieler2Selected="HandleSpieler2Selected"
+                                       OnSpieler3Selected="HandleSpieler3Selected"
+                                       OnSpieler4Selected="HandleSpieler4Selected"
                                        Spieler="@Spieler">
                     </TeamConfiguration>
                 </MudItem>

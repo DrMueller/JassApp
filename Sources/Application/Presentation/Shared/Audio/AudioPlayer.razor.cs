@@ -23,9 +23,12 @@ namespace JassApp.Presentation.Shared.Audio
         [EditorRequired]
         public required string Src { get; set; }
 
+        [Parameter]
+        public string? VoiceIcon { get; set; }
+
         private bool Disabled => !_isInitialized || string.IsNullOrWhiteSpace(Src);
 
-        private string VoiceIcon => _isPlaying ? Icons.Material.Filled.MicOff : Icons.Material.Filled.MicNone;
+        private string EffectiveVoiceIcon => VoiceIcon ?? (_isPlaying ? Icons.Material.Filled.MicOff : Icons.Material.Filled.MicNone);
 
         public async ValueTask DisposeAsync()
         {

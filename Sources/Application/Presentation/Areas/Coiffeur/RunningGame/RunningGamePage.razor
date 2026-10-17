@@ -1,10 +1,13 @@
 ﻿@using JassApp.Presentation.Shared.Audio
 @using JassApp.Presentation.Shared.LoadingIndication
+@using MudBlazor
 @attribute [Route(Path)]
 
 <LoadingIndicator IsLoading="@IsLoading">
-    <AudioPlayer Src="/audio/jeopardy.mp3" />
+    <AudioPlayer Src="/audio/jeopardy.mp3" VoiceIcon="@Icons.Material.Filled.HourglassEmpty" />
     @* ReSharper disable once CSharpWarnings::CS8604 *@
-    <RunningGameInfos Spielrunde="@Spielrunde"></RunningGameInfos>
-    <Spieltafel Spielrunde="@Spielrunde" SpectatorMode="@SpectatorMode"></Spieltafel>
+    <RunningGameInfos Spielrunde="@Spielrunde"
+                      SpectatorMode="@SpectatorMode"
+                      OnValueChanged="HandleOptionValueChangedAsync"></RunningGameInfos>
+    <Spieltafel @ref="SpieltafelRef" Spielrunde="@Spielrunde" SpectatorMode="@SpectatorMode"></Spieltafel>
 </LoadingIndicator>

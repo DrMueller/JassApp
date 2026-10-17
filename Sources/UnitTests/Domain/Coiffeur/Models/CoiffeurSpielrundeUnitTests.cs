@@ -73,5 +73,17 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
 
             sut.PunktwertDescription.Should().Be("10 Rp.");
         }
+
+        [Fact]
+        public void SetIsJassTrainingslager_UpdatesOnlyTraininglagerOption()
+        {
+            var sut = CoiffeurSpielrundeTestBuilder.Create();
+
+            sut.SetIsJassTrainingslager(false);
+
+            sut.Optionen.IsJassTrainingslager.Should().BeFalse();
+            sut.Optionen.DoIncludeRaucherpausen.Should().BeTrue();
+            sut.Optionen.DoIncludeShots.Should().BeTrue();
+        }
     }
 }

@@ -23,11 +23,18 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         private bool IsLoading => Spielrunde == null;
 
         private CoiffeurSpielrunde? Spielrunde { get; set; }
+        private Spieltafel SpieltafelRef { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {
             var spec = new CoiffeurSpielrundeSpec(new CoiffeurSpielrundeId(GameId));
             Spielrunde = await QueryService.QuerySingleAsync(spec);
+        }
+
+        private Task HandleOptionValueChangedAsync()
+        {
+            SpieltafelRef.MarkDirty();
+            return Task.CompletedTask;
         }
     }
 }

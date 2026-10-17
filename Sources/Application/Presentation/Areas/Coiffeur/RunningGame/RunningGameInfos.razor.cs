@@ -20,6 +20,14 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         [EditorRequired]
         public required CoiffeurSpielrunde Spielrunde { get; set; }
 
+        [Parameter]
+        [EditorRequired]
+        public required bool SpectatorMode { get; set; }
+
+        [Parameter]
+        [EditorRequired]
+        public EventCallback OnValueChanged { get; set; }
+
         private Voice VoiceRef { get; set; } = null!;
         private VoiceSupport VoiceSupportRef { get; set; } = null!;
 
@@ -67,6 +75,12 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame
         {
             Snackbar.Add(info, Severity.Success);
             await VoiceRef.SpeakAsync(info);
+        }
+
+        private async Task HandleJassTrainingslagerChangedAsync(bool value)
+        {
+            Spielrunde.SetIsJassTrainingslager(value);
+            await OnValueChanged.InvokeAsync();
         }
     }
 }
