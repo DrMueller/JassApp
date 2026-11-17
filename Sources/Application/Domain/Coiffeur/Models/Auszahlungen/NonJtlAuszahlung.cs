@@ -18,7 +18,7 @@
 
                 var team1HasToPay = Team1.TotalPunkte.DifferenzZuGegner!.Value < 0;
 
-                var str = team1HasToPay ? $"Team 1: {franken2.Description}" : $"Team 2: {franken1.Description}";
+                var str = team1HasToPay ? $"Team 1 bezahlt {franken2.Description}" : $"Team 2 bezahlt {franken1.Description}";
 
                 return str;
             }
