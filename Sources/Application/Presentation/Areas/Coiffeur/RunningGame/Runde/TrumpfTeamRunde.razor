@@ -1,8 +1,9 @@
-﻿@using MudBlazor
+﻿@using JassApp.Domain.Coiffeur
+@using MudBlazor
 <MudTd>
     <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
         <MudNumericField
-            Max="16"
+            Max="@Constants.MaximumPunkte"
             Min="0"
                       @bind-Value="TrumpfrundeResultat.Punkte"
                       @bind-Value:after="HandleValueChangedAsync"

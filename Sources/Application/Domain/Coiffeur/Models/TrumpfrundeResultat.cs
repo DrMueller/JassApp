@@ -2,7 +2,6 @@
 {
     public class TrumpfrundeResultat(JassTeamTyp teamTyp, int? punkte, bool istMatsch, bool istKontermatsch)
     {
-        private const int MaxPunkte = 16;
         private bool _istKontermatsch = istKontermatsch;
         private bool _istMatsch = istMatsch;
 
@@ -32,7 +31,7 @@
             get => _istMatsch;
             set
             {
-                if (Punkte != MaxPunkte)
+                if (Punkte != Constants.MaximumPunkte)
                 {
                     _istMatsch = false;
                     return;

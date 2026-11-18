@@ -105,7 +105,7 @@
             return _values
                 .Where(f => f.Type == type)
                 .Select(f => f.Message)
-                .OrderBy(f => f)
+                .OrderBy(f => f, StringComparer.OrdinalIgnoreCase)
                 .ToList();
         }
     }

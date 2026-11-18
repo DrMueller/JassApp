@@ -24,7 +24,7 @@
                     Team1.Maetsche * 2,
                     PunkteWertInRappen);
 
-                return $"Team 1: {franken1.Description}, Team 2: {franken2.Description}";
+                return $"Team 1 zahlt {franken1.Description}, Team 2 zahlt {franken2.Description}";
             }
         }
     }

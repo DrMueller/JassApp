@@ -19,7 +19,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Auswertung
         {
             var spieler = await queryService.QueryAsync(new SpielerSpec());
             var map = spieler
-                .OrderBy(s => s.Name)
+                .OrderBy(s => s.Name, StringComparer.OrdinalIgnoreCase)
                 .Select(s => new AuswertungSpielerItemModel(s.Id.Value, s.Name))
                 .ToList();
 
@@ -173,7 +173,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Auswertung
             }
 
             return rows
-                .OrderBy(r => r.GegnerName)
+                .OrderBy(r => r.GegnerName, StringComparer.OrdinalIgnoreCase)
                 .Select(r => r.ToModel())
                 .ToList();
         }
@@ -304,9 +304,9 @@ namespace JassApp.Presentation.Areas.Coiffeur.Auswertung
             var maetscheGegner = runde.CalculateMaetche(gegnerTeam.Typ);
 
             var normalizedSpielerTeamText = string.Join(", ",
-                new[] { spielerTeam.Spieler1.Name, spielerTeam.Spieler2.Name }.OrderBy(n => n));
+                new[] { spielerTeam.Spieler1.Name, spielerTeam.Spieler2.Name }.OrderBy(n => n, StringComparer.OrdinalIgnoreCase));
             var normalizedGegnerTeamText = string.Join(", ",
-                new[] { gegnerTeam.Spieler1.Name, gegnerTeam.Spieler2.Name }.OrderBy(n => n));
+                new[] { gegnerTeam.Spieler1.Name, gegnerTeam.Spieler2.Name }.OrderBy(n => n, StringComparer.OrdinalIgnoreCase));
 
             if (!punktetotalSpieler.Punkte.HasValue || !punktetotalGegner.Punkte.HasValue)
             {

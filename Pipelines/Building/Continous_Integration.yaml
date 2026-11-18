@@ -49,8 +49,9 @@ jobs:
       displayName: '.NET Core Global Tool'
       inputs:
         name: jetbrains.resharper.globaltools
+        vereion: '2026.2.3'
 
-    - task: DrMueller2.ReSharperRunner.ReSharperRunnerTask.ReSharperRunnerTask@2
+    - task: DrMueller2.ReSharperRunner.ReSharperRunnerTask.ReSharperRunnerTask@4
       displayName: Run ReSharper analysis
       inputs:
         solutionPath: JassApp.sln
