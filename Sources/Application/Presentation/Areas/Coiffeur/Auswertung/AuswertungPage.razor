@@ -164,7 +164,7 @@
                     <MudTh>Punktedifferenz</MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd>@context.GestartetAm.ToString("dd.MM.yyyy")</MudTd>
+                    <MudTd>@context.GestartetAm.ToString("dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)</MudTd>
                     <MudTd>@context.TrumpfrundeTyp</MudTd>
                     <MudTd>@context.SpielerTeam</MudTd>
                     <MudTd>@context.GegnerTeam</MudTd>

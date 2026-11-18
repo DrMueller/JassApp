@@ -33,7 +33,7 @@ namespace JassApp.Presentation.Shared.Voices.Services.Implementation
                 return swissVoice;
             }
 
-            var germanVoice = voices.FirstOrDefault(f => f.Lang.ToLower().StartsWith("de-"));
+            var germanVoice = voices.FirstOrDefault(f => f.Lang.ToLower(System.Globalization.CultureInfo.InvariantCulture).StartsWith("de-"));
             if (germanVoice != null)
             {
                 return germanVoice;

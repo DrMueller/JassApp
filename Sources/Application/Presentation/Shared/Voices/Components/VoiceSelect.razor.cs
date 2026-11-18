@@ -35,7 +35,7 @@ namespace JassApp.Presentation.Shared.Voices.Components
             var voices = await SpeechSynthesis.GetVoicesAsync();
             SelectedVoice = await VoicePersister.LoadAsync();
 
-            Voices = voices.OrderBy(f => f.Name).ToList();
+            Voices = voices.OrderBy(f => f.Name, StringComparer.OrdinalIgnoreCase).ToList();
         }
 
         private async Task SpeakTestAsync()
