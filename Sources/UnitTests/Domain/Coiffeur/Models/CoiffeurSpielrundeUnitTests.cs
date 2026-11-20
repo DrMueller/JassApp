@@ -28,7 +28,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false, false, false));
+                new CoiffeurSpielrundeOptionen(false));
 
             var total = sut.CalculateTotalPunkte(JassTeamTyp.Team1);
             total.Punkte.Should().Be(80); // (100-80)*1 + (120-100)*2+(1 Matsch * 20)
@@ -47,7 +47,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false, true, false));
+                new CoiffeurSpielrundeOptionen(false));
 
             sut.CheckShouldSmoke().Should().BeFalse();
         }
@@ -69,7 +69,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false, false, false));
+                new CoiffeurSpielrundeOptionen(false));
 
             sut.PunktwertDescription.Should().Be("10 Rp.");
         }
@@ -82,8 +82,6 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
             sut.SetIsJassTrainingslager(false);
 
             sut.Optionen.IsJassTrainingslager.Should().BeFalse();
-            sut.Optionen.DoIncludeRaucherpausen.Should().BeTrue();
-            sut.Optionen.DoIncludeShots.Should().BeTrue();
         }
     }
 }

@@ -24,8 +24,6 @@ namespace JassApp.DataAccess.Repositories
 
             rundeTable.Punktewert = runde.PunkteWert;
             rundeTable.GestartetAm = runde.GestartetAm;
-            rundeTable.DoIncludeRaucherpausen = runde.Optionen.DoIncludeRaucherpausen;
-            rundeTable.DoIncludeShots = runde.Optionen.DoIncludeShots;
             rundeTable.IsJassTrainingslager = runde.Optionen.IsJassTrainingslager;
 
             MapJassTeams(runde, rundeTable);

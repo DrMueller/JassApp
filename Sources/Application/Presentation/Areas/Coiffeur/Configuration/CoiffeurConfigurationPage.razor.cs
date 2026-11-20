@@ -29,12 +29,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         [Inject]
         public required IUnitOfWorkFactory UowFactory { get; set; }
 
-        private bool IncludeRaucherpausen { get; set; }
-        private bool IncludeShots { get; set; }
         private bool IsJasstrainingslager { get; set; }
-
         private InformationEntries? Infos { get; set; }
-
         private bool IsLoading => Spieler == null;
         private int Punktwert { get; set; } = 20;
 
@@ -64,8 +60,6 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
                     SelectedSpieler3,
                     SelectedSpieler4,
                     StartSpieler,
-                    IncludeRaucherpausen,
-                    IncludeShots,
                     IsJasstrainingslager)
                 .ToTuple(() => null!);
 
