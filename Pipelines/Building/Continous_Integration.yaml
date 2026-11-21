@@ -16,11 +16,11 @@ jobs:
       name: Azure Pipelines
       vmImage: windows-latest
     steps:
-      - task: UseDotNet@2
-        displayName: "Install .NET 10 SDK"
-        inputs:
-          packageType: sdk
-          useGlobalJson: true
+      # - task: UseDotNet@2
+      #   displayName: "Install .NET 10 SDK"
+      #   inputs:
+      #     packageType: sdk
+      #     useGlobalJson: true
       - task: DotNetCoreCLI@2
         displayName: "Restore"
         inputs:
@@ -50,11 +50,11 @@ jobs:
       name: Azure Pipelines
       vmImage: windows-latest
     steps:
-    - task: UseDotNet@2
-      displayName: "Install .NET 10 SDK"
-      inputs:
-        packageType: sdk
-        useGlobalJson: true
+    # - task: UseDotNet@2
+    #   displayName: "Install .NET 10 SDK"
+    #   inputs:
+    #     packageType: sdk
+    #     useGlobalJson: true
     - task: petersendev.dotnet-global-tool-installer.DotnetGlobalToolInstaller.DotnetGlobalToolInstaller@0
       displayName: '.NET Core Global Tool'
       inputs:
