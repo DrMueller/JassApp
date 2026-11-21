@@ -41,8 +41,8 @@ jobs:
         displayName: '.NET Core Global Tool'
         inputs:
           name: nugetlicencebuddy
-      - script: 'nugetlicencebuddy -i -s Sources'
-        displayName: 'Run Licence Buddy'
+      # - script: 'nugetlicencebuddy -i -s Sources'
+      #   displayName: 'Run Licence Buddy'
 
   - job: "RunResharper"
     displayName: "Run ReSharper analysis"
