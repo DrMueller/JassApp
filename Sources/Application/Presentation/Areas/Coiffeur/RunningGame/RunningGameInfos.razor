@@ -1,5 +1,7 @@
 ﻿@using JassApp.Presentation.Shared.Voices.Components
 @using MudBlazor
+Punkte gerundet: @(Spielrunde.Optionen.HasRoundedPunkte ? "Ja" : "Nein")
+
 <MudCheckBox T="bool"
              Value="Spielrunde.Optionen.IsJassTrainingslager"
              ValueChanged="HandleJassTrainingslagerChangedAsync"

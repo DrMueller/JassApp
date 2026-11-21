@@ -2,9 +2,6 @@
 {
     public class TrumpfrundeResultat(JassTeamTyp teamTyp, int? punkte, bool istMatsch, bool istKontermatsch)
     {
-        private bool _istKontermatsch = istKontermatsch;
-        private bool _istMatsch = istMatsch;
-
         public TrumpfrundeResultat(JassTeamTyp teamTyp) : this(teamTyp, null, false, false)
         {
         }
@@ -13,35 +10,60 @@
 
         public bool IstKontermatsch
         {
-            get => _istKontermatsch;
+            get;
             set
             {
                 if (Punkte != 0)
                 {
-                    _istKontermatsch = false;
+                    field = false;
                     return;
                 }
 
-                _istKontermatsch = value;
+                field = value;
             }
-        }
+        } = istKontermatsch;
 
         public bool IstMatch
         {
-            get => _istMatsch;
+            get;
             set
             {
-                if (Punkte != Constants.MaximumPunkte)
+                if (Punkte != MaxPunkte!.MaxPunkte)
                 {
-                    _istMatsch = false;
+                    field = false;
                     return;
                 }
 
-                _istMatsch = value;
+                field = value;
             }
-        }
+        } = istMatsch;
 
-        public int? Punkte { get; set; } = punkte;
+        public TrumpfrundeMaximumPunkte? MaxPunkte { get; private set; }
+
+        public int? Punkte
+        {
+            get;
+            set
+            {
+                if (value < 0)
+                {
+                    value = 0;
+                }
+
+                if (value > MaxPunkte!.MaxPunkte)
+                {
+                    value = MaxPunkte.MaxPunkte;
+                }
+
+                field = value;
+            }
+        } = punkte;
+
         public JassTeamTyp TeamTyp { get; } = teamTyp;
+
+        public void InitializeMaxPunkte(TrumpfrundeMaximumPunkte maxPunkte)
+        {
+            MaxPunkte = maxPunkte;
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.RunningGame.Runde
         [EditorRequired]
         public required TrumpfrundeResultat TrumpfrundeResultat { get; set; }
 
+        private bool IsLoading => TrumpfrundeResultat.MaxPunkte == null;
+
         private async Task HandleValueChangedAsync()
         {
             await OnValueChanged.InvokeAsync();

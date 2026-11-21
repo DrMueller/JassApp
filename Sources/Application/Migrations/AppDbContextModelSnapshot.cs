@@ -17,7 +17,7 @@ namespace JassApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.7")
+                .HasAnnotation("ProductVersion", "10.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,14 +33,13 @@ namespace JassApp.Migrations
                     b.Property<int>("CoiffeurSpielrundeTyp")
                         .HasColumnType("int");
 
-                    b.Property<bool>("DoIncludeRaucherpausen")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DoIncludeShots")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("GestartetAm")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasRoundedPunkte")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<bool>("IsJassTrainingslager")
                         .HasColumnType("bit");

@@ -18,7 +18,8 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
             Spieler.Models.Spieler? spieler3,
             Spieler.Models.Spieler? spieler4,
             Spieler.Models.Spieler? startSpieler,
-            bool istJasstrainingslager)
+            bool istJasstrainingslager,
+            bool hasRoundedPunkte)
         {
             if (punkteWert == 0)
             {
@@ -93,7 +94,8 @@ namespace JassApp.Domain.Coiffeur.Services.Implementation
                 trumpfRunden,
                 jassTeams,
                 new CoiffeurSpielrundeOptionen(
-                    istJasstrainingslager));
+                    istJasstrainingslager,
+                    hasRoundedPunkte));
         }
 
         private static InformationEntries ValidateSpieler(

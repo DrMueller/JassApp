@@ -30,6 +30,7 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
         public required IUnitOfWorkFactory UowFactory { get; set; }
 
         private bool IsJasstrainingslager { get; set; }
+        private bool HasRoundedPunkte { get; set; } = true;
         private InformationEntries? Infos { get; set; }
         private bool IsLoading => Spieler == null;
         private int Punktwert { get; set; } = 20;
@@ -60,7 +61,8 @@ namespace JassApp.Presentation.Areas.Coiffeur.Configuration
                     SelectedSpieler3,
                     SelectedSpieler4,
                     StartSpieler,
-                    IsJasstrainingslager)
+                    IsJasstrainingslager,
+                    HasRoundedPunkte)
                 .ToTuple(() => null!);
 
             if (Infos.HasErrorsOrWarnings)

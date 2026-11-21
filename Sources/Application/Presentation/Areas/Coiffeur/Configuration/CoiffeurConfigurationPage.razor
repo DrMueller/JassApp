@@ -11,6 +11,7 @@
                 <MudItem xs="4">
                     <MudNumericField @bind-Value="Punktwert" Label="Punktwert" Variant="Variant.Text" Min="0"/>
                     <MudCheckBox @bind-Value="IsJasstrainingslager">Jasstrainingslager</MudCheckBox>
+                    <MudCheckBox @bind-Value="HasRoundedPunkte">Punkte runden</MudCheckBox>
                 </MudItem>
                 <MudItem xs="4">
                     <CoiffeurTypSelect OnSelectedTypChanged="f => SelectedTyp = f"></CoiffeurTypSelect>

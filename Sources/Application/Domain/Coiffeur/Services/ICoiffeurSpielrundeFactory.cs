@@ -14,7 +14,8 @@ namespace JassApp.Domain.Coiffeur.Services
             Spieler.Models.Spieler? spieler3,
             Spieler.Models.Spieler? spieler4,
             Spieler.Models.Spieler? startSpieler,
-            bool includeMaetscheInPunkte
+            bool istJasstrainingslager,
+            bool hasRoundedPunkte
         );
     }
 }

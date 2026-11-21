@@ -22,6 +22,14 @@ namespace JassApp.Domain.Coiffeur.Models
             ];
         }
 
+        public void InitializeMaxPunkte(TrumpfrundeMaximumPunkte maxPunkte)
+        {
+            foreach (var resultat in _resultate)
+            {
+                resultat.InitializeMaxPunkte(maxPunkte);
+            }
+        }
+
         public CoiffeurTrumpfrunde(
             TrumpfrundeId id,
             int punkteModifikator,

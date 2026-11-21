@@ -21,6 +21,10 @@ namespace JassApp.DataAccess.Configurations
             builder.Property(f => f.IsJassTrainingslager)
                 .IsRequired();
 
+            builder.Property(f => f.HasRoundedPunkte)
+                .IsRequired()
+                .HasDefaultValue(true);
+
             builder
                 .HasMany(f => f.Trumpfrunden)
                 .WithOne()

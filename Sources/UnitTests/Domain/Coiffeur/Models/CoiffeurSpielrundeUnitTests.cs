@@ -28,7 +28,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false));
+                new CoiffeurSpielrundeOptionen(false, false));
 
             var total = sut.CalculateTotalPunkte(JassTeamTyp.Team1);
             total.Punkte.Should().Be(80); // (100-80)*1 + (120-100)*2+(1 Matsch * 20)
@@ -52,7 +52,7 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
                 10,
                 runden,
                 new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false));
+                new CoiffeurSpielrundeOptionen(false, false));
 
             sut.PunktwertDescription.Should().Be("10 Rp.");
         }

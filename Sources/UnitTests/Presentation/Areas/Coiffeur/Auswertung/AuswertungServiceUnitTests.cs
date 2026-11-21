@@ -418,7 +418,7 @@ namespace JassApp.UnitTests.Presentation.Areas.Coiffeur.Auswertung
                 10,
                 trumpfrunden,
                 [team1, team2],
-                new CoiffeurSpielrundeOptionen(isJtl));
+                new CoiffeurSpielrundeOptionen(isJtl, false));
         }
 
         private static CoiffeurSpielrunde CreateInvalidRound(DateTime startedAt, Spieler spieler)
@@ -448,7 +448,7 @@ namespace JassApp.UnitTests.Presentation.Areas.Coiffeur.Auswertung
                 10,
                 trumpfrunden,
                 [team1, team2],
-                new CoiffeurSpielrundeOptionen(false));
+                new CoiffeurSpielrundeOptionen(false, false));
         }
 
         private static Spieler CreateSpieler(int id, string name)
@@ -483,7 +483,7 @@ namespace JassApp.UnitTests.Presentation.Areas.Coiffeur.Auswertung
                 10,
                 trumpfrunden,
                 [team1, team2],
-                new CoiffeurSpielrundeOptionen(false));
+                new CoiffeurSpielrundeOptionen(false, false));
         }
 
         private AuswertungService CreateSut()

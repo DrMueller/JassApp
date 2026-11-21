@@ -1,20 +1,22 @@
-﻿@using JassApp.Domain.Coiffeur
-@using MudBlazor
-<MudTd>
-    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-        <MudNumericField
-            Max="@Constants.MaximumPunkte"
-            Min="0"
-                      @bind-Value="TrumpfrundeResultat.Punkte"
-                      @bind-Value:after="HandleValueChangedAsync"
-                      Immediate="true"/>
+﻿@using MudBlazor
+@if(!IsLoading)
+{
+    <MudTd>
+        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+            <MudNumericField Max="@TrumpfrundeResultat.MaxPunkte!.MaxPunkte"
+                             Min="0"
+                             @bind-Value="TrumpfrundeResultat.Punkte"
+                             @bind-Value:after="HandleValueChangedAsync"
+                             Immediate="true"
+                             TextUpdateSuppression="false"/>
 
-        <MudCheckBox @bind-Value="TrumpfrundeResultat.IstMatch"
-                     @bind-Value:after="HandleValueChangedAsync">*</MudCheckBox>
-        <MudCheckBox @bind-Value="TrumpfrundeResultat.IstKontermatsch"
-                     @bind-Value:after="HandleValueChangedAsync">**</MudCheckBox>
-    </MudStack>
-</MudTd>
-<MudTd>
-    <MudText>@CoiffeurTrumpfrunde.CalculatePunktedifferenz(TrumpfrundeResultat.TeamTyp)</MudText>
-</MudTd>
+            <MudCheckBox @bind-Value="TrumpfrundeResultat.IstMatch"
+                         @bind-Value:after="HandleValueChangedAsync">*</MudCheckBox>
+            <MudCheckBox @bind-Value="TrumpfrundeResultat.IstKontermatsch"
+                         @bind-Value:after="HandleValueChangedAsync">**</MudCheckBox>
+        </MudStack>
+    </MudTd>
+    <MudTd>
+        <MudText>@CoiffeurTrumpfrunde.CalculatePunktedifferenz(TrumpfrundeResultat.TeamTyp)</MudText>
+    </MudTd>
+}

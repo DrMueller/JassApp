@@ -11,8 +11,6 @@ namespace JassApp.Domain.Coiffeur.Models
     {
         public const int MatschPunkteWert = 20;
 
-        private int _shotsAfterNRounds;
-
         public CoiffeurSpielrunde(
             CoiffeurSpielrundeId id,
             DateTime gestartetAm,
@@ -33,7 +31,12 @@ namespace JassApp.Domain.Coiffeur.Models
             JassTeams = jassTeams;
             Optionen = optionen;
 
-            _shotsAfterNRounds = Random.Shared.Next(10, 20);
+            TrumpfrundeMaximumPunkte maxPunkte = optionen.HasRoundedPunkte ? new RoundedMaxPunkte() : new UnroundedMaxPunkte();
+
+            foreach (var runde in trumpfrunden)
+            {
+                runde.InitializeMaxPunkte(maxPunkte);
+            }
         }
 
         public bool CanBeDeleted => !WasFinished;
