@@ -21,6 +21,8 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
         public void IstGespielt_IsTrue_WhenPunkteSet()
         {
             var sut = new TrumpfrundeResultat(JassTeamTyp.Team1);
+            sut.InitializeMaxPunkte(new RoundedMaxPunkte());
+
             sut.Punkte = 10;
 
             sut.IstGespielt.Should().BeTrue();
