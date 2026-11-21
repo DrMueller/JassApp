@@ -1,6 +1,4 @@
 ﻿using JassApp.Common.LanguageExtensions.Invariance;
-using JassApp.Common.LanguageExtensions.Types.Maybes;
-using JassApp.Common.LanguageExtensions.Types.Maybes.Implementation;
 using JassApp.Domain.Coiffeur.Models.Auszahlungen;
 using JetBrains.Annotations;
 
@@ -47,11 +45,6 @@ namespace JassApp.Domain.Coiffeur.Models
         public IReadOnlyCollection<JassTeam> JassTeams { get; }
         public CoiffeurSpielrundeOptionen Optionen { get; private set; }
         public int PunkteWert { get; }
-
-        public void SetIsJassTrainingslager(bool isJassTrainingslager)
-        {
-            Optionen = Optionen with { IsJassTrainingslager = isJassTrainingslager };
-        }
 
         public string PunktwertDescription
         {
@@ -130,47 +123,6 @@ namespace JassApp.Domain.Coiffeur.Models
             return new Punktetotal(ownPunkte, ownPunkte - opposingPunkte);
         }
 
-        public bool CheckShouldSmoke()
-        {
-            if (!Optionen.DoIncludeRaucherpausen)
-            {
-                return false;
-            }
-
-            var playedResultate = Trumpfrunden
-                .Sum(f => f.AmountOfResultate);
-
-            return playedResultate == 12;
-        }
-
-        public Maybe<string> CheckWhoShouldOrderShots()
-        {
-            var playedAmount = Trumpfrunden
-                .Sum(f => f.AmountOfResultate);
-
-            if (!Optionen.DoIncludeShots)
-            {
-                return None.Value;
-            }
-
-            var shouldOrder = playedAmount == _shotsAfterNRounds;
-            if (shouldOrder)
-            {
-                var allPlayers = new List<string>
-                {
-                    JassTeam1.Spieler1.Name,
-                    JassTeam2.Spieler2.Name,
-                    JassTeam1.Spieler2.Name,
-                    JassTeam2.Spieler1.Name
-                };
-
-                var randomPlayer = allPlayers[Random.Shared.Next(allPlayers.Count)];
-                return randomPlayer;
-            }
-
-            return None.Value;
-        }
-
         public string GetOffeneTruempfeDescription(JassTeamTyp team)
         {
             var offen = Trumpfrunden
@@ -245,6 +197,11 @@ namespace JassApp.Domain.Coiffeur.Models
 
             var team = JassTeams.Single(f => f.Typ == teamTyp);
             return team.GetRundeDescription(dealer);
+        }
+
+        public void SetIsJassTrainingslager(bool isJassTrainingslager)
+        {
+            Optionen = Optionen with { IsJassTrainingslager = isJassTrainingslager };
         }
 
         private JassTeamTyp GetOpposingTeamType(JassTeamTyp teamTyp)

@@ -1,11 +1,9 @@
 ﻿@using JassApp.Presentation.Shared.Voices.Components
 @using MudBlazor
-
-<VoiceSupport @ref="VoiceSupportRef"></VoiceSupport>
-Raucherpausen: @(Spielrunde.Optionen.DoIncludeRaucherpausen ? "Ja" : "Nein"), Shots: @(Spielrunde.Optionen.DoIncludeShots ? "Ja" : "Nein")
 <MudCheckBox T="bool"
              Value="Spielrunde.Optionen.IsJassTrainingslager"
              ValueChanged="HandleJassTrainingslagerChangedAsync"
-             Disabled="@SpectatorMode">Jass Trainingslager</MudCheckBox>
-<Voice @ref="VoiceRef"></Voice>
+             Disabled="@SpectatorMode">
+    Jass Trainingslager
+</MudCheckBox>
 <VoiceSelect></VoiceSelect>

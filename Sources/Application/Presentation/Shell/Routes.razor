@@ -3,14 +3,11 @@
 @using JassApp.Presentation.Shell.Layout
 <AppErrorBoundary @ref="ErrorBoundary" OnExceptionThrown="HandleExceptionThrown">
     <ChildContent>
-        <Router AppAssembly="typeof(Program).Assembly">
+        <Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(NotFoundPage)">
             <Found Context="routeData">
                 <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)"/>
                 <FocusOnNavigate RouteData="routeData" Selector="h1"/>
             </Found>
-            <NotFound>
-                <NotFoundPage/>
-            </NotFound>
         </Router>
     </ChildContent>
     <ErrorContent>

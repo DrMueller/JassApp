@@ -36,23 +36,6 @@ namespace JassApp.UnitTests.Domain.Coiffeur.Models
         }
 
         [Fact]
-        public void CheckShouldSmoke_ReturnsFalse_WhenDisabled()
-        {
-            var (team1, team2) = JassTeamTestBuilder.Create();
-            var runden = new[] { new CoiffeurTrumpfrunde(new TrumpfrundeId(1), 1, CoiffeurTrumpf.Herz) };
-
-            var sut = new CoiffeurSpielrunde(
-                new CoiffeurSpielrundeId(1),
-                DateTime.Today,
-                10,
-                runden,
-                new[] { team1, team2 },
-                new CoiffeurSpielrundeOptionen(false));
-
-            sut.CheckShouldSmoke().Should().BeFalse();
-        }
-
-        [Fact]
         public void PunktwertDescription_IsFormatted()
         {
             var (team1, team2) = JassTeamTestBuilder.Create();

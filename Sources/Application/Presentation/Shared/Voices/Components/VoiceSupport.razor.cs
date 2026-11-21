@@ -45,17 +45,6 @@ namespace JassApp.Presentation.Shared.Voices.Components
             }
         }
 
-        public async Task CheckSupportAsync()
-        {
-            if (IsLoading)
-            {
-                return;
-            }
-
-            IsSupported = await _module!.InvokeAsync<bool>("checkVoiceSupport");
-            StateHasChanged();
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -69,6 +58,17 @@ namespace JassApp.Presentation.Shared.Voices.Components
         {
             var jsFilePath = await JsLocator.LocateJsFilePathAsync(this);
             _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>("import", jsFilePath);
+        }
+
+        private async Task CheckSupportAsync()
+        {
+            if (IsLoading)
+            {
+                return;
+            }
+
+            IsSupported = await _module!.InvokeAsync<bool>("checkVoiceSupport");
+            StateHasChanged();
         }
     }
 }
